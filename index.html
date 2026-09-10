@@ -285,7 +285,8 @@ async function run(){
     const rel = parseFloat(document.getElementById("relparmax").value), fac = parseFloat(document.getElementById("facparmax").value);
     pyodide.globals.set("_rel", isFinite(rel) ? rel : null); pyodide.globals.set("_fac", isFinite(fac) ? fac : null);
     const out = await pyodide.runPythonAsync(`
-_a = {k: (bytes(v) if not isinstance(v, str) else v) for k, v in _archivos.to_py().items()}
+_src = _archivos.to_py() if hasattr(_archivos, 'to_py') else _archivos
+_a = {k: (v if isinstance(v, str) else bytes(v)) for k, v in _src.items()}
 json.dumps(pestio.diagnosticar(_a, _rel, _fac), default=float)`);
     last = JSON.parse(out); render(last); setStatus(exampleNote || T("ready"));
   }catch(e){ const m = String(e.message||e).split("\n").filter(l => l.trim()).pop(); setStatus(T("err_pre") + m, true); }
