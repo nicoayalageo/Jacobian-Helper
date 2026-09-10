@@ -23,7 +23,7 @@
 
 ## Método
 
-`py/discriminador.py` es el código del estudio, sin modificar (hash en `py/discriminador.sha256`). `py/pestio.py` lee los archivos de PEST sin dependencias; se validó contra pyemu en 188 corridas (`test_pestio.py` en el repositorio del estudio). La ganancia es una predicción lineal: valida siempre con una corrida.
+`py/discriminador.py` es el código del estudio, sin modificar (hash en `py/discriminador.sha256`). `py/pestio.py` lee los archivos de PEST sin dependencias; se validó contra pyemu en 188 corridas; el veredicto se validó a ciegas en 122 corridas con verdad conocida (117 aciertos) (`test_pestio.py` en el repositorio del estudio). La ganancia es una predicción lineal: valida siempre con una corrida.
 
 Ayala, N. (Arcadis) & López, D. (GWLab), 2026. *Antes de recalibrar: cómo saber si una corrida PEST estancada se puede rescatar desde el Jacobiano ya calculado.* Referencias: Doherty (2018) PEST Manual Part I; White et al. (2020) PEST++ v5, USGS T&M 7-C26.
 

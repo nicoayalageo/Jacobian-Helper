@@ -133,17 +133,25 @@ def discriminar_grupo(jco, residuals, weights, par_names, par_values, tipos,
         max_sostener = max(1, n - 3)          # nunca dejar menos de 3 parametros libres
 
     def sin_limite(libres):
-        """Mejor ganancia sobre K SIN limites. La truncacion regulariza, asi que no se dispara a 100%."""
-        if not libres: return 0.0
+        """Mejor ganancia sobre K SIN limites, y la misma ganancia descontando lo que se gana por
+        ajustar ruido. Un paso lineal con k direcciones libres reduce phi en ~k/n_obs aunque el
+        modelo ya este en el optimo (k grados de libertad sobre n residuales de varianza ~1). Con
+        pocos parametros el efecto es menor que el umbral min_gain (13/648 = 2 %), pero con 87
+        parametros llega al 13 % y producia falsos STRANGLED sobre corridas convergidas (medido el
+        10-sep-2026 en `fam_pest_V1off_kzpp3`, 612.5: 12.8 % "recuperable" con 87/648 = 13.4 %
+        esperado por ruido). Se devuelve (ganancia bruta, ganancia en exceso sobre el ruido)."""
+        if not libres: return 0.0, 0.0
         A = WJ[:, libres]
         U, S, Vt = np.linalg.svd(A, full_matrices=False)
         rank = int(np.sum(S > S[0] * rank_tol)) if S.size else 0
-        g = -np.inf
+        n_obs = A.shape[0]
+        g, g_ex = -np.inf, -np.inf
         for k in range(1, rank + 1):
             d = Vt[:k].T @ ((U[:, :k].T @ wr) / S[:k])
             e = wr - A @ d
-            g = max(g, 1.0 - float(e @ e) / phi0)
-        return g
+            gk = 1.0 - float(e @ e) / phi0
+            g = max(g, gk); g_ex = max(g_ex, gk - k / n_obs)
+        return g, g_ex
 
     def mejor(libres):
         """(ganancia limitada, quien fija beta) usando solo las columnas `libres`."""
@@ -198,12 +206,12 @@ def discriminar_grupo(jco, residuals, weights, par_names, par_values, tipos,
         if ganancias[k] - ganancias[n_sost] > 0.01:
             n_sost = k
     g_grupo = ganancias[n_sost]
-    g_sin_lim = sin_limite(list(range(n)))       # lo que se alcanzaria si el limitador no existiera
-    perdida = max(g_grupo, g_sin_lim) - ganancias[0]
+    g_sin_lim, g_exceso = sin_limite(list(range(n)))   # sin limitador: bruta y en exceso sobre el ruido
+    perdida = max(g_grupo, g_exceso) - ganancias[0]
 
     base = discriminar(jco, residuals, weights, par_names, par_values, tipos,
                        rel_limit, factor_limit, abs_limit, min_gain, tol_perdida, rank_tol)
-    if max(g_grupo, g_sin_lim) < min_gain:
+    if max(g_grupo, g_exceso) < min_gain:
         veredicto = "NO_INFORMATION"
     elif perdida < tol_perdida:
         veredicto = "HEALTHY"
@@ -211,5 +219,5 @@ def discriminar_grupo(jco, residuals, weights, par_names, par_values, tipos,
         veredicto = "STRANGLED"
     base.update(veredicto=veredicto, rehenes=rehenes[:max(n_sost, 1)], ganancias=ganancias,
                 n_sostener=n_sost, g_grupo=g_grupo, g_lim=ganancias[0], perdida=perdida,
-                g_sin_limite=g_sin_lim)
+                g_sin_limite=g_sin_lim, g_sin_limite_exceso=g_exceso, n_obs=int(WJ.shape[0]))
     return base
