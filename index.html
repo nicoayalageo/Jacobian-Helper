@@ -35,7 +35,7 @@ main{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:28px;align-i
 @media (max-width:900px){main{grid-template-columns:1fr}}
 .panel{background:var(--surface);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow)}
 .panel h2{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:0;padding:14px 18px 0;font-weight:500}
-.drop{margin:14px 18px;border:1.5px dashed var(--rule);border-radius:6px;padding:26px 18px;text-align:center;color:var(--muted);cursor:pointer;transition:background .15s,border-color .15s}
+.drop{display:block;margin:14px 18px;border:1.5px dashed var(--rule);border-radius:6px;padding:26px 18px;text-align:center;color:var(--muted);cursor:pointer;transition:background .15s,border-color .15s}
 .drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
 .drop strong{color:var(--ink);font-weight:600;display:block;margin-bottom:4px}
 .drop input{display:none}
