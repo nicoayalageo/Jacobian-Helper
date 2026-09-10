@@ -1,0 +1,2108 @@
+                        PEST RUN RECORD: CASE W0001
+
+
+ PEST Version: 18.25
+
+
+ PEST run mode:-
+
+    Parameter estimation mode
+
+
+ Case dimensions:-
+
+    Number of parameters                           :    87
+    Number of adjustable parameters                :    87
+    Number of parameter groups                     :     2
+    Number of observations                         :   648
+    Number of prior estimates                      :     0
+
+
+ Model command line(s):-
+
+    ../.venv/bin/python forward.py
+
+
+ Jacobian command line:-
+
+    na
+
+
+ Model interface files:-
+
+    Templates:
+       ./pars.tpl
+    for model input files:
+       ./pars.dat
+
+    (Parameter values written using single precision protocol.)
+    (Decimal point always included.)
+
+    Instruction files:
+       ./obs.ins
+    for reading model output files:
+       ./obs.dat
+
+
+ PEST-to-model message file:-
+
+    na
+
+
+ Singular value decomposition:-
+
+    Perform SVD on XtQX or Q^(1/2)X               : XtQX
+    Max. number of singular values to employ      : 87
+    Ratio of lowest/highest singular value        :  1.000000E-07
+    Record eigenvectors in SVD file               : yes
+
+
+ Derivatives calculation:-
+
+ Param        Increment   Increment   Increment   Forward or   Multiplier  Method
+ group        type                    low bound   central      (central)   (central)
+ hk           relative    5.0000E-02   none       always_2        na         na
+ trend        absolute    1.2500E-03    na        always_2        na         na
+
+ Derivatives problem rectification through split slope analysis:-
+
+ Param        Slope inaction      Rel. slope diff      Action
+ group        threshold           threshold
+ hk           1.0000E-05            0.5000            use_smaller
+ trend        1.0000E-05            0.5000            use_smaller
+
+
+ Parameter definitions:-
+
+ Name         Trans-            Change       Initial        Lower          Upper
+              formation         limit        value          bound          bound
+ a_z0         none              relative  -1.000000E-03   -3.00000        1.00000    
+ a_z1         none              relative  -1.000000E-03   -3.00000        1.00000    
+ a_z2         none              relative  -1.000000E-03   -3.00000        1.00000    
+ a_z3         none              relative  -1.000000E-03   -3.00000        1.00000    
+ a_z4         none              relative  -1.000000E-03   -3.00000        1.00000    
+ a_z5         none              relative  -1.000000E-03   -3.00000        1.00000    
+ a_z6         none              relative  -1.000000E-03   -3.00000        1.00000    
+ a_z7         none              relative  -1.000000E-03   -3.00000        1.00000    
+ pp_0000      log               factor      30.0000       0.300000        3000.00    
+ pp_0001      log               factor      30.0000       0.300000        3000.00    
+ pp_0002      log               factor      30.0000       0.300000        3000.00    
+ pp_0003      log               factor      30.0000       0.300000        3000.00    
+ pp_0004      log               factor      30.0000       0.300000        3000.00    
+ pp_0005      log               factor      30.0000       0.300000        3000.00    
+ pp_0006      log               factor      30.0000       0.300000        3000.00    
+ pp_0007      log               factor      30.0000       0.300000        3000.00    
+ pp_0008      log               factor      30.0000       0.300000        3000.00    
+ pp_0009      log               factor      30.0000       0.300000        3000.00    
+ pp_0010      log               factor      30.0000       0.300000        3000.00    
+ pp_0011      log               factor      30.0000       0.300000        3000.00    
+ pp_0012      log               factor      30.0000       0.300000        3000.00    
+ pp_0013      log               factor      30.0000       0.300000        3000.00    
+ pp_0014      log               factor      30.0000       0.300000        3000.00    
+ pp_0015      log               factor      30.0000       0.300000        3000.00    
+ pp_0016      log               factor      30.0000       0.300000        3000.00    
+ pp_0017      log               factor      30.0000       0.300000        3000.00    
+ pp_0018      log               factor      30.0000       0.300000        3000.00    
+ pp_0019      log               factor      30.0000       0.300000        3000.00    
+ pp_0020      log               factor      30.0000       0.300000        3000.00    
+ pp_0021      log               factor      30.0000       0.300000        3000.00    
+ pp_0022      log               factor      30.0000       0.300000        3000.00    
+ pp_0023      log               factor      30.0000       0.300000        3000.00    
+ pp_0024      log               factor      30.0000       0.300000        3000.00    
+ pp_0025      log               factor      30.0000       0.300000        3000.00    
+ pp_0026      log               factor      30.0000       0.300000        3000.00    
+ pp_0027      log               factor      30.0000       0.300000        3000.00    
+ pp_0028      log               factor      30.0000       0.300000        3000.00    
+ pp_0029      log               factor      30.0000       0.300000        3000.00    
+ pp_0030      log               factor      30.0000       0.300000        3000.00    
+ pp_0031      log               factor      30.0000       0.300000        3000.00    
+ pp_0032      log               factor      30.0000       0.300000        3000.00    
+ pp_0033      log               factor      30.0000       0.300000        3000.00    
+ pp_0034      log               factor      30.0000       0.300000        3000.00    
+ pp_0035      log               factor      30.0000       0.300000        3000.00    
+ pp_0036      log               factor      30.0000       0.300000        3000.00    
+ pp_0037      log               factor      30.0000       0.300000        3000.00    
+ pp_0038      log               factor      30.0000       0.300000        3000.00    
+ pp_0039      log               factor      30.0000       0.300000        3000.00    
+ pp_0040      log               factor      30.0000       0.300000        3000.00    
+ pp_0041      log               factor      30.0000       0.300000        3000.00    
+ pp_0042      log               factor      30.0000       0.300000        3000.00    
+ pp_0043      log               factor      30.0000       0.300000        3000.00    
+ pp_0044      log               factor      30.0000       0.300000        3000.00    
+ pp_0045      log               factor      30.0000       0.300000        3000.00    
+ pp_0046      log               factor      30.0000       0.300000        3000.00    
+ pp_0047      log               factor      30.0000       0.300000        3000.00    
+ pp_0048      log               factor      30.0000       0.300000        3000.00    
+ pp_0049      log               factor      30.0000       0.300000        3000.00    
+ pp_0050      log               factor      30.0000       0.300000        3000.00    
+ pp_0051      log               factor      30.0000       0.300000        3000.00    
+ pp_0052      log               factor      30.0000       0.300000        3000.00    
+ pp_0053      log               factor      30.0000       0.300000        3000.00    
+ pp_0054      log               factor      30.0000       0.300000        3000.00    
+ pp_0055      log               factor      30.0000       0.300000        3000.00    
+ pp_0056      log               factor      30.0000       0.300000        3000.00    
+ pp_0057      log               factor      30.0000       0.300000        3000.00    
+ pp_0058      log               factor      30.0000       0.300000        3000.00    
+ pp_0059      log               factor      30.0000       0.300000        3000.00    
+ pp_0060      log               factor      30.0000       0.300000        3000.00    
+ pp_0061      log               factor      30.0000       0.300000        3000.00    
+ pp_0062      log               factor      30.0000       0.300000        3000.00    
+ pp_0063      log               factor      30.0000       0.300000        3000.00    
+ pp_0064      log               factor      30.0000       0.300000        3000.00    
+ pp_0065      log               factor      30.0000       0.300000        3000.00    
+ pp_0066      log               factor      30.0000       0.300000        3000.00    
+ pp_0067      log               factor      30.0000       0.300000        3000.00    
+ pp_0068      log               factor      30.0000       0.300000        3000.00    
+ pp_0069      log               factor      30.0000       0.300000        3000.00    
+ pp_0070      log               factor      30.0000       0.300000        3000.00    
+ pp_0071      log               factor      30.0000       0.300000        3000.00    
+ pp_0072      log               factor      30.0000       0.300000        3000.00    
+ pp_0073      log               factor      30.0000       0.300000        3000.00    
+ pp_0074      log               factor      30.0000       0.300000        3000.00    
+ pp_0075      log               factor      30.0000       0.300000        3000.00    
+ pp_0076      log               factor      30.0000       0.300000        3000.00    
+ pp_0077      log               factor      30.0000       0.300000        3000.00    
+ pp_0078      log               factor      30.0000       0.300000        3000.00    
+
+ Name         Group          Scale         Offset        Model command number
+ a_z0         trend         1.00000        0.00000            1
+ a_z1         trend         1.00000        0.00000            1
+ a_z2         trend         1.00000        0.00000            1
+ a_z3         trend         1.00000        0.00000            1
+ a_z4         trend         1.00000        0.00000            1
+ a_z5         trend         1.00000        0.00000            1
+ a_z6         trend         1.00000        0.00000            1
+ a_z7         trend         1.00000        0.00000            1
+ pp_0000      hk            1.00000        0.00000            1
+ pp_0001      hk            1.00000        0.00000            1
+ pp_0002      hk            1.00000        0.00000            1
+ pp_0003      hk            1.00000        0.00000            1
+ pp_0004      hk            1.00000        0.00000            1
+ pp_0005      hk            1.00000        0.00000            1
+ pp_0006      hk            1.00000        0.00000            1
+ pp_0007      hk            1.00000        0.00000            1
+ pp_0008      hk            1.00000        0.00000            1
+ pp_0009      hk            1.00000        0.00000            1
+ pp_0010      hk            1.00000        0.00000            1
+ pp_0011      hk            1.00000        0.00000            1
+ pp_0012      hk            1.00000        0.00000            1
+ pp_0013      hk            1.00000        0.00000            1
+ pp_0014      hk            1.00000        0.00000            1
+ pp_0015      hk            1.00000        0.00000            1
+ pp_0016      hk            1.00000        0.00000            1
+ pp_0017      hk            1.00000        0.00000            1
+ pp_0018      hk            1.00000        0.00000            1
+ pp_0019      hk            1.00000        0.00000            1
+ pp_0020      hk            1.00000        0.00000            1
+ pp_0021      hk            1.00000        0.00000            1
+ pp_0022      hk            1.00000        0.00000            1
+ pp_0023      hk            1.00000        0.00000            1
+ pp_0024      hk            1.00000        0.00000            1
+ pp_0025      hk            1.00000        0.00000            1
+ pp_0026      hk            1.00000        0.00000            1
+ pp_0027      hk            1.00000        0.00000            1
+ pp_0028      hk            1.00000        0.00000            1
+ pp_0029      hk            1.00000        0.00000            1
+ pp_0030      hk            1.00000        0.00000            1
+ pp_0031      hk            1.00000        0.00000            1
+ pp_0032      hk            1.00000        0.00000            1
+ pp_0033      hk            1.00000        0.00000            1
+ pp_0034      hk            1.00000        0.00000            1
+ pp_0035      hk            1.00000        0.00000            1
+ pp_0036      hk            1.00000        0.00000            1
+ pp_0037      hk            1.00000        0.00000            1
+ pp_0038      hk            1.00000        0.00000            1
+ pp_0039      hk            1.00000        0.00000            1
+ pp_0040      hk            1.00000        0.00000            1
+ pp_0041      hk            1.00000        0.00000            1
+ pp_0042      hk            1.00000        0.00000            1
+ pp_0043      hk            1.00000        0.00000            1
+ pp_0044      hk            1.00000        0.00000            1
+ pp_0045      hk            1.00000        0.00000            1
+ pp_0046      hk            1.00000        0.00000            1
+ pp_0047      hk            1.00000        0.00000            1
+ pp_0048      hk            1.00000        0.00000            1
+ pp_0049      hk            1.00000        0.00000            1
+ pp_0050      hk            1.00000        0.00000            1
+ pp_0051      hk            1.00000        0.00000            1
+ pp_0052      hk            1.00000        0.00000            1
+ pp_0053      hk            1.00000        0.00000            1
+ pp_0054      hk            1.00000        0.00000            1
+ pp_0055      hk            1.00000        0.00000            1
+ pp_0056      hk            1.00000        0.00000            1
+ pp_0057      hk            1.00000        0.00000            1
+ pp_0058      hk            1.00000        0.00000            1
+ pp_0059      hk            1.00000        0.00000            1
+ pp_0060      hk            1.00000        0.00000            1
+ pp_0061      hk            1.00000        0.00000            1
+ pp_0062      hk            1.00000        0.00000            1
+ pp_0063      hk            1.00000        0.00000            1
+ pp_0064      hk            1.00000        0.00000            1
+ pp_0065      hk            1.00000        0.00000            1
+ pp_0066      hk            1.00000        0.00000            1
+ pp_0067      hk            1.00000        0.00000            1
+ pp_0068      hk            1.00000        0.00000            1
+ pp_0069      hk            1.00000        0.00000            1
+ pp_0070      hk            1.00000        0.00000            1
+ pp_0071      hk            1.00000        0.00000            1
+ pp_0072      hk            1.00000        0.00000            1
+ pp_0073      hk            1.00000        0.00000            1
+ pp_0074      hk            1.00000        0.00000            1
+ pp_0075      hk            1.00000        0.00000            1
+ pp_0076      hk            1.00000        0.00000            1
+ pp_0077      hk            1.00000        0.00000            1
+ pp_0078      hk            1.00000        0.00000            1
+
+
+ Prior information:-
+
+    No prior information supplied
+
+
+ Observations:-
+
+ Observation name        Observation       Weight       Group
+  gage_t122               1999.47         4.9665E-03   gage        
+  gage_t153               1670.78         5.7298E-03   gage        
+  gage_t183               1232.90         7.2413E-03   gage        
+  gage_t214               1114.29         9.9392E-03   gage        
+  gage_t245               831.716         1.3780E-02   gage        
+  gage_t275               524.986         1.6655E-02   gage        
+  gage_t306               738.450         1.4967E-02   gage        
+  gage_t32                1581.97         5.8368E-03   gage        
+  gage_t336               954.102         1.0926E-02   gage        
+  gage_t367               1207.78         7.7901E-03   gage        
+  gage_t398               1664.82         6.0193E-03   gage        
+  gage_t426               1539.16         5.2153E-03   gage        
+  gage_t457               2267.84         4.9591E-03   gage        
+  gage_t487               1655.02         5.2459E-03   gage        
+  gage_t518               1534.54         6.1791E-03   gage        
+  gage_t548               1149.54         8.0053E-03   gage        
+  gage_t579               948.688         1.1216E-02   gage        
+  gage_t61                1975.19         5.0435E-03   gage        
+  gage_t610               721.720         1.5178E-02   gage        
+  gage_t640               652.065         1.6184E-02   gage        
+  gage_t671               732.857         1.2874E-02   gage        
+  gage_t701               1222.11         9.1963E-03   gage        
+  gage_t732               1220.66         6.7898E-03   gage        
+  gage_t92                1779.81         4.7624E-03   gage        
+  trgw-0-13-10_t122       35.4801          2.000       head        
+  trgw-0-13-10_t153       33.9583          2.000       head        
+  trgw-0-13-10_t183       34.2276          2.000       head        
+  trgw-0-13-10_t214       34.3074          2.000       head        
+  trgw-0-13-10_t245       34.6715          2.000       head        
+  trgw-0-13-10_t275       34.2787          2.000       head        
+  trgw-0-13-10_t306       34.7965          2.000       head        
+  trgw-0-13-10_t32        34.6322          2.000       head        
+  trgw-0-13-10_t336       32.6673          2.000       head        
+  trgw-0-13-10_t367       34.6940          2.000       head        
+  trgw-0-13-10_t398       34.1223          2.000       head        
+  trgw-0-13-10_t426       34.8710          2.000       head        
+  trgw-0-13-10_t457       35.1052          2.000       head        
+  trgw-0-13-10_t487       34.9208          2.000       head        
+  trgw-0-13-10_t518       34.0207          2.000       head        
+  trgw-0-13-10_t548       35.0503          2.000       head        
+  trgw-0-13-10_t579       34.5310          2.000       head        
+  trgw-0-13-10_t61        35.1829          2.000       head        
+  trgw-0-13-10_t610       34.0731          2.000       head        
+  trgw-0-13-10_t640       33.3500          2.000       head        
+  trgw-0-13-10_t671       35.5694          2.000       head        
+  trgw-0-13-10_t701       34.6459          2.000       head        
+  trgw-0-13-10_t732       33.6900          2.000       head        
+  trgw-0-13-10_t92        34.7246          2.000       head        
+  trgw-0-15-16_t122       34.3551          2.000       head        
+  trgw-0-15-16_t153       34.3542          2.000       head        
+  trgw-0-15-16_t183       33.9196          2.000       head        
+  trgw-0-15-16_t214       33.8648          2.000       head        
+  trgw-0-15-16_t245       34.0487          2.000       head        
+  trgw-0-15-16_t275       34.0691          2.000       head        
+  trgw-0-15-16_t306       33.7334          2.000       head        
+  trgw-0-15-16_t32        33.9916          2.000       head        
+  trgw-0-15-16_t336       33.9169          2.000       head        
+  trgw-0-15-16_t367       34.7183          2.000       head        
+  trgw-0-15-16_t398       35.4927          2.000       head        
+  trgw-0-15-16_t426       34.6618          2.000       head        
+  trgw-0-15-16_t457       34.1104          2.000       head        
+  trgw-0-15-16_t487       34.9597          2.000       head        
+  trgw-0-15-16_t518       34.5153          2.000       head        
+  trgw-0-15-16_t548       34.4747          2.000       head        
+  trgw-0-15-16_t579       34.4749          2.000       head        
+  trgw-0-15-16_t61        34.4134          2.000       head        
+  trgw-0-15-16_t610       34.0930          2.000       head        
+  trgw-0-15-16_t640       35.2979          2.000       head        
+  trgw-0-15-16_t671       33.7822          2.000       head        
+  trgw-0-15-16_t701       34.0893          2.000       head        
+  trgw-0-15-16_t732       33.8910          2.000       head        
+  trgw-0-15-16_t92        34.5580          2.000       head        
+  trgw-0-2-15_t122        34.4774          2.000       head        
+  trgw-0-2-15_t153        34.1796          2.000       head        
+  trgw-0-2-15_t183        34.1140          2.000       head        
+  trgw-0-2-15_t214        34.2149          2.000       head        
+  trgw-0-2-15_t245        34.1539          2.000       head        
+  trgw-0-2-15_t275        33.9320          2.000       head        
+  trgw-0-2-15_t306        34.4497          2.000       head        
+  trgw-0-2-15_t32         35.0134          2.000       head        
+  trgw-0-2-15_t336        34.6900          2.000       head        
+  trgw-0-2-15_t367        34.5835          2.000       head        
+  trgw-0-2-15_t398        35.3557          2.000       head        
+  trgw-0-2-15_t426        35.0382          2.000       head        
+  trgw-0-2-15_t457        35.5514          2.000       head        
+  trgw-0-2-15_t487        34.0014          2.000       head        
+  trgw-0-2-15_t518        33.8220          2.000       head        
+  trgw-0-2-15_t548        33.8378          2.000       head        
+  trgw-0-2-15_t579        34.7348          2.000       head        
+  trgw-0-2-15_t61         34.4525          2.000       head        
+  trgw-0-2-15_t610        35.0250          2.000       head        
+  trgw-0-2-15_t640        33.5872          2.000       head        
+  trgw-0-2-15_t671        34.0618          2.000       head        
+  trgw-0-2-15_t701        34.1163          2.000       head        
+  trgw-0-2-15_t732        34.4515          2.000       head        
+  trgw-0-2-15_t92         34.5365          2.000       head        
+  trgw-0-2-9_t122         35.9450          2.000       head        
+  trgw-0-2-9_t153         35.0729          2.000       head        
+  trgw-0-2-9_t183         34.5218          2.000       head        
+  trgw-0-2-9_t214         35.3721          2.000       head        
+  trgw-0-2-9_t245         35.1162          2.000       head        
+  trgw-0-2-9_t275         35.2834          2.000       head        
+  trgw-0-2-9_t306         35.2632          2.000       head        
+  trgw-0-2-9_t32          34.7924          2.000       head        
+  trgw-0-2-9_t336         34.8256          2.000       head        
+  trgw-0-2-9_t367         34.5042          2.000       head        
+  trgw-0-2-9_t398         34.9814          2.000       head        
+  trgw-0-2-9_t426         34.7165          2.000       head        
+  trgw-0-2-9_t457         34.7978          2.000       head        
+  trgw-0-2-9_t487         34.7675          2.000       head        
+  trgw-0-2-9_t518         35.3640          2.000       head        
+  trgw-0-2-9_t548         35.5740          2.000       head        
+  trgw-0-2-9_t579         34.8959          2.000       head        
+  trgw-0-2-9_t61          35.6105          2.000       head        
+  trgw-0-2-9_t610         34.8869          2.000       head        
+  trgw-0-2-9_t640         34.6982          2.000       head        
+  trgw-0-2-9_t671         35.7810          2.000       head        
+  trgw-0-2-9_t701         34.6618          2.000       head        
+  trgw-0-2-9_t732         34.8746          2.000       head        
+  trgw-0-2-9_t92          35.0429          2.000       head        
+  trgw-0-21-10_t122       35.4711          2.000       head        
+  trgw-0-21-10_t153       35.4249          2.000       head        
+  trgw-0-21-10_t183       34.8551          2.000       head        
+  trgw-0-21-10_t214       34.1086          2.000       head        
+  trgw-0-21-10_t245       34.7024          2.000       head        
+  trgw-0-21-10_t275       33.7151          2.000       head        
+  trgw-0-21-10_t306       33.7457          2.000       head        
+  trgw-0-21-10_t32        34.3208          2.000       head        
+  trgw-0-21-10_t336       33.8201          2.000       head        
+  trgw-0-21-10_t367       34.4135          2.000       head        
+  trgw-0-21-10_t398       34.4396          2.000       head        
+  trgw-0-21-10_t426       34.4217          2.000       head        
+  trgw-0-21-10_t457       34.6418          2.000       head        
+  trgw-0-21-10_t487       33.9606          2.000       head        
+  trgw-0-21-10_t518       34.7208          2.000       head        
+  trgw-0-21-10_t548       35.0137          2.000       head        
+  trgw-0-21-10_t579       34.6048          2.000       head        
+  trgw-0-21-10_t61        34.4739          2.000       head        
+  trgw-0-21-10_t610       35.2370          2.000       head        
+  trgw-0-21-10_t640       33.9470          2.000       head        
+  trgw-0-21-10_t671       34.4687          2.000       head        
+  trgw-0-21-10_t701       34.4858          2.000       head        
+  trgw-0-21-10_t732       35.4110          2.000       head        
+  trgw-0-21-10_t92        34.9787          2.000       head        
+  trgw-0-22-15_t122       35.1479          2.000       head        
+  trgw-0-22-15_t153       34.4297          2.000       head        
+  trgw-0-22-15_t183       34.7739          2.000       head        
+  trgw-0-22-15_t214       33.9542          2.000       head        
+  trgw-0-22-15_t245       33.8359          2.000       head        
+  trgw-0-22-15_t275       33.3582          2.000       head        
+  trgw-0-22-15_t306       34.2746          2.000       head        
+  trgw-0-22-15_t32        34.3744          2.000       head        
+  trgw-0-22-15_t336       34.2580          2.000       head        
+  trgw-0-22-15_t367       34.8051          2.000       head        
+  trgw-0-22-15_t398       33.5405          2.000       head        
+  trgw-0-22-15_t426       34.1489          2.000       head        
+  trgw-0-22-15_t457       34.5231          2.000       head        
+  trgw-0-22-15_t487       33.8640          2.000       head        
+  trgw-0-22-15_t518       33.1640          2.000       head        
+  trgw-0-22-15_t548       34.2570          2.000       head        
+  trgw-0-22-15_t579       33.2451          2.000       head        
+  trgw-0-22-15_t61        34.8473          2.000       head        
+  trgw-0-22-15_t610       33.2674          2.000       head        
+  trgw-0-22-15_t640       33.8738          2.000       head        
+  trgw-0-22-15_t671       34.2660          2.000       head        
+  trgw-0-22-15_t701       33.8969          2.000       head        
+  trgw-0-22-15_t732       34.9159          2.000       head        
+  trgw-0-22-15_t92        34.2336          2.000       head        
+  trgw-0-24-4_t122        35.2108          2.000       head        
+  trgw-0-24-4_t153        35.5939          2.000       head        
+  trgw-0-24-4_t183        35.2656          2.000       head        
+  trgw-0-24-4_t214        34.8296          2.000       head        
+  trgw-0-24-4_t245        34.6992          2.000       head        
+  trgw-0-24-4_t275        34.8870          2.000       head        
+  trgw-0-24-4_t306        34.2934          2.000       head        
+  trgw-0-24-4_t32         35.9585          2.000       head        
+  trgw-0-24-4_t336        35.4934          2.000       head        
+  trgw-0-24-4_t367        34.9906          2.000       head        
+  trgw-0-24-4_t398        35.7837          2.000       head        
+  trgw-0-24-4_t426        36.2736          2.000       head        
+  trgw-0-24-4_t457        35.7835          2.000       head        
+  trgw-0-24-4_t487        35.5124          2.000       head        
+  trgw-0-24-4_t518        35.3507          2.000       head        
+  trgw-0-24-4_t548        35.1360          2.000       head        
+  trgw-0-24-4_t579        35.0069          2.000       head        
+  trgw-0-24-4_t61         35.4025          2.000       head        
+  trgw-0-24-4_t610        34.7679          2.000       head        
+  trgw-0-24-4_t640        34.5964          2.000       head        
+  trgw-0-24-4_t671        35.1592          2.000       head        
+  trgw-0-24-4_t701        35.4691          2.000       head        
+  trgw-0-24-4_t732        35.3769          2.000       head        
+  trgw-0-24-4_t92         35.0453          2.000       head        
+  trgw-0-26-6_t122        35.1265          2.000       head        
+  trgw-0-26-6_t153        34.9214          2.000       head        
+  trgw-0-26-6_t183        34.7451          2.000       head        
+  trgw-0-26-6_t214        35.0794          2.000       head        
+  trgw-0-26-6_t245        34.4437          2.000       head        
+  trgw-0-26-6_t275        34.4691          2.000       head        
+  trgw-0-26-6_t306        34.3960          2.000       head        
+  trgw-0-26-6_t32         35.0123          2.000       head        
+  trgw-0-26-6_t336        34.2828          2.000       head        
+  trgw-0-26-6_t367        34.3846          2.000       head        
+  trgw-0-26-6_t398        34.5366          2.000       head        
+  trgw-0-26-6_t426        34.4100          2.000       head        
+  trgw-0-26-6_t457        35.5990          2.000       head        
+  trgw-0-26-6_t487        35.5023          2.000       head        
+  trgw-0-26-6_t518        35.0758          2.000       head        
+  trgw-0-26-6_t548        34.2693          2.000       head        
+  trgw-0-26-6_t579        34.7027          2.000       head        
+  trgw-0-26-6_t61         35.2659          2.000       head        
+  trgw-0-26-6_t610        34.3714          2.000       head        
+  trgw-0-26-6_t640        35.1429          2.000       head        
+  trgw-0-26-6_t671        34.0048          2.000       head        
+  trgw-0-26-6_t701        34.4043          2.000       head        
+  trgw-0-26-6_t732        34.0591          2.000       head        
+  trgw-0-26-6_t92         34.8317          2.000       head        
+  trgw-0-29-15_t122       33.9439          2.000       head        
+  trgw-0-29-15_t153       33.5005          2.000       head        
+  trgw-0-29-15_t183       32.8081          2.000       head        
+  trgw-0-29-15_t214       34.2586          2.000       head        
+  trgw-0-29-15_t245       33.9613          2.000       head        
+  trgw-0-29-15_t275       33.5399          2.000       head        
+  trgw-0-29-15_t306       33.5991          2.000       head        
+  trgw-0-29-15_t32        33.7534          2.000       head        
+  trgw-0-29-15_t336       33.1890          2.000       head        
+  trgw-0-29-15_t367       34.0851          2.000       head        
+  trgw-0-29-15_t398       33.8803          2.000       head        
+  trgw-0-29-15_t426       33.9482          2.000       head        
+  trgw-0-29-15_t457       33.5567          2.000       head        
+  trgw-0-29-15_t487       33.5400          2.000       head        
+  trgw-0-29-15_t518       34.2521          2.000       head        
+  trgw-0-29-15_t548       34.5456          2.000       head        
+  trgw-0-29-15_t579       34.5549          2.000       head        
+  trgw-0-29-15_t61        34.3388          2.000       head        
+  trgw-0-29-15_t610       34.1476          2.000       head        
+  trgw-0-29-15_t640       33.2108          2.000       head        
+  trgw-0-29-15_t671       33.4000          2.000       head        
+  trgw-0-29-15_t701       34.4147          2.000       head        
+  trgw-0-29-15_t732       34.0427          2.000       head        
+  trgw-0-29-15_t92        33.9767          2.000       head        
+  trgw-0-3-8_t122         35.2980          2.000       head        
+  trgw-0-3-8_t153         36.2586          2.000       head        
+  trgw-0-3-8_t183         35.3575          2.000       head        
+  trgw-0-3-8_t214         35.3647          2.000       head        
+  trgw-0-3-8_t245         34.6921          2.000       head        
+  trgw-0-3-8_t275         34.6855          2.000       head        
+  trgw-0-3-8_t306         35.2415          2.000       head        
+  trgw-0-3-8_t32          35.4626          2.000       head        
+  trgw-0-3-8_t336         34.3279          2.000       head        
+  trgw-0-3-8_t367         34.7350          2.000       head        
+  trgw-0-3-8_t398         35.7230          2.000       head        
+  trgw-0-3-8_t426         34.7893          2.000       head        
+  trgw-0-3-8_t457         35.4108          2.000       head        
+  trgw-0-3-8_t487         35.1205          2.000       head        
+  trgw-0-3-8_t518         35.5984          2.000       head        
+  trgw-0-3-8_t548         34.9420          2.000       head        
+  trgw-0-3-8_t579         35.9826          2.000       head        
+  trgw-0-3-8_t61          35.3583          2.000       head        
+  trgw-0-3-8_t610         34.6536          2.000       head        
+  trgw-0-3-8_t640         35.1729          2.000       head        
+  trgw-0-3-8_t671         34.7631          2.000       head        
+  trgw-0-3-8_t701         35.1300          2.000       head        
+  trgw-0-3-8_t732         34.2116          2.000       head        
+  trgw-0-3-8_t92          36.2753          2.000       head        
+  trgw-0-33-7_t122        33.6221          2.000       head        
+  trgw-0-33-7_t153        34.9671          2.000       head        
+  trgw-0-33-7_t183        34.4410          2.000       head        
+  trgw-0-33-7_t214        34.6918          2.000       head        
+  trgw-0-33-7_t245        33.6008          2.000       head        
+  trgw-0-33-7_t275        33.7643          2.000       head        
+  trgw-0-33-7_t306        34.2109          2.000       head        
+  trgw-0-33-7_t32         34.8240          2.000       head        
+  trgw-0-33-7_t336        34.8604          2.000       head        
+  trgw-0-33-7_t367        32.5371          2.000       head        
+  trgw-0-33-7_t398        35.7450          2.000       head        
+  trgw-0-33-7_t426        35.1566          2.000       head        
+  trgw-0-33-7_t457        35.0130          2.000       head        
+  trgw-0-33-7_t487        35.3430          2.000       head        
+  trgw-0-33-7_t518        34.2957          2.000       head        
+  trgw-0-33-7_t548        33.9683          2.000       head        
+  trgw-0-33-7_t579        34.0488          2.000       head        
+  trgw-0-33-7_t61         35.9149          2.000       head        
+  trgw-0-33-7_t610        34.1704          2.000       head        
+  trgw-0-33-7_t640        33.4185          2.000       head        
+  trgw-0-33-7_t671        34.0846          2.000       head        
+  trgw-0-33-7_t701        34.9144          2.000       head        
+  trgw-0-33-7_t732        33.8878          2.000       head        
+  trgw-0-33-7_t92         34.6952          2.000       head        
+  trgw-0-34-10_t122       34.5923          2.000       head        
+  trgw-0-34-10_t153       34.7995          2.000       head        
+  trgw-0-34-10_t183       33.9283          2.000       head        
+  trgw-0-34-10_t214       33.9697          2.000       head        
+  trgw-0-34-10_t245       32.8574          2.000       head        
+  trgw-0-34-10_t275       33.5110          2.000       head        
+  trgw-0-34-10_t306       33.4796          2.000       head        
+  trgw-0-34-10_t32        33.5443          2.000       head        
+  trgw-0-34-10_t336       34.3112          2.000       head        
+  trgw-0-34-10_t367       33.7836          2.000       head        
+  trgw-0-34-10_t398       33.6094          2.000       head        
+  trgw-0-34-10_t426       32.8740          2.000       head        
+  trgw-0-34-10_t457       34.5558          2.000       head        
+  trgw-0-34-10_t487       34.2330          2.000       head        
+  trgw-0-34-10_t518       33.7034          2.000       head        
+  trgw-0-34-10_t548       33.5595          2.000       head        
+  trgw-0-34-10_t579       33.6695          2.000       head        
+  trgw-0-34-10_t61        33.5676          2.000       head        
+  trgw-0-34-10_t610       33.3891          2.000       head        
+  trgw-0-34-10_t640       33.2752          2.000       head        
+  trgw-0-34-10_t671       34.2782          2.000       head        
+  trgw-0-34-10_t701       34.5442          2.000       head        
+  trgw-0-34-10_t732       33.2069          2.000       head        
+  trgw-0-34-10_t92        34.6131          2.000       head        
+  trgw-0-9-1_t122         36.3053          2.000       head        
+  trgw-0-9-1_t153         35.9704          2.000       head        
+  trgw-0-9-1_t183         34.9686          2.000       head        
+  trgw-0-9-1_t214         36.5467          2.000       head        
+  trgw-0-9-1_t245         36.8525          2.000       head        
+  trgw-0-9-1_t275         35.7753          2.000       head        
+  trgw-0-9-1_t306         36.2586          2.000       head        
+  trgw-0-9-1_t32          36.4378          2.000       head        
+  trgw-0-9-1_t336         35.9751          2.000       head        
+  trgw-0-9-1_t367         36.1324          2.000       head        
+  trgw-0-9-1_t398         35.7623          2.000       head        
+  trgw-0-9-1_t426         36.4624          2.000       head        
+  trgw-0-9-1_t457         36.2311          2.000       head        
+  trgw-0-9-1_t487         36.1339          2.000       head        
+  trgw-0-9-1_t518         35.4612          2.000       head        
+  trgw-0-9-1_t548         35.9335          2.000       head        
+  trgw-0-9-1_t579         35.4250          2.000       head        
+  trgw-0-9-1_t61          37.1666          2.000       head        
+  trgw-0-9-1_t610         35.8080          2.000       head        
+  trgw-0-9-1_t640         35.5903          2.000       head        
+  trgw-0-9-1_t671         35.9747          2.000       head        
+  trgw-0-9-1_t701         35.2105          2.000       head        
+  trgw-0-9-1_t732         35.6657          2.000       head        
+  trgw-0-9-1_t92          36.8648          2.000       head        
+  trgw-2-13-10_t122       34.9977          2.000       head        
+  trgw-2-13-10_t153       34.8730          2.000       head        
+  trgw-2-13-10_t183       34.5641          2.000       head        
+  trgw-2-13-10_t214       34.7295          2.000       head        
+  trgw-2-13-10_t245       34.5807          2.000       head        
+  trgw-2-13-10_t275       33.6220          2.000       head        
+  trgw-2-13-10_t306       33.7623          2.000       head        
+  trgw-2-13-10_t32        34.6686          2.000       head        
+  trgw-2-13-10_t336       34.5070          2.000       head        
+  trgw-2-13-10_t367       34.5533          2.000       head        
+  trgw-2-13-10_t398       34.7205          2.000       head        
+  trgw-2-13-10_t426       34.5964          2.000       head        
+  trgw-2-13-10_t457       34.9046          2.000       head        
+  trgw-2-13-10_t487       35.2130          2.000       head        
+  trgw-2-13-10_t518       35.0335          2.000       head        
+  trgw-2-13-10_t548       35.6851          2.000       head        
+  trgw-2-13-10_t579       34.8616          2.000       head        
+  trgw-2-13-10_t61        35.5245          2.000       head        
+  trgw-2-13-10_t610       34.5813          2.000       head        
+  trgw-2-13-10_t640       34.5139          2.000       head        
+  trgw-2-13-10_t671       34.0747          2.000       head        
+  trgw-2-13-10_t701       34.3874          2.000       head        
+  trgw-2-13-10_t732       34.3530          2.000       head        
+  trgw-2-13-10_t92        34.3551          2.000       head        
+  trgw-2-15-16_t122       34.8604          2.000       head        
+  trgw-2-15-16_t153       35.1289          2.000       head        
+  trgw-2-15-16_t183       34.7790          2.000       head        
+  trgw-2-15-16_t214       34.5672          2.000       head        
+  trgw-2-15-16_t245       34.2728          2.000       head        
+  trgw-2-15-16_t275       34.0318          2.000       head        
+  trgw-2-15-16_t306       34.0712          2.000       head        
+  trgw-2-15-16_t32        34.3352          2.000       head        
+  trgw-2-15-16_t336       33.9457          2.000       head        
+  trgw-2-15-16_t367       33.9460          2.000       head        
+  trgw-2-15-16_t398       34.2340          2.000       head        
+  trgw-2-15-16_t426       34.3913          2.000       head        
+  trgw-2-15-16_t457       33.9891          2.000       head        
+  trgw-2-15-16_t487       33.8396          2.000       head        
+  trgw-2-15-16_t518       34.0144          2.000       head        
+  trgw-2-15-16_t548       34.3743          2.000       head        
+  trgw-2-15-16_t579       33.8152          2.000       head        
+  trgw-2-15-16_t61        34.3536          2.000       head        
+  trgw-2-15-16_t610       33.7380          2.000       head        
+  trgw-2-15-16_t640       34.3868          2.000       head        
+  trgw-2-15-16_t671       34.1660          2.000       head        
+  trgw-2-15-16_t701       34.5007          2.000       head        
+  trgw-2-15-16_t732       34.5031          2.000       head        
+  trgw-2-15-16_t92        34.6105          2.000       head        
+  trgw-2-2-15_t122        34.2475          2.000       head        
+  trgw-2-2-15_t153        33.5454          2.000       head        
+  trgw-2-2-15_t183        35.3338          2.000       head        
+  trgw-2-2-15_t214        34.5393          2.000       head        
+  trgw-2-2-15_t245        34.0729          2.000       head        
+  trgw-2-2-15_t275        34.8576          2.000       head        
+  trgw-2-2-15_t306        33.6686          2.000       head        
+  trgw-2-2-15_t32         35.0269          2.000       head        
+  trgw-2-2-15_t336        35.3082          2.000       head        
+  trgw-2-2-15_t367        35.1184          2.000       head        
+  trgw-2-2-15_t398        35.2361          2.000       head        
+  trgw-2-2-15_t426        33.5630          2.000       head        
+  trgw-2-2-15_t457        34.2194          2.000       head        
+  trgw-2-2-15_t487        35.1610          2.000       head        
+  trgw-2-2-15_t518        34.1712          2.000       head        
+  trgw-2-2-15_t548        34.1890          2.000       head        
+  trgw-2-2-15_t579        34.3857          2.000       head        
+  trgw-2-2-15_t61         34.6407          2.000       head        
+  trgw-2-2-15_t610        34.6277          2.000       head        
+  trgw-2-2-15_t640        34.2995          2.000       head        
+  trgw-2-2-15_t671        34.6709          2.000       head        
+  trgw-2-2-15_t701        34.9693          2.000       head        
+  trgw-2-2-15_t732        34.2563          2.000       head        
+  trgw-2-2-15_t92         35.4000          2.000       head        
+  trgw-2-2-9_t122         35.5609          2.000       head        
+  trgw-2-2-9_t153         35.1405          2.000       head        
+  trgw-2-2-9_t183         35.2066          2.000       head        
+  trgw-2-2-9_t214         35.4606          2.000       head        
+  trgw-2-2-9_t245         35.1047          2.000       head        
+  trgw-2-2-9_t275         34.4210          2.000       head        
+  trgw-2-2-9_t306         34.3837          2.000       head        
+  trgw-2-2-9_t32          35.6176          2.000       head        
+  trgw-2-2-9_t336         35.3402          2.000       head        
+  trgw-2-2-9_t367         34.1663          2.000       head        
+  trgw-2-2-9_t398         35.8343          2.000       head        
+  trgw-2-2-9_t426         35.1490          2.000       head        
+  trgw-2-2-9_t457         34.2403          2.000       head        
+  trgw-2-2-9_t487         34.3858          2.000       head        
+  trgw-2-2-9_t518         34.7004          2.000       head        
+  trgw-2-2-9_t548         34.6345          2.000       head        
+  trgw-2-2-9_t579         34.9898          2.000       head        
+  trgw-2-2-9_t61          35.1977          2.000       head        
+  trgw-2-2-9_t610         34.5512          2.000       head        
+  trgw-2-2-9_t640         34.2695          2.000       head        
+  trgw-2-2-9_t671         35.4794          2.000       head        
+  trgw-2-2-9_t701         35.2025          2.000       head        
+  trgw-2-2-9_t732         35.8937          2.000       head        
+  trgw-2-2-9_t92          35.6055          2.000       head        
+  trgw-2-21-10_t122       34.7459          2.000       head        
+  trgw-2-21-10_t153       34.6815          2.000       head        
+  trgw-2-21-10_t183       33.7555          2.000       head        
+  trgw-2-21-10_t214       34.3999          2.000       head        
+  trgw-2-21-10_t245       34.1111          2.000       head        
+  trgw-2-21-10_t275       33.8354          2.000       head        
+  trgw-2-21-10_t306       34.0820          2.000       head        
+  trgw-2-21-10_t32        35.5192          2.000       head        
+  trgw-2-21-10_t336       34.5478          2.000       head        
+  trgw-2-21-10_t367       34.4554          2.000       head        
+  trgw-2-21-10_t398       34.3415          2.000       head        
+  trgw-2-21-10_t426       35.1180          2.000       head        
+  trgw-2-21-10_t457       34.8364          2.000       head        
+  trgw-2-21-10_t487       33.9054          2.000       head        
+  trgw-2-21-10_t518       34.9653          2.000       head        
+  trgw-2-21-10_t548       34.2647          2.000       head        
+  trgw-2-21-10_t579       34.9763          2.000       head        
+  trgw-2-21-10_t61        34.6338          2.000       head        
+  trgw-2-21-10_t610       33.3047          2.000       head        
+  trgw-2-21-10_t640       34.2369          2.000       head        
+  trgw-2-21-10_t671       34.3652          2.000       head        
+  trgw-2-21-10_t701       34.3570          2.000       head        
+  trgw-2-21-10_t732       34.5015          2.000       head        
+  trgw-2-21-10_t92        35.4806          2.000       head        
+  trgw-2-22-15_t122       34.7542          2.000       head        
+  trgw-2-22-15_t153       33.7991          2.000       head        
+  trgw-2-22-15_t183       34.3628          2.000       head        
+  trgw-2-22-15_t214       34.5554          2.000       head        
+  trgw-2-22-15_t245       34.0200          2.000       head        
+  trgw-2-22-15_t275       33.9299          2.000       head        
+  trgw-2-22-15_t306       34.5924          2.000       head        
+  trgw-2-22-15_t32        35.0207          2.000       head        
+  trgw-2-22-15_t336       33.8221          2.000       head        
+  trgw-2-22-15_t367       34.0210          2.000       head        
+  trgw-2-22-15_t398       34.1989          2.000       head        
+  trgw-2-22-15_t426       32.9655          2.000       head        
+  trgw-2-22-15_t457       34.6470          2.000       head        
+  trgw-2-22-15_t487       33.6899          2.000       head        
+  trgw-2-22-15_t518       34.1921          2.000       head        
+  trgw-2-22-15_t548       35.2650          2.000       head        
+  trgw-2-22-15_t579       34.2837          2.000       head        
+  trgw-2-22-15_t61        35.0071          2.000       head        
+  trgw-2-22-15_t610       34.0758          2.000       head        
+  trgw-2-22-15_t640       34.5997          2.000       head        
+  trgw-2-22-15_t671       34.3221          2.000       head        
+  trgw-2-22-15_t701       33.9086          2.000       head        
+  trgw-2-22-15_t732       34.0204          2.000       head        
+  trgw-2-22-15_t92        34.7070          2.000       head        
+  trgw-2-24-4_t122        35.9805          2.000       head        
+  trgw-2-24-4_t153        34.8280          2.000       head        
+  trgw-2-24-4_t183        35.0367          2.000       head        
+  trgw-2-24-4_t214        34.5221          2.000       head        
+  trgw-2-24-4_t245        34.7096          2.000       head        
+  trgw-2-24-4_t275        35.6430          2.000       head        
+  trgw-2-24-4_t306        35.7690          2.000       head        
+  trgw-2-24-4_t32         35.5274          2.000       head        
+  trgw-2-24-4_t336        35.1724          2.000       head        
+  trgw-2-24-4_t367        34.7175          2.000       head        
+  trgw-2-24-4_t398        35.0901          2.000       head        
+  trgw-2-24-4_t426        35.2656          2.000       head        
+  trgw-2-24-4_t457        35.4001          2.000       head        
+  trgw-2-24-4_t487        35.1033          2.000       head        
+  trgw-2-24-4_t518        35.6501          2.000       head        
+  trgw-2-24-4_t548        35.8755          2.000       head        
+  trgw-2-24-4_t579        34.9801          2.000       head        
+  trgw-2-24-4_t61         35.4044          2.000       head        
+  trgw-2-24-4_t610        35.0264          2.000       head        
+  trgw-2-24-4_t640        34.8573          2.000       head        
+  trgw-2-24-4_t671        35.1245          2.000       head        
+  trgw-2-24-4_t701        34.4837          2.000       head        
+  trgw-2-24-4_t732        34.1983          2.000       head        
+  trgw-2-24-4_t92         35.7616          2.000       head        
+  trgw-2-26-6_t122        35.5007          2.000       head        
+  trgw-2-26-6_t153        34.3295          2.000       head        
+  trgw-2-26-6_t183        35.2147          2.000       head        
+  trgw-2-26-6_t214        34.1610          2.000       head        
+  trgw-2-26-6_t245        34.8113          2.000       head        
+  trgw-2-26-6_t275        34.5271          2.000       head        
+  trgw-2-26-6_t306        34.7610          2.000       head        
+  trgw-2-26-6_t32         34.8433          2.000       head        
+  trgw-2-26-6_t336        34.0027          2.000       head        
+  trgw-2-26-6_t367        33.7687          2.000       head        
+  trgw-2-26-6_t398        34.6346          2.000       head        
+  trgw-2-26-6_t426        34.0822          2.000       head        
+  trgw-2-26-6_t457        34.8489          2.000       head        
+  trgw-2-26-6_t487        34.8278          2.000       head        
+  trgw-2-26-6_t518        34.5836          2.000       head        
+  trgw-2-26-6_t548        34.9488          2.000       head        
+  trgw-2-26-6_t579        34.1379          2.000       head        
+  trgw-2-26-6_t61         35.3378          2.000       head        
+  trgw-2-26-6_t610        34.1310          2.000       head        
+  trgw-2-26-6_t640        34.6419          2.000       head        
+  trgw-2-26-6_t671        33.6868          2.000       head        
+  trgw-2-26-6_t701        34.1028          2.000       head        
+  trgw-2-26-6_t732        33.7657          2.000       head        
+  trgw-2-26-6_t92         35.6015          2.000       head        
+  trgw-2-29-15_t122       33.6228          2.000       head        
+  trgw-2-29-15_t153       33.2602          2.000       head        
+  trgw-2-29-15_t183       33.9201          2.000       head        
+  trgw-2-29-15_t214       34.6243          2.000       head        
+  trgw-2-29-15_t245       32.9333          2.000       head        
+  trgw-2-29-15_t275       33.8762          2.000       head        
+  trgw-2-29-15_t306       34.0979          2.000       head        
+  trgw-2-29-15_t32        33.7154          2.000       head        
+  trgw-2-29-15_t336       33.9550          2.000       head        
+  trgw-2-29-15_t367       32.4448          2.000       head        
+  trgw-2-29-15_t398       34.4441          2.000       head        
+  trgw-2-29-15_t426       33.9166          2.000       head        
+  trgw-2-29-15_t457       33.6978          2.000       head        
+  trgw-2-29-15_t487       34.0444          2.000       head        
+  trgw-2-29-15_t518       34.4379          2.000       head        
+  trgw-2-29-15_t548       35.1233          2.000       head        
+  trgw-2-29-15_t579       34.0820          2.000       head        
+  trgw-2-29-15_t61        34.4368          2.000       head        
+  trgw-2-29-15_t610       34.6773          2.000       head        
+  trgw-2-29-15_t640       33.8264          2.000       head        
+  trgw-2-29-15_t671       33.4380          2.000       head        
+  trgw-2-29-15_t701       33.6869          2.000       head        
+  trgw-2-29-15_t732       34.5010          2.000       head        
+  trgw-2-29-15_t92        33.8544          2.000       head        
+  trgw-2-3-8_t122         35.7602          2.000       head        
+  trgw-2-3-8_t153         35.1467          2.000       head        
+  trgw-2-3-8_t183         35.4334          2.000       head        
+  trgw-2-3-8_t214         35.5252          2.000       head        
+  trgw-2-3-8_t245         34.7935          2.000       head        
+  trgw-2-3-8_t275         35.3268          2.000       head        
+  trgw-2-3-8_t306         34.9996          2.000       head        
+  trgw-2-3-8_t32          34.9426          2.000       head        
+  trgw-2-3-8_t336         35.9133          2.000       head        
+  trgw-2-3-8_t367         34.9660          2.000       head        
+  trgw-2-3-8_t398         35.6051          2.000       head        
+  trgw-2-3-8_t426         34.6100          2.000       head        
+  trgw-2-3-8_t457         36.5370          2.000       head        
+  trgw-2-3-8_t487         35.6126          2.000       head        
+  trgw-2-3-8_t518         35.1476          2.000       head        
+  trgw-2-3-8_t548         34.8919          2.000       head        
+  trgw-2-3-8_t579         34.9468          2.000       head        
+  trgw-2-3-8_t61          35.5315          2.000       head        
+  trgw-2-3-8_t610         35.1111          2.000       head        
+  trgw-2-3-8_t640         35.7443          2.000       head        
+  trgw-2-3-8_t671         34.9537          2.000       head        
+  trgw-2-3-8_t701         34.5230          2.000       head        
+  trgw-2-3-8_t732         35.0642          2.000       head        
+  trgw-2-3-8_t92          35.5758          2.000       head        
+  trgw-2-33-7_t122        34.5450          2.000       head        
+  trgw-2-33-7_t153        34.6913          2.000       head        
+  trgw-2-33-7_t183        35.3749          2.000       head        
+  trgw-2-33-7_t214        35.1158          2.000       head        
+  trgw-2-33-7_t245        33.6297          2.000       head        
+  trgw-2-33-7_t275        34.7033          2.000       head        
+  trgw-2-33-7_t306        33.6486          2.000       head        
+  trgw-2-33-7_t32         35.2099          2.000       head        
+  trgw-2-33-7_t336        33.5726          2.000       head        
+  trgw-2-33-7_t367        34.2267          2.000       head        
+  trgw-2-33-7_t398        33.6926          2.000       head        
+  trgw-2-33-7_t426        34.6427          2.000       head        
+  trgw-2-33-7_t457        34.4794          2.000       head        
+  trgw-2-33-7_t487        35.8146          2.000       head        
+  trgw-2-33-7_t518        34.0167          2.000       head        
+  trgw-2-33-7_t548        34.4962          2.000       head        
+  trgw-2-33-7_t579        34.4111          2.000       head        
+  trgw-2-33-7_t61         33.7499          2.000       head        
+  trgw-2-33-7_t610        33.4284          2.000       head        
+  trgw-2-33-7_t640        33.5659          2.000       head        
+  trgw-2-33-7_t671        34.0465          2.000       head        
+  trgw-2-33-7_t701        33.6738          2.000       head        
+  trgw-2-33-7_t732        35.0086          2.000       head        
+  trgw-2-33-7_t92         34.6464          2.000       head        
+  trgw-2-34-10_t122       33.7928          2.000       head        
+  trgw-2-34-10_t153       34.6613          2.000       head        
+  trgw-2-34-10_t183       34.7476          2.000       head        
+  trgw-2-34-10_t214       33.2257          2.000       head        
+  trgw-2-34-10_t245       33.8913          2.000       head        
+  trgw-2-34-10_t275       33.3932          2.000       head        
+  trgw-2-34-10_t306       33.2716          2.000       head        
+  trgw-2-34-10_t32        34.3580          2.000       head        
+  trgw-2-34-10_t336       34.0764          2.000       head        
+  trgw-2-34-10_t367       33.5828          2.000       head        
+  trgw-2-34-10_t398       34.3806          2.000       head        
+  trgw-2-34-10_t426       33.9308          2.000       head        
+  trgw-2-34-10_t457       34.7784          2.000       head        
+  trgw-2-34-10_t487       34.2216          2.000       head        
+  trgw-2-34-10_t518       33.5112          2.000       head        
+  trgw-2-34-10_t548       34.0884          2.000       head        
+  trgw-2-34-10_t579       33.3945          2.000       head        
+  trgw-2-34-10_t61        33.2880          2.000       head        
+  trgw-2-34-10_t610       34.0356          2.000       head        
+  trgw-2-34-10_t640       34.6219          2.000       head        
+  trgw-2-34-10_t671       33.9264          2.000       head        
+  trgw-2-34-10_t701       34.6349          2.000       head        
+  trgw-2-34-10_t732       34.2611          2.000       head        
+  trgw-2-34-10_t92        34.0218          2.000       head        
+  trgw-2-9-1_t122         36.2492          2.000       head        
+  trgw-2-9-1_t153         36.5475          2.000       head        
+  trgw-2-9-1_t183         35.7966          2.000       head        
+  trgw-2-9-1_t214         35.7553          2.000       head        
+  trgw-2-9-1_t245         35.5697          2.000       head        
+  trgw-2-9-1_t275         36.2146          2.000       head        
+  trgw-2-9-1_t306         35.0796          2.000       head        
+  trgw-2-9-1_t32          35.7737          2.000       head        
+  trgw-2-9-1_t336         36.3628          2.000       head        
+  trgw-2-9-1_t367         37.2655          2.000       head        
+  trgw-2-9-1_t398         35.8287          2.000       head        
+  trgw-2-9-1_t426         36.5057          2.000       head        
+  trgw-2-9-1_t457         36.1019          2.000       head        
+  trgw-2-9-1_t487         36.4024          2.000       head        
+  trgw-2-9-1_t518         36.7980          2.000       head        
+  trgw-2-9-1_t548         36.3154          2.000       head        
+  trgw-2-9-1_t579         35.5717          2.000       head        
+  trgw-2-9-1_t61          35.6594          2.000       head        
+  trgw-2-9-1_t610         35.1962          2.000       head        
+  trgw-2-9-1_t640         35.7012          2.000       head        
+  trgw-2-9-1_t671         35.4095          2.000       head        
+  trgw-2-9-1_t701         36.5022          2.000       head        
+  trgw-2-9-1_t732         36.2207          2.000       head        
+  trgw-2-9-1_t92          36.0610          2.000       head        
+
+
+ Control settings:-
+
+    Initial lambda                                               :  20.000    
+    Lambda adjustment factor                                     : iteration-dependent
+    Value of variable governing adjustment                       : -3.0000    
+    Sufficient new/old phi ratio per optimisation iteration      : 0.30000    
+    Limiting relative phi reduction between lambdas              : 1.00000E-02
+    Maximum trial lambdas per iteration                          :   7
+    Forgive model run failure during lamda testing               : yes
+    Forgive model run failure during Jacobian runs               : yes
+
+    Perform Broyden's update of Jacobian matrix                  : no
+    Undertake observation re-referencing                         : no
+
+    Maximum  factor  parameter change (factor-limited changes)   :  5.0000
+    Maximum relative parameter change (relative-limited changes) :  3.0000
+    Fraction of initial parameter values used in computing
+    change limit for near-zero parameters                        : 1.00000E-03
+    Allow bending of parameter upgrade vector                    : no
+    Allow parameters to stick to their bounds                    : no
+
+    Relative phi reduction below which to begin use of
+    central derivatives                                          : na                  
+    Iteration at which to first consider derivatives switch      : na
+    New-to-old phi to commence split slope deriv analysis        :na
+
+    Relative phi reduction indicating convergence                : 0.10000E-01
+    Number of phi values required within this range              :   3
+    Maximum number of consecutive failures to lower phi          :   3
+    Minimal relative parameter change indicating convergence     : 0.10000E-01
+    Number of consecutive iterations with minimal param change   :   3
+    Maximum number of optimisation iterations                    :  20
+
+    Attempt automatic user intervention                          : no
+
+    Attempt reuse of parameter sensitivities                     : no
+
+    Scale parameters by their bounds                             : no
+
+
+ File saving options: -
+
+    Save best JCO file                                           : yes
+    Save multiple JCO files                                      : no
+    Save multiple REI files                                      : no
+    Save multiple PAR files                                      : no
+
+
+                             OPTIMISATION RECORD
+
+
+ INITIAL CONDITIONS: 
+    Sum of squared weighted residuals (ie phi)               =   1346.9    
+    Contribution to phi from observation group "gage"        =   109.88    
+    Contribution to phi from observation group "head"        =   1237.0    
+
+       Current parameter values
+       a_z0           -1.000000E-03
+       a_z1           -1.000000E-03
+       a_z2           -1.000000E-03
+       a_z3           -1.000000E-03
+       a_z4           -1.000000E-03
+       a_z5           -1.000000E-03
+       a_z6           -1.000000E-03
+       a_z7           -1.000000E-03
+       pp_0000          30.0000    
+       pp_0001          30.0000    
+       pp_0002          30.0000    
+       pp_0003          30.0000    
+       pp_0004          30.0000    
+       pp_0005          30.0000    
+       pp_0006          30.0000    
+       pp_0007          30.0000    
+       pp_0008          30.0000    
+       pp_0009          30.0000    
+       pp_0010          30.0000    
+       pp_0011          30.0000    
+       pp_0012          30.0000    
+       pp_0013          30.0000    
+       pp_0014          30.0000    
+       pp_0015          30.0000    
+       pp_0016          30.0000    
+       pp_0017          30.0000    
+       pp_0018          30.0000    
+       pp_0019          30.0000    
+       pp_0020          30.0000    
+       pp_0021          30.0000    
+       pp_0022          30.0000    
+       pp_0023          30.0000    
+       pp_0024          30.0000    
+       pp_0025          30.0000    
+       pp_0026          30.0000    
+       pp_0027          30.0000    
+       pp_0028          30.0000    
+       pp_0029          30.0000    
+       pp_0030          30.0000    
+       pp_0031          30.0000    
+       pp_0032          30.0000    
+       pp_0033          30.0000    
+       pp_0034          30.0000    
+       pp_0035          30.0000    
+       pp_0036          30.0000    
+       pp_0037          30.0000    
+       pp_0038          30.0000    
+       pp_0039          30.0000    
+       pp_0040          30.0000    
+       pp_0041          30.0000    
+       pp_0042          30.0000    
+       pp_0043          30.0000    
+       pp_0044          30.0000    
+       pp_0045          30.0000    
+       pp_0046          30.0000    
+       pp_0047          30.0000    
+       pp_0048          30.0000    
+       pp_0049          30.0000    
+       pp_0050          30.0000    
+       pp_0051          30.0000    
+       pp_0052          30.0000    
+       pp_0053          30.0000    
+       pp_0054          30.0000    
+       pp_0055          30.0000    
+       pp_0056          30.0000    
+       pp_0057          30.0000    
+       pp_0058          30.0000    
+       pp_0059          30.0000    
+       pp_0060          30.0000    
+       pp_0061          30.0000    
+       pp_0062          30.0000    
+       pp_0063          30.0000    
+       pp_0064          30.0000    
+       pp_0065          30.0000    
+       pp_0066          30.0000    
+       pp_0067          30.0000    
+       pp_0068          30.0000    
+       pp_0069          30.0000    
+       pp_0070          30.0000    
+       pp_0071          30.0000    
+       pp_0072          30.0000    
+       pp_0073          30.0000    
+       pp_0074          30.0000    
+       pp_0075          30.0000    
+       pp_0076          30.0000    
+       pp_0077          30.0000    
+       pp_0078          30.0000    
+
+
+ OPTIMISATION ITERATION NO.        : 1
+    Model calls so far             : 1
+    Starting phi for this iteration                          :   1346.9    
+    Contribution to phi from observation group "gage"        :   109.88    
+    Contribution to phi from observation group "head"        :   1237.0    
+
+        Lambda =   20.000     ----->
+           Phi =   1344.4      (  0.998 of starting phi)
+
+        Lambda =   7.3681     ----->
+           Phi =   1344.9      (  0.999 of starting phi)
+
+        Lambda =   54.288     ----->
+           Phi =   1344.6      (  0.998 of starting phi)
+
+    No more lambdas: phi rising
+    Lowest phi this iteration:   1344.4    
+
+       Current parameter values                 Previous parameter values
+       a_z0           -3.849013E-03             a_z0            -1.000000E-03
+       a_z1           -1.486727E-03             a_z1            -1.000000E-03
+       a_z2            2.000000E-03             a_z2            -1.000000E-03
+       a_z3           -3.139277E-03             a_z3            -1.000000E-03
+       a_z4           -3.617823E-03             a_z4            -1.000000E-03
+       a_z5           -3.815907E-03             a_z5            -1.000000E-03
+       a_z6           -5.432084E-04             a_z6            -1.000000E-03
+       a_z7           -2.763707E-03             a_z7            -1.000000E-03
+       pp_0000          29.9896                 pp_0000           30.0000    
+       pp_0001          29.9206                 pp_0001           30.0000    
+       pp_0002          29.8142                 pp_0002           30.0000    
+       pp_0003          30.0131                 pp_0003           30.0000    
+       pp_0004          30.0892                 pp_0004           30.0000    
+       pp_0005          29.9833                 pp_0005           30.0000    
+       pp_0006          29.9845                 pp_0006           30.0000    
+       pp_0007          30.0510                 pp_0007           30.0000    
+       pp_0008          29.9505                 pp_0008           30.0000    
+       pp_0009          29.8478                 pp_0009           30.0000    
+       pp_0010          29.9016                 pp_0010           30.0000    
+       pp_0011          29.9548                 pp_0011           30.0000    
+       pp_0012          29.9161                 pp_0012           30.0000    
+       pp_0013          29.9836                 pp_0013           30.0000    
+       pp_0014          30.2256                 pp_0014           30.0000    
+       pp_0015          30.0538                 pp_0015           30.0000    
+       pp_0016          29.9565                 pp_0016           30.0000    
+       pp_0017          29.9587                 pp_0017           30.0000    
+       pp_0018          29.9144                 pp_0018           30.0000    
+       pp_0019          29.9968                 pp_0019           30.0000    
+       pp_0020          30.0416                 pp_0020           30.0000    
+       pp_0021          29.9557                 pp_0021           30.0000    
+       pp_0022          30.1181                 pp_0022           30.0000    
+       pp_0023          29.9468                 pp_0023           30.0000    
+       pp_0024          29.9162                 pp_0024           30.0000    
+       pp_0025          30.0530                 pp_0025           30.0000    
+       pp_0026          29.9823                 pp_0026           30.0000    
+       pp_0027          30.0719                 pp_0027           30.0000    
+       pp_0028          29.8319                 pp_0028           30.0000    
+       pp_0029          29.9880                 pp_0029           30.0000    
+       pp_0030          30.0761                 pp_0030           30.0000    
+       pp_0031          30.0572                 pp_0031           30.0000    
+       pp_0032          30.1181                 pp_0032           30.0000    
+       pp_0033          29.9733                 pp_0033           30.0000    
+       pp_0034          29.8390                 pp_0034           30.0000    
+       pp_0035          30.0386                 pp_0035           30.0000    
+       pp_0036          30.0412                 pp_0036           30.0000    
+       pp_0037          30.1897                 pp_0037           30.0000    
+       pp_0038          30.0952                 pp_0038           30.0000    
+       pp_0039          29.9788                 pp_0039           30.0000    
+       pp_0040          30.0245                 pp_0040           30.0000    
+       pp_0041          29.9888                 pp_0041           30.0000    
+       pp_0042          30.0034                 pp_0042           30.0000    
+       pp_0043          30.0763                 pp_0043           30.0000    
+       pp_0044          30.1503                 pp_0044           30.0000    
+       pp_0045          30.0754                 pp_0045           30.0000    
+       pp_0046          30.1079                 pp_0046           30.0000    
+       pp_0047          30.0118                 pp_0047           30.0000    
+       pp_0048          29.9179                 pp_0048           30.0000    
+       pp_0049          29.8821                 pp_0049           30.0000    
+       pp_0050          29.8757                 pp_0050           30.0000    
+       pp_0051          30.0166                 pp_0051           30.0000    
+       pp_0052          29.8442                 pp_0052           30.0000    
+       pp_0053          29.7910                 pp_0053           30.0000    
+       pp_0054          29.9477                 pp_0054           30.0000    
+       pp_0055          29.9732                 pp_0055           30.0000    
+       pp_0056          30.0012                 pp_0056           30.0000    
+       pp_0057          29.9629                 pp_0057           30.0000    
+       pp_0058          29.9318                 pp_0058           30.0000    
+       pp_0059          29.8289                 pp_0059           30.0000    
+       pp_0060          29.8694                 pp_0060           30.0000    
+       pp_0061          29.9579                 pp_0061           30.0000    
+       pp_0062          30.0736                 pp_0062           30.0000    
+       pp_0063          30.2298                 pp_0063           30.0000    
+       pp_0064          30.2463                 pp_0064           30.0000    
+       pp_0065          29.9042                 pp_0065           30.0000    
+       pp_0066          29.8162                 pp_0066           30.0000    
+       pp_0067          29.7871                 pp_0067           30.0000    
+       pp_0068          29.9483                 pp_0068           30.0000    
+       pp_0069          30.1151                 pp_0069           30.0000    
+       pp_0070          29.7085                 pp_0070           30.0000    
+       pp_0071          29.7388                 pp_0071           30.0000    
+       pp_0072          30.0509                 pp_0072           30.0000    
+       pp_0073          29.9286                 pp_0073           30.0000    
+       pp_0074          29.9755                 pp_0074           30.0000    
+       pp_0075          29.8428                 pp_0075           30.0000    
+       pp_0076          30.0356                 pp_0076           30.0000    
+       pp_0077          30.2750                 pp_0077           30.0000    
+       pp_0078          30.1941                 pp_0078           30.0000    
+    Maximum   factor change (  factor-limited params):  1.010     ["pp_0070"]
+    Maximum relative change (relative-limited params):  3.000     ["a_z2"]
+    Maximum relative change (      all        params):  3.000     ["a_z2"]
+
+
+ OPTIMISATION ITERATION NO.        : 2
+    Model calls so far             : 91
+    Starting phi for this iteration                          :   1344.4    
+    Contribution to phi from observation group "gage"        :   109.58    
+    Contribution to phi from observation group "head"        :   1234.9    
+
+        Lambda =   20.000     ----->
+           Phi =   1339.5      (  0.996 of starting phi)
+
+        Lambda =   7.3681     ----->
+           Phi =   1341.3      (  0.998 of starting phi)
+
+        Lambda =   54.288     ----->
+           Phi =   1338.4      (  0.995 of starting phi)
+
+    No more lambdas: relative phi reduction between lambdas less than 0.0100
+    Lowest phi this iteration:   1338.4    
+
+       Current parameter values                 Previous parameter values
+       a_z0           -1.166911E-02             a_z0            -3.849013E-03
+       a_z1           -3.178977E-03             a_z1            -1.486727E-03
+       a_z2            8.000000E-03             a_z2             2.000000E-03
+       a_z3           -7.994773E-03             a_z3            -3.139277E-03
+       a_z4           -8.349044E-03             a_z4            -3.617823E-03
+       a_z5           -1.116017E-02             a_z5            -3.815907E-03
+       a_z6           -1.552523E-03             a_z6            -5.432084E-04
+       a_z7           -5.864512E-03             a_z7            -2.763707E-03
+       pp_0000          29.9667                 pp_0000           29.9896    
+       pp_0001          29.7997                 pp_0001           29.9206    
+       pp_0002          29.4901                 pp_0002           29.8142    
+       pp_0003          30.0187                 pp_0003           30.0131    
+       pp_0004          30.2256                 pp_0004           30.0892    
+       pp_0005          29.9695                 pp_0005           29.9833    
+       pp_0006          29.9656                 pp_0006           29.9845    
+       pp_0007          30.0833                 pp_0007           30.0510    
+       pp_0008          29.8701                 pp_0008           29.9505    
+       pp_0009          29.6176                 pp_0009           29.8478    
+       pp_0010          29.7357                 pp_0010           29.9016    
+       pp_0011          29.8471                 pp_0011           29.9548    
+       pp_0012          29.7714                 pp_0012           29.9161    
+       pp_0013          29.9660                 pp_0013           29.9836    
+       pp_0014          30.4130                 pp_0014           30.2256    
+       pp_0015          30.0514                 pp_0015           30.0538    
+       pp_0016          29.9022                 pp_0016           29.9565    
+       pp_0017          29.8972                 pp_0017           29.9587    
+       pp_0018          29.7180                 pp_0018           29.9144    
+       pp_0019          29.9593                 pp_0019           29.9968    
+       pp_0020          30.1054                 pp_0020           30.0416    
+       pp_0021          29.9090                 pp_0021           29.9557    
+       pp_0022          30.3128                 pp_0022           30.1181    
+       pp_0023          29.8262                 pp_0023           29.9468    
+       pp_0024          29.7760                 pp_0024           29.9162    
+       pp_0025          30.1289                 pp_0025           30.0530    
+       pp_0026          30.0133                 pp_0026           29.9823    
+       pp_0027          30.1676                 pp_0027           30.0719    
+       pp_0028          29.5497                 pp_0028           29.8319    
+       pp_0029          29.9468                 pp_0029           29.9880    
+       pp_0030          30.1862                 pp_0030           30.0761    
+       pp_0031          30.2018                 pp_0031           30.0572    
+       pp_0032          30.2436                 pp_0032           30.1181    
+       pp_0033          29.8965                 pp_0033           29.9733    
+       pp_0034          29.6001                 pp_0034           29.8390    
+       pp_0035          30.0959                 pp_0035           30.0386    
+       pp_0036          30.1988                 pp_0036           30.0412    
+       pp_0037          30.4147                 pp_0037           30.1897    
+       pp_0038          30.2512                 pp_0038           30.0952    
+       pp_0039          29.9625                 pp_0039           29.9788    
+       pp_0040          30.0622                 pp_0040           30.0245    
+       pp_0041          30.0754                 pp_0041           29.9888    
+       pp_0042          30.0172                 pp_0042           30.0034    
+       pp_0043          30.0630                 pp_0043           30.0763    
+       pp_0044          30.3210                 pp_0044           30.1503    
+       pp_0045          30.2548                 pp_0045           30.0754    
+       pp_0046          30.3164                 pp_0046           30.1079    
+       pp_0047          30.0239                 pp_0047           30.0118    
+       pp_0048          29.8540                 pp_0048           29.9179    
+       pp_0049          29.5400                 pp_0049           29.8821    
+       pp_0050          29.6283                 pp_0050           29.8757    
+       pp_0051          29.9756                 pp_0051           30.0166    
+       pp_0052          29.5404                 pp_0052           29.8442    
+       pp_0053          29.4366                 pp_0053           29.7910    
+       pp_0054          29.8496                 pp_0054           29.9477    
+       pp_0055          29.9647                 pp_0055           29.9732    
+       pp_0056          29.9911                 pp_0056           30.0012    
+       pp_0057          30.0054                 pp_0057           29.9629    
+       pp_0058          29.8217                 pp_0058           29.9318    
+       pp_0059          29.4696                 pp_0059           29.8289    
+       pp_0060          29.6004                 pp_0060           29.8694    
+       pp_0061          29.8776                 pp_0061           29.9579    
+       pp_0062          30.2094                 pp_0062           30.0736    
+       pp_0063          30.6358                 pp_0063           30.2298    
+       pp_0064          30.6444                 pp_0064           30.2463    
+       pp_0065          29.6744                 pp_0065           29.9042    
+       pp_0066          29.4355                 pp_0066           29.8162    
+       pp_0067          29.4733                 pp_0067           29.7871    
+       pp_0068          29.8773                 pp_0068           29.9483    
+       pp_0069          30.3099                 pp_0069           30.1151    
+       pp_0070          29.1471                 pp_0070           29.7085    
+       pp_0071          29.2376                 pp_0071           29.7388    
+       pp_0072          30.0177                 pp_0072           30.0509    
+       pp_0073          29.8311                 pp_0073           29.9286    
+       pp_0074          29.9583                 pp_0074           29.9755    
+       pp_0075          29.5763                 pp_0075           29.8428    
+       pp_0076          30.1203                 pp_0076           30.0356    
+       pp_0077          30.7822                 pp_0077           30.2750    
+       pp_0078          30.5620                 pp_0078           30.1941    
+    Maximum   factor change (  factor-limited params):  1.019     ["pp_0070"]
+    Maximum relative change (relative-limited params):  3.000     ["a_z2"]
+    Maximum relative change (      all        params):  3.000     ["a_z2"]
+
+    Optimisation complete: the  3 lowest phi's are within a relative distance
+                           of eachother of 1.000E-02
+    Total model calls:    181
+
+    The model has been run one final time using best parameters. 
+    Thus all model input files contain best parameter values, and model 
+    output files contain model results based on these parameters.
+
+
+                             OPTIMISATION RESULTS
+
+ Covariance matrix and parameter confidence intervals cannot be determined:-
+ Some form or regularisation was implemented so these are not applicable.
+
+ Use the PREDUNC7 utility to obtain a full posterior covariance matrix.
+
+
+ Parameters ----->
+
+ Parameter      Estimated value
+  a_z0          -1.166911E-02
+  a_z1          -3.178977E-03
+  a_z2           8.000000E-03
+  a_z3          -7.994773E-03
+  a_z4          -8.349044E-03
+  a_z5          -1.116017E-02
+  a_z6          -1.552523E-03
+  a_z7          -5.864512E-03
+  pp_0000         29.9667    
+  pp_0001         29.7997    
+  pp_0002         29.4901    
+  pp_0003         30.0187    
+  pp_0004         30.2256    
+  pp_0005         29.9695    
+  pp_0006         29.9656    
+  pp_0007         30.0833    
+  pp_0008         29.8701    
+  pp_0009         29.6176    
+  pp_0010         29.7357    
+  pp_0011         29.8471    
+  pp_0012         29.7714    
+  pp_0013         29.9660    
+  pp_0014         30.4130    
+  pp_0015         30.0514    
+  pp_0016         29.9022    
+  pp_0017         29.8972    
+  pp_0018         29.7180    
+  pp_0019         29.9593    
+  pp_0020         30.1054    
+  pp_0021         29.9090    
+  pp_0022         30.3128    
+  pp_0023         29.8262    
+  pp_0024         29.7760    
+  pp_0025         30.1289    
+  pp_0026         30.0133    
+  pp_0027         30.1676    
+  pp_0028         29.5497    
+  pp_0029         29.9468    
+  pp_0030         30.1862    
+  pp_0031         30.2018    
+  pp_0032         30.2436    
+  pp_0033         29.8965    
+  pp_0034         29.6001    
+  pp_0035         30.0959    
+  pp_0036         30.1988    
+  pp_0037         30.4147    
+  pp_0038         30.2512    
+  pp_0039         29.9625    
+  pp_0040         30.0622    
+  pp_0041         30.0754    
+  pp_0042         30.0172    
+  pp_0043         30.0630    
+  pp_0044         30.3210    
+  pp_0045         30.2548    
+  pp_0046         30.3164    
+  pp_0047         30.0239    
+  pp_0048         29.8540    
+  pp_0049         29.5400    
+  pp_0050         29.6283    
+  pp_0051         29.9756    
+  pp_0052         29.5404    
+  pp_0053         29.4366    
+  pp_0054         29.8496    
+  pp_0055         29.9647    
+  pp_0056         29.9911    
+  pp_0057         30.0054    
+  pp_0058         29.8217    
+  pp_0059         29.4696    
+  pp_0060         29.6004    
+  pp_0061         29.8776    
+  pp_0062         30.2094    
+  pp_0063         30.6358    
+  pp_0064         30.6444    
+  pp_0065         29.6744    
+  pp_0066         29.4355    
+  pp_0067         29.4733    
+  pp_0068         29.8773    
+  pp_0069         30.3099    
+  pp_0070         29.1471    
+  pp_0071         29.2376    
+  pp_0072         30.0177    
+  pp_0073         29.8311    
+  pp_0074         29.9583    
+  pp_0075         29.5763    
+  pp_0076         30.1203    
+  pp_0077         30.7822    
+  pp_0078         30.5620    
+
+ See file W0001.sen for parameter sensitivities.
+
+
+ Observations ----->
+
+ Observation            Measured       Calculated     Residual       Weight     Group
+                        value          value
+ gage_t122              1999.47        1978.33        21.1415       4.9665E-03  gage        
+ gage_t153              1670.78        1680.68       -9.90855       5.7298E-03  gage        
+ gage_t183              1232.90        1273.02       -40.1210       7.2413E-03  gage        
+ gage_t214              1114.29        851.089        263.205       9.9392E-03  gage        
+ gage_t245              831.716        534.203        297.513       1.3780E-02  gage        
+ gage_t275              524.986        391.019        133.967       1.6655E-02  gage        
+ gage_t306              738.450        461.417        277.034       1.4967E-02  gage        
+ gage_t32               1581.97        1631.50       -49.5298       5.8368E-03  gage        
+ gage_t336              954.102        732.995        221.107       1.0926E-02  gage        
+ gage_t367              1207.78        1144.54        63.2421       7.7901E-03  gage        
+ gage_t398              1664.82        1570.05        94.7741       6.0193E-03  gage        
+ gage_t426              1539.16        1861.23       -322.075       5.2153E-03  gage        
+ gage_t457              2267.84        1977.40        290.434       4.9591E-03  gage        
+ gage_t487              1655.02        1858.23       -203.207       5.2459E-03  gage        
+ gage_t518              1534.54        1538.15       -3.60343       6.1791E-03  gage        
+ gage_t548              1149.54        1125.48        24.0692       8.0053E-03  gage        
+ gage_t579              948.688        724.515        224.173       1.1216E-02  gage        
+ gage_t61               1975.19        1934.04        41.1530       5.0435E-03  gage        
+ gage_t610              721.720        462.695        259.024       1.5178E-02  gage        
+ gage_t640              652.065        413.256        238.809       1.6184E-02  gage        
+ gage_t671              732.857        586.185        146.671       1.2874E-02  gage        
+ gage_t701              1222.11        931.383        290.727       9.1963E-03  gage        
+ gage_t732              1220.66        1364.52       -143.851       6.7898E-03  gage        
+ gage_t92               1779.81        2070.04       -290.225       4.7624E-03  gage        
+ trgw-0-13-10_t122      35.4801        34.5280       0.952026        2.000      head        
+ trgw-0-13-10_t153      33.9583        34.4443      -0.485982        2.000      head        
+ trgw-0-13-10_t183      34.2276        34.3185      -9.090506E-02    2.000      head        
+ trgw-0-13-10_t214      34.3074        34.1784       0.128987        2.000      head        
+ trgw-0-13-10_t245      34.6715        34.0638       0.607649        2.000      head        
+ trgw-0-13-10_t275      34.2787        34.0018       0.276913        2.000      head        
+ trgw-0-13-10_t306      34.7965        34.0096       0.786870        2.000      head        
+ trgw-0-13-10_t32       34.6322        34.3850       0.247233        2.000      head        
+ trgw-0-13-10_t336      32.6673        34.0868       -1.41950        2.000      head        
+ trgw-0-13-10_t367      34.6940        34.2152       0.478777        2.000      head        
+ trgw-0-13-10_t398      34.1223        34.3555      -0.233211        2.000      head        
+ trgw-0-13-10_t426      34.8710        34.4586       0.412422        2.000      head        
+ trgw-0-13-10_t457      35.1052        34.5113       0.593896        2.000      head        
+ trgw-0-13-10_t487      34.9208        34.4888       0.432054        2.000      head        
+ trgw-0-13-10_t518      34.0207        34.3972      -0.376517        2.000      head        
+ trgw-0-13-10_t548      35.0503        34.2676       0.782669        2.000      head        
+ trgw-0-13-10_t579      34.5310        34.1314       0.399652        2.000      head        
+ trgw-0-13-10_t61       35.1829        34.4872       0.695684        2.000      head        
+ trgw-0-13-10_t610      34.0731        34.0323       4.076962E-02    2.000      head        
+ trgw-0-13-10_t640      33.3500        34.0004      -0.650406        2.000      head        
+ trgw-0-13-10_t671      35.5694        34.0434        1.52597        2.000      head        
+ trgw-0-13-10_t701      34.6459        34.1471       0.498739        2.000      head        
+ trgw-0-13-10_t732      33.6900        34.2862      -0.596238        2.000      head        
+ trgw-0-13-10_t92       34.7246        34.5431       0.181491        2.000      head        
+ trgw-0-15-16_t122      34.3551        34.3591      -4.012913E-03    2.000      head        
+ trgw-0-15-16_t153      34.3542        34.2828       7.137008E-02    2.000      head        
+ trgw-0-15-16_t183      33.9196        34.1731      -0.253496        2.000      head        
+ trgw-0-15-16_t214      33.8648        34.0544      -0.189539        2.000      head        
+ trgw-0-15-16_t245      34.0487        33.9603       8.837514E-02    2.000      head        
+ trgw-0-15-16_t275      34.0691        33.9126       0.156501        2.000      head        
+ trgw-0-15-16_t306      33.7334        33.9255      -0.192127        2.000      head        
+ trgw-0-15-16_t32       33.9916        34.2484      -0.256725        2.000      head        
+ trgw-0-15-16_t336      33.9169        33.9969      -7.998534E-02    2.000      head        
+ trgw-0-15-16_t367      34.7183        34.1096       0.608627        2.000      head        
+ trgw-0-15-16_t398      35.4927        34.2292        1.26346        2.000      head        
+ trgw-0-15-16_t426      34.6618        34.3144       0.347417        2.000      head        
+ trgw-0-15-16_t457      34.1104        34.3543      -0.243862        2.000      head        
+ trgw-0-15-16_t487      34.9597        34.3296       0.630161        2.000      head        
+ trgw-0-15-16_t518      34.5153        34.2471       0.268214        2.000      head        
+ trgw-0-15-16_t548      34.4747        34.1344       0.340312        2.000      head        
+ trgw-0-15-16_t579      34.4749        34.0190       0.455924        2.000      head        
+ trgw-0-15-16_t61       34.4134        34.3345       7.896460E-02    2.000      head        
+ trgw-0-15-16_t610      34.0930        33.9379       0.155082        2.000      head        
+ trgw-0-15-16_t640      35.2979        33.9158        1.38212        2.000      head        
+ trgw-0-15-16_t671      33.7822        33.9582      -0.175965        2.000      head        
+ trgw-0-15-16_t701      34.0893        34.0509       3.840662E-02    2.000      head        
+ trgw-0-15-16_t732      33.8910        34.1710      -0.280043        2.000      head        
+ trgw-0-15-16_t92       34.5580        34.3775       0.180458        2.000      head        
+ trgw-0-2-15_t122       34.4774        34.4612       1.612967E-02    2.000      head        
+ trgw-0-2-15_t153       34.1796        34.4157      -0.236053        2.000      head        
+ trgw-0-2-15_t183       34.1140        34.3415      -0.227564        2.000      head        
+ trgw-0-2-15_t214       34.2149        34.2552      -4.022585E-02    2.000      head        
+ trgw-0-2-15_t245       34.1539        34.1818      -2.787682E-02    2.000      head        
+ trgw-0-2-15_t275       33.9320        34.1406      -0.208623        2.000      head        
+ trgw-0-2-15_t306       34.4497        34.1413       0.308459        2.000      head        
+ trgw-0-2-15_t32        35.0134        34.3616       0.651808        2.000      head        
+ trgw-0-2-15_t336       34.6900        34.1838       0.506272        2.000      head        
+ trgw-0-2-15_t367       34.5835        34.2578       0.325685        2.000      head        
+ trgw-0-2-15_t398       35.3557        34.3406        1.01511        2.000      head        
+ trgw-0-2-15_t426       35.0382        34.4028       0.635450        2.000      head        
+ trgw-0-2-15_t457       35.5514        34.4365        1.11481        2.000      head        
+ trgw-0-2-15_t487       34.0014        34.4260      -0.424611        2.000      head        
+ trgw-0-2-15_t518       33.8220        34.3741      -0.552077        2.000      head        
+ trgw-0-2-15_t548       33.8378        34.2982      -0.460366        2.000      head        
+ trgw-0-2-15_t579       34.7348        34.2168       0.518029        2.000      head        
+ trgw-0-2-15_t61        34.4525        34.4251       2.740406E-02    2.000      head        
+ trgw-0-2-15_t610       35.0250        34.1562       0.868795        2.000      head        
+ trgw-0-2-15_t640       33.5872        34.1347      -0.547463        2.000      head        
+ trgw-0-2-15_t671       34.0618        34.1575      -9.566847E-02    2.000      head        
+ trgw-0-2-15_t701       34.1163        34.2169      -0.100651        2.000      head        
+ trgw-0-2-15_t732       34.4515        34.2985       0.152986        2.000      head        
+ trgw-0-2-15_t92        34.5365        34.4641       7.232975E-02    2.000      head        
+ trgw-0-2-9_t122        35.9450        34.8673        1.07770        2.000      head        
+ trgw-0-2-9_t153        35.0729        34.8131       0.259782        2.000      head        
+ trgw-0-2-9_t183        34.5218        34.7088      -0.186970        2.000      head        
+ trgw-0-2-9_t214        35.3721        34.5765       0.795595        2.000      head        
+ trgw-0-2-9_t245        35.1162        34.4548       0.661408        2.000      head        
+ trgw-0-2-9_t275        35.2834        34.3769       0.906544        2.000      head        
+ trgw-0-2-9_t306        35.2632        34.3595       0.903726        2.000      head        
+ trgw-0-2-9_t32         34.7924        34.6854       0.107008        2.000      head        
+ trgw-0-2-9_t336        34.8256        34.4081       0.417499        2.000      head        
+ trgw-0-2-9_t367        34.5042        34.5106      -6.453259E-03    2.000      head        
+ trgw-0-2-9_t398        34.9814        34.6352       0.346177        2.000      head        
+ trgw-0-2-9_t426        34.7165        34.7362      -1.969054E-02    2.000      head        
+ trgw-0-2-9_t457        34.7978        34.8011      -3.393478E-03    2.000      head        
+ trgw-0-2-9_t487        34.7675        34.8009      -3.331257E-02    2.000      head        
+ trgw-0-2-9_t518        35.3640        34.7356       0.628447        2.000      head        
+ trgw-0-2-9_t548        35.5740        34.6278       0.946216        2.000      head        
+ trgw-0-2-9_t579        34.8959        34.5031       0.392776        2.000      head        
+ trgw-0-2-9_t61         35.6105        34.7841       0.826392        2.000      head        
+ trgw-0-2-9_t610        34.8869        34.4017       0.485149        2.000      head        
+ trgw-0-2-9_t640        34.6982        34.3545       0.343725        2.000      head        
+ trgw-0-2-9_t671        35.7810        34.3728        1.40814        2.000      head        
+ trgw-0-2-9_t701        34.6618        34.4507       0.211163        2.000      head        
+ trgw-0-2-9_t732        34.8746        34.5695       0.305129        2.000      head        
+ trgw-0-2-9_t92         35.0429        34.8556       0.187310        2.000      head        
+ trgw-0-21-10_t122      35.4711        34.4226        1.04845        2.000      head        
+ trgw-0-21-10_t153      35.4249        34.3342        1.09064        2.000      head        
+ trgw-0-21-10_t183      34.8551        34.2025       0.652621        2.000      head        
+ trgw-0-21-10_t214      34.1086        34.0565       5.205569E-02    2.000      head        
+ trgw-0-21-10_t245      34.7024        33.9377       0.764650        2.000      head        
+ trgw-0-21-10_t275      33.7151        33.8737      -0.158666        2.000      head        
+ trgw-0-21-10_t306      33.7457        33.8827      -0.136926        2.000      head        
+ trgw-0-21-10_t32       34.3208        34.2764       4.440778E-02    2.000      head        
+ trgw-0-21-10_t336      33.8201        33.9639      -0.143824        2.000      head        
+ trgw-0-21-10_t367      34.4135        34.0987       0.314835        2.000      head        
+ trgw-0-21-10_t398      34.4396        34.2456       0.193970        2.000      head        
+ trgw-0-21-10_t426      34.4217        34.3537       6.791456E-02    2.000      head        
+ trgw-0-21-10_t457      34.6418        34.4091       0.232650        2.000      head        
+ trgw-0-21-10_t487      33.9606        34.3859      -0.425320        2.000      head        
+ trgw-0-21-10_t518      34.7208        34.2905       0.430338        2.000      head        
+ trgw-0-21-10_t548      35.0137        34.1552       0.858504        2.000      head        
+ trgw-0-21-10_t579      34.6048        34.0129       0.591856        2.000      head        
+ trgw-0-21-10_t61       34.4739        34.3823       9.168629E-02    2.000      head        
+ trgw-0-21-10_t610      35.2370        33.9094        1.32758        2.000      head        
+ trgw-0-21-10_t640      33.9470        33.8758       7.115982E-02    2.000      head        
+ trgw-0-21-10_t671      34.4687        33.9206       0.548053        2.000      head        
+ trgw-0-21-10_t701      34.4858        34.0290       0.456895        2.000      head        
+ trgw-0-21-10_t732      35.4110        34.1743        1.23671        2.000      head        
+ trgw-0-21-10_t92       34.9787        34.4395       0.539229        2.000      head        
+ trgw-0-22-15_t122      35.1479        34.1735       0.974432        2.000      head        
+ trgw-0-22-15_t153      34.4297        34.1069       0.322812        2.000      head        
+ trgw-0-22-15_t183      34.7739        34.0131       0.760784        2.000      head        
+ trgw-0-22-15_t214      33.9542        33.9128       4.134998E-02    2.000      head        
+ trgw-0-22-15_t245      33.8359        33.8341       1.774900E-03    2.000      head        
+ trgw-0-22-15_t275      33.3582        33.7949      -0.436730        2.000      head        
+ trgw-0-22-15_t306      34.2746        33.8083       0.466280        2.000      head        
+ trgw-0-22-15_t32       34.3744        34.0867       0.287695        2.000      head        
+ trgw-0-22-15_t336      34.2580        33.8714       0.386660        2.000      head        
+ trgw-0-22-15_t367      34.8051        33.9687       0.836419        2.000      head        
+ trgw-0-22-15_t398      33.5405        34.0704      -0.529827        2.000      head        
+ trgw-0-22-15_t426      34.1489        34.1418       7.120996E-03    2.000      head        
+ trgw-0-22-15_t457      34.5231        34.1738       0.349229        2.000      head        
+ trgw-0-22-15_t487      33.8640        34.1510      -0.286969        2.000      head        
+ trgw-0-22-15_t518      33.1640        34.0795      -0.915494        2.000      head        
+ trgw-0-22-15_t548      34.2570        33.9831       0.273851        2.000      head        
+ trgw-0-22-15_t579      33.2451        33.8851      -0.639967        2.000      head        
+ trgw-0-22-15_t61       34.8473        34.1578       0.689509        2.000      head        
+ trgw-0-22-15_t610      33.2674        33.8170      -0.549684        2.000      head        
+ trgw-0-22-15_t640      33.8738        33.7999       7.382738E-02    2.000      head        
+ trgw-0-22-15_t671      34.2660        33.8383       0.427748        2.000      head        
+ trgw-0-22-15_t701      33.8969        33.9189      -2.201077E-02    2.000      head        
+ trgw-0-22-15_t732      34.9159        34.0216       0.894396        2.000      head        
+ trgw-0-22-15_t92       34.2336        34.1917       4.196679E-02    2.000      head        
+ trgw-0-24-4_t122       35.2108        34.6443       0.566532        2.000      head        
+ trgw-0-24-4_t153       35.5939        34.5664        1.02746        2.000      head        
+ trgw-0-24-4_t183       35.2656        34.4318       0.833754        2.000      head        
+ trgw-0-24-4_t214       34.8296        34.2693       0.560346        2.000      head        
+ trgw-0-24-4_t245       34.6992        34.1253       0.573845        2.000      head        
+ trgw-0-24-4_t275       34.8870        34.0361       0.850907        2.000      head        
+ trgw-0-24-4_t306       34.2934        34.0231       0.270337        2.000      head        
+ trgw-0-24-4_t32        35.9585        34.4434        1.51512        2.000      head        
+ trgw-0-24-4_t336       35.4934        34.0915        1.40182        2.000      head        
+ trgw-0-24-4_t367       34.9906        34.2259       0.764735        2.000      head        
+ trgw-0-24-4_t398       35.7837        34.3850        1.39869        2.000      head        
+ trgw-0-24-4_t426       36.2736        34.5116        1.76202        2.000      head        
+ trgw-0-24-4_t457       35.7835        34.5903        1.19327        2.000      head        
+ trgw-0-24-4_t487       35.5124        34.5857       0.926691        2.000      head        
+ trgw-0-24-4_t518       35.3507        34.4995       0.851268        2.000      head        
+ trgw-0-24-4_t548       35.1360        34.3614       0.774619        2.000      head        
+ trgw-0-24-4_t579       35.0069        34.2047       0.802212        2.000      head        
+ trgw-0-24-4_t61        35.4025        34.5625       0.839997        2.000      head        
+ trgw-0-24-4_t610       34.7679        34.0797       0.688230        2.000      head        
+ trgw-0-24-4_t640       34.5964        34.0243       0.572123        2.000      head        
+ trgw-0-24-4_t671       35.1592        34.0523        1.10694        2.000      head        
+ trgw-0-24-4_t701       35.4691        34.1542        1.31487        2.000      head        
+ trgw-0-24-4_t732       35.3769        34.3058        1.07103        2.000      head        
+ trgw-0-24-4_t92        35.0453        34.6416       0.403680        2.000      head        
+ trgw-0-26-6_t122       35.1265        34.4849       0.641619        2.000      head        
+ trgw-0-26-6_t153       34.9214        34.3919       0.529488        2.000      head        
+ trgw-0-26-6_t183       34.7451        34.2493       0.495841        2.000      head        
+ trgw-0-26-6_t214       35.0794        34.0882       0.991151        2.000      head        
+ trgw-0-26-6_t245       34.4437        33.9539       0.489825        2.000      head        
+ trgw-0-26-6_t275       34.4691        33.8775       0.591616        2.000      head        
+ trgw-0-26-6_t306       34.3960        33.8807       0.515318        2.000      head        
+ trgw-0-26-6_t32        35.0123        34.3173       0.695025        2.000      head        
+ trgw-0-26-6_t336       34.2828        33.9646       0.318183        2.000      head        
+ trgw-0-26-6_t367       34.3846        34.1100       0.274628        2.000      head        
+ trgw-0-26-6_t398       34.5366        34.2722       0.264358        2.000      head        
+ trgw-0-26-6_t426       34.4100        34.3943       1.569623E-02    2.000      head        
+ trgw-0-26-6_t457       35.5990        34.4608        1.13814        2.000      head        
+ trgw-0-26-6_t487       35.5023        34.4410        1.06128        2.000      head        
+ trgw-0-26-6_t518       35.0758        34.3405       0.735369        2.000      head        
+ trgw-0-26-6_t548       34.2693        34.1935       7.576994E-02    2.000      head        
+ trgw-0-26-6_t579       34.7027        34.0358       0.666873        2.000      head        
+ trgw-0-26-6_t61        35.2659        34.4335       0.832359        2.000      head        
+ trgw-0-26-6_t610       34.3714        33.9180       0.453346        2.000      head        
+ trgw-0-26-6_t640       35.1429        33.8757        1.26726        2.000      head        
+ trgw-0-26-6_t671       34.0048        33.9192       8.557059E-02    2.000      head        
+ trgw-0-26-6_t701       34.4043        34.0344       0.369927        2.000      head        
+ trgw-0-26-6_t732       34.0591        34.1931      -0.133956        2.000      head        
+ trgw-0-26-6_t92        34.8317        34.4992       0.332525        2.000      head        
+ trgw-0-29-15_t122      33.9439        34.0749      -0.130996        2.000      head        
+ trgw-0-29-15_t153      33.5005        34.0157      -0.515129        2.000      head        
+ trgw-0-29-15_t183      32.8081        33.9306       -1.12248        2.000      head        
+ trgw-0-29-15_t214      34.2586        33.8386       0.420037        2.000      head        
+ trgw-0-29-15_t245      33.9613        33.7658       0.195405        2.000      head        
+ trgw-0-29-15_t275      33.5399        33.7299      -0.190022        2.000      head        
+ trgw-0-29-15_t306      33.5991        33.7416      -0.142548        2.000      head        
+ trgw-0-29-15_t32       33.7534        33.9907      -0.237335        2.000      head        
+ trgw-0-29-15_t336      33.1890        33.7984      -0.609413        2.000      head        
+ trgw-0-29-15_t367      34.0851        33.8862       0.198882        2.000      head        
+ trgw-0-29-15_t398      33.8803        33.9780      -9.764537E-02    2.000      head        
+ trgw-0-29-15_t426      33.9482        34.0425      -9.438309E-02    2.000      head        
+ trgw-0-29-15_t457      33.5567        34.0718      -0.515185        2.000      head        
+ trgw-0-29-15_t487      33.5400        34.0518      -0.511794        2.000      head        
+ trgw-0-29-15_t518      34.2521        33.9879       0.264200        2.000      head        
+ trgw-0-29-15_t548      34.5456        33.9013       0.644358        2.000      head        
+ trgw-0-29-15_t579      34.5549        33.8128       0.742092        2.000      head        
+ trgw-0-29-15_t61       34.3388        34.0567       0.282086        2.000      head        
+ trgw-0-29-15_t610      34.1476        33.7508       0.396734        2.000      head        
+ trgw-0-29-15_t640      33.2108        33.7348      -0.523968        2.000      head        
+ trgw-0-29-15_t671      33.4000        33.7690      -0.369024        2.000      head        
+ trgw-0-29-15_t701      34.4147        33.8416       0.573138        2.000      head        
+ trgw-0-29-15_t732      34.0427        33.9341       0.108596        2.000      head        
+ trgw-0-29-15_t92       33.9767        34.0896      -0.112875        2.000      head        
+ trgw-0-3-8_t122        35.2980        34.9068       0.391197        2.000      head        
+ trgw-0-3-8_t153        36.2586        34.8531        1.40547        2.000      head        
+ trgw-0-3-8_t183        35.3575        34.7474       0.610126        2.000      head        
+ trgw-0-3-8_t214        35.3647        34.6120       0.752698        2.000      head        
+ trgw-0-3-8_t245        34.6921        34.4863       0.205730        2.000      head        
+ trgw-0-3-8_t275        34.6855        34.4046       0.280875        2.000      head        
+ trgw-0-3-8_t306        35.2415        34.3846       0.856869        2.000      head        
+ trgw-0-3-8_t32         35.4626        34.7173       0.745383        2.000      head        
+ trgw-0-3-8_t336        34.3279        34.4323      -0.104444        2.000      head        
+ trgw-0-3-8_t367        34.7350        34.5360       0.199010        2.000      head        
+ trgw-0-3-8_t398        35.7230        34.6632        1.05971        2.000      head        
+ trgw-0-3-8_t426        34.7893        34.7673       2.204908E-02    2.000      head        
+ trgw-0-3-8_t457        35.4108        34.8354       0.575359        2.000      head        
+ trgw-0-3-8_t487        35.1205        34.8371       0.283466        2.000      head        
+ trgw-0-3-8_t518        35.5984        34.7720       0.826435        2.000      head        
+ trgw-0-3-8_t548        34.9420        34.6626       0.279393        2.000      head        
+ trgw-0-3-8_t579        35.9826        34.5350        1.44759        2.000      head        
+ trgw-0-3-8_t61         35.3583        34.8185       0.539779        2.000      head        
+ trgw-0-3-8_t610        34.6536        34.4301       0.223593        2.000      head        
+ trgw-0-3-8_t640        35.1729        34.3799       0.793023        2.000      head        
+ trgw-0-3-8_t671        34.7631        34.3967       0.366437        2.000      head        
+ trgw-0-3-8_t701        35.1300        34.4748       0.655194        2.000      head        
+ trgw-0-3-8_t732        34.2116        34.5957      -0.384118        2.000      head        
+ trgw-0-3-8_t92         36.2753        34.8929        1.38235        2.000      head        
+ trgw-0-33-7_t122       33.6221        34.2276      -0.605460        2.000      head        
+ trgw-0-33-7_t153       34.9671        34.1456       0.821485        2.000      head        
+ trgw-0-33-7_t183       34.4410        34.0261       0.414913        2.000      head        
+ trgw-0-33-7_t214       34.6918        33.8956       0.796226        2.000      head        
+ trgw-0-33-7_t245       33.6008        33.7911      -0.190325        2.000      head        
+ trgw-0-33-7_t275       33.7643        33.7367       2.758155E-02    2.000      head        
+ trgw-0-33-7_t306       34.2109        33.7480       0.462904        2.000      head        
+ trgw-0-33-7_t32        34.8240        34.1026       0.721429        2.000      head        
+ trgw-0-33-7_t336       34.8604        33.8235        1.03689        2.000      head        
+ trgw-0-33-7_t367       32.5371        33.9456       -1.40857        2.000      head        
+ trgw-0-33-7_t398       35.7450        34.0770        1.66800        2.000      head        
+ trgw-0-33-7_t426       35.1566        34.1721       0.984501        2.000      head        
+ trgw-0-33-7_t457       35.0130        34.2186       0.794357        2.000      head        
+ trgw-0-33-7_t487       35.3430        34.1946        1.14837        2.000      head        
+ trgw-0-33-7_t518       34.2957        34.1066       0.189157        2.000      head        
+ trgw-0-33-7_t548       33.9683        33.9844      -1.605051E-02    2.000      head        
+ trgw-0-33-7_t579       34.0488        33.8578       0.190950        2.000      head        
+ trgw-0-33-7_t61        35.9149        34.1970        1.71791        2.000      head        
+ trgw-0-33-7_t610       34.1704        33.7676       0.402761        2.000      head        
+ trgw-0-33-7_t640       33.4185        33.7408      -0.322357        2.000      head        
+ trgw-0-33-7_t671       34.0846        33.7841       0.300531        2.000      head        
+ trgw-0-33-7_t701       34.9144        33.8832        1.03118        2.000      head        
+ trgw-0-33-7_t732       33.8878        34.0139      -0.126109        2.000      head        
+ trgw-0-33-7_t92        34.6952        34.2458       0.449403        2.000      head        
+ trgw-0-34-10_t122      34.5923        34.0943       0.497973        2.000      head        
+ trgw-0-34-10_t153      34.7995        34.0132       0.786300        2.000      head        
+ trgw-0-34-10_t183      33.9283        33.9027       2.554705E-02    2.000      head        
+ trgw-0-34-10_t214      33.9697        33.7879       0.181848        2.000      head        
+ trgw-0-34-10_t245      32.8574        33.7004      -0.843058        2.000      head        
+ trgw-0-34-10_t275      33.5110        33.6593      -0.148244        2.000      head        
+ trgw-0-34-10_t306      33.4796        33.6787      -0.199066        2.000      head        
+ trgw-0-34-10_t32       33.5443        34.0037      -0.459333        2.000      head        
+ trgw-0-34-10_t336      34.3112        33.7548       0.556398        2.000      head        
+ trgw-0-34-10_t367      33.7836        33.8692      -8.554412E-02    2.000      head        
+ trgw-0-34-10_t398      33.6094        33.9868      -0.377425        2.000      head        
+ trgw-0-34-10_t426      32.8740        34.0677       -1.19370        2.000      head        
+ trgw-0-34-10_t457      34.5558        34.1010       0.454759        2.000      head        
+ trgw-0-34-10_t487      34.2330        34.0702       0.162741        2.000      head        
+ trgw-0-34-10_t518      33.7034        33.9837      -0.280347        2.000      head        
+ trgw-0-34-10_t548      33.5595        33.8704      -0.310973        2.000      head        
+ trgw-0-34-10_t579      33.6695        33.7582      -8.864906E-02    2.000      head        
+ trgw-0-34-10_t61       33.5676        34.0851      -0.517469        2.000      head        
+ trgw-0-34-10_t610      33.3891        33.6830      -0.293857        2.000      head        
+ trgw-0-34-10_t640      33.2752        33.6675      -0.392226        2.000      head        
+ trgw-0-34-10_t671      34.2782        33.7154       0.562780        2.000      head        
+ trgw-0-34-10_t701      34.5442        33.8112       0.732983        2.000      head        
+ trgw-0-34-10_t732      33.2069        33.9309      -0.724021        2.000      head        
+ trgw-0-34-10_t92       34.6131        34.1203       0.492789        2.000      head        
+ trgw-0-9-1_t122        36.3053        35.2249        1.08037        2.000      head        
+ trgw-0-9-1_t153        35.9704        35.1891       0.781290        2.000      head        
+ trgw-0-9-1_t183        34.9686        35.0883      -0.119635        2.000      head        
+ trgw-0-9-1_t214        36.5467        34.9419        1.60481        2.000      head        
+ trgw-0-9-1_t245        36.8525        34.7920        2.06045        2.000      head        
+ trgw-0-9-1_t275        35.7753        34.6814        1.09397        2.000      head        
+ trgw-0-9-1_t306        36.2586        34.6325        1.62618        2.000      head        
+ trgw-0-9-1_t32         36.4378        34.9803        1.45749        2.000      head        
+ trgw-0-9-1_t336        35.9751        34.6594        1.31575        2.000      head        
+ trgw-0-9-1_t367        36.1324        34.7543        1.37808        2.000      head        
+ trgw-0-9-1_t398        35.7623        34.8875       0.874875        2.000      head        
+ trgw-0-9-1_t426        36.4624        35.0071        1.45530        2.000      head        
+ trgw-0-9-1_t457        36.2311        35.0994        1.13169        2.000      head        
+ trgw-0-9-1_t487        36.1339        35.1241        1.00977        2.000      head        
+ trgw-0-9-1_t518        35.4612        35.0751       0.386080        2.000      head        
+ trgw-0-9-1_t548        35.9335        34.9696       0.963881        2.000      head        
+ trgw-0-9-1_t579        35.4250        34.8324       0.592587        2.000      head        
+ trgw-0-9-1_t61         37.1666        35.0919        2.07476        2.000      head        
+ trgw-0-9-1_t610        35.8080        34.7072        1.10081        2.000      head        
+ trgw-0-9-1_t640        35.5903        34.6329       0.957416        2.000      head        
+ trgw-0-9-1_t671        35.9747        34.6273        1.34738        2.000      head        
+ trgw-0-9-1_t701        35.2105        34.6924       0.518136        2.000      head        
+ trgw-0-9-1_t732        35.6657        34.8131       0.852630        2.000      head        
+ trgw-0-9-1_t92         36.8648        35.1877        1.67716        2.000      head        
+ trgw-2-13-10_t122      34.9977        34.5205       0.477172        2.000      head        
+ trgw-2-13-10_t153      34.8730        34.4366       0.436399        2.000      head        
+ trgw-2-13-10_t183      34.5641        34.3112       0.252873        2.000      head        
+ trgw-2-13-10_t214      34.7295        34.1720       0.557426        2.000      head        
+ trgw-2-13-10_t245      34.5807        34.0585       0.522146        2.000      head        
+ trgw-2-13-10_t275      33.6220        33.9972      -0.375196        2.000      head        
+ trgw-2-13-10_t306      33.7623        34.0057      -0.243408        2.000      head        
+ trgw-2-13-10_t32       34.6686        34.3803       0.288304        2.000      head        
+ trgw-2-13-10_t336      34.5070        34.0831       0.423951        2.000      head        
+ trgw-2-13-10_t367      34.5533        34.2113       0.341971        2.000      head        
+ trgw-2-13-10_t398      34.7205        34.3509       0.369631        2.000      head        
+ trgw-2-13-10_t426      34.5964        34.4532       0.143160        2.000      head        
+ trgw-2-13-10_t457      34.9046        34.5050       0.399568        2.000      head        
+ trgw-2-13-10_t487      35.2130        34.4819       0.731072        2.000      head        
+ trgw-2-13-10_t518      35.0335        34.3902       0.643257        2.000      head        
+ trgw-2-13-10_t548      35.6851        34.2609        1.42423        2.000      head        
+ trgw-2-13-10_t579      34.8616        34.1254       0.736249        2.000      head        
+ trgw-2-13-10_t61       35.5245        34.4816        1.04290        2.000      head        
+ trgw-2-13-10_t610      34.5813        34.0273       0.554048        2.000      head        
+ trgw-2-13-10_t640      34.5139        33.9961       0.517818        2.000      head        
+ trgw-2-13-10_t671      34.0747        34.0396       3.508490E-02    2.000      head        
+ trgw-2-13-10_t701      34.3874        34.1434       0.243985        2.000      head        
+ trgw-2-13-10_t732      34.3530        34.2820       7.097414E-02    2.000      head        
+ trgw-2-13-10_t92       34.3551        34.5363      -0.181194        2.000      head        
+ trgw-2-15-16_t122      34.8604        34.3521       0.508233        2.000      head        
+ trgw-2-15-16_t153      35.1289        34.2759       0.853031        2.000      head        
+ trgw-2-15-16_t183      34.7790        34.1667       0.612330        2.000      head        
+ trgw-2-15-16_t214      34.5672        34.0489       0.518280        2.000      head        
+ trgw-2-15-16_t245      34.2728        33.9558       0.317004        2.000      head        
+ trgw-2-15-16_t275      34.0318        33.9087       0.123125        2.000      head        
+ trgw-2-15-16_t306      34.0712        33.9219       0.149270        2.000      head        
+ trgw-2-15-16_t32       34.3352        34.2438       9.148933E-02    2.000      head        
+ trgw-2-15-16_t336      33.9457        33.9932      -4.755618E-02    2.000      head        
+ trgw-2-15-16_t367      33.9460        34.1056      -0.159595        2.000      head        
+ trgw-2-15-16_t398      34.2340        34.2245       9.481547E-03    2.000      head        
+ trgw-2-15-16_t426      34.3913        34.3090       8.223824E-02    2.000      head        
+ trgw-2-15-16_t457      33.9891        34.3483      -0.359170        2.000      head        
+ trgw-2-15-16_t487      33.8396        34.3233      -0.483638        2.000      head        
+ trgw-2-15-16_t518      34.0144        34.2409      -0.226482        2.000      head        
+ trgw-2-15-16_t548      34.3743        34.1286       0.245615        2.000      head        
+ trgw-2-15-16_t579      33.8152        34.0139      -0.198712        2.000      head        
+ trgw-2-15-16_t61       34.3536        34.3289       2.464610E-02    2.000      head        
+ trgw-2-15-16_t610      33.7380        33.9335      -0.195580        2.000      head        
+ trgw-2-15-16_t640      34.3868        33.9119       0.474904        2.000      head        
+ trgw-2-15-16_t671      34.1660        33.9545       0.211464        2.000      head        
+ trgw-2-15-16_t701      34.5007        34.0471       0.453642        2.000      head        
+ trgw-2-15-16_t732      34.5031        34.1666       0.336468        2.000      head        
+ trgw-2-15-16_t92       34.6105        34.3711       0.239352        2.000      head        
+ trgw-2-2-15_t122       34.2475        34.5356      -0.288159        2.000      head        
+ trgw-2-2-15_t153       33.5454        34.4832      -0.937805        2.000      head        
+ trgw-2-2-15_t183       35.3338        34.3974       0.936357        2.000      head        
+ trgw-2-2-15_t214       34.5393        34.2974       0.241920        2.000      head        
+ trgw-2-2-15_t245       34.0729        34.2121      -0.139174        2.000      head        
+ trgw-2-2-15_t275       34.8576        34.1638       0.693841        2.000      head        
+ trgw-2-2-15_t306       33.6686        34.1638      -0.495246        2.000      head        
+ trgw-2-2-15_t32        35.0269        34.4195       0.607416        2.000      head        
+ trgw-2-2-15_t336       35.3082        34.2127        1.09555        2.000      head        
+ trgw-2-2-15_t367       35.1184        34.2984       0.819968        2.000      head        
+ trgw-2-2-15_t398       35.2361        34.3946       0.841525        2.000      head        
+ trgw-2-2-15_t426       33.5630        34.4671      -0.904177        2.000      head        
+ trgw-2-2-15_t457       34.2194        34.5069      -0.287483        2.000      head        
+ trgw-2-2-15_t487       35.1610        34.4952       0.665876        2.000      head        
+ trgw-2-2-15_t518       34.1712        34.4353      -0.264086        2.000      head        
+ trgw-2-2-15_t548       34.1890        34.3474      -0.158404        2.000      head        
+ trgw-2-2-15_t579       34.3857        34.2529       0.132810        2.000      head        
+ trgw-2-2-15_t61        34.6407        34.4932       0.147529        2.000      head        
+ trgw-2-2-15_t610       34.6277        34.1821       0.445574        2.000      head        
+ trgw-2-2-15_t640       34.2995        34.1566       0.142897        2.000      head        
+ trgw-2-2-15_t671       34.6709        34.1824       0.488531        2.000      head        
+ trgw-2-2-15_t701       34.9693        34.2510       0.718275        2.000      head        
+ trgw-2-2-15_t732       34.2563        34.3457      -8.933078E-02    2.000      head        
+ trgw-2-2-15_t92        35.4000        34.5387       0.861366        2.000      head        
+ trgw-2-2-9_t122        35.5609        34.8604       0.700528        2.000      head        
+ trgw-2-2-9_t153        35.1405        34.8061       0.334386        2.000      head        
+ trgw-2-2-9_t183        35.2066        34.7020       0.504663        2.000      head        
+ trgw-2-2-9_t214        35.4606        34.5702       0.890453        2.000      head        
+ trgw-2-2-9_t245        35.1047        34.4491       0.655560        2.000      head        
+ trgw-2-2-9_t275        34.4210        34.3717       4.930844E-02    2.000      head        
+ trgw-2-2-9_t306        34.3837        34.3547       2.895963E-02    2.000      head        
+ trgw-2-2-9_t32         35.6176        34.6798       0.937733        2.000      head        
+ trgw-2-2-9_t336        35.3402        34.4034       0.936786        2.000      head        
+ trgw-2-2-9_t367        34.1663        34.5058      -0.339554        2.000      head        
+ trgw-2-2-9_t398        35.8343        34.6300        1.20426        2.000      head        
+ trgw-2-2-9_t426        35.1490        34.7305       0.418504        2.000      head        
+ trgw-2-2-9_t457        34.2403        34.7950      -0.554772        2.000      head        
+ trgw-2-2-9_t487        34.3858        34.7945      -0.408654        2.000      head        
+ trgw-2-2-9_t518        34.7004        34.7291      -2.871699E-02    2.000      head        
+ trgw-2-2-9_t548        34.6345        34.6215       1.298677E-02    2.000      head        
+ trgw-2-2-9_t579        34.9898        34.4973       0.492449        2.000      head        
+ trgw-2-2-9_t61         35.1977        34.7782       0.419479        2.000      head        
+ trgw-2-2-9_t610        34.5512        34.3964       0.154807        2.000      head        
+ trgw-2-2-9_t640        34.2695        34.3496      -8.004432E-02    2.000      head        
+ trgw-2-2-9_t671        35.4794        34.3681        1.11123        2.000      head        
+ trgw-2-2-9_t701        35.2025        34.4460       0.756551        2.000      head        
+ trgw-2-2-9_t732        35.8937        34.5645        1.32915        2.000      head        
+ trgw-2-2-9_t92         35.6055        34.8491       0.756426        2.000      head        
+ trgw-2-21-10_t122      34.7459        34.4151       0.330830        2.000      head        
+ trgw-2-21-10_t153      34.6815        34.3264       0.355095        2.000      head        
+ trgw-2-21-10_t183      33.7555        34.1950      -0.439513        2.000      head        
+ trgw-2-21-10_t214      34.3999        34.0500       0.349874        2.000      head        
+ trgw-2-21-10_t245      34.1111        33.9323       0.178745        2.000      head        
+ trgw-2-21-10_t275      33.8354        33.8692      -3.380548E-02    2.000      head        
+ trgw-2-21-10_t306      34.0820        33.8788       0.203196        2.000      head        
+ trgw-2-21-10_t32       35.5192        34.2719        1.24731        2.000      head        
+ trgw-2-21-10_t336      34.5478        33.9604       0.587433        2.000      head        
+ trgw-2-21-10_t367      34.4554        34.0950       0.360414        2.000      head        
+ trgw-2-21-10_t398      34.3415        34.2413       0.100214        2.000      head        
+ trgw-2-21-10_t426      35.1180        34.3485       0.769503        2.000      head        
+ trgw-2-21-10_t457      34.8364        34.4030       0.433429        2.000      head        
+ trgw-2-21-10_t487      33.9054        34.3790      -0.473610        2.000      head        
+ trgw-2-21-10_t518      34.9653        34.2834       0.681967        2.000      head        
+ trgw-2-21-10_t548      34.2647        34.1484       0.116375        2.000      head        
+ trgw-2-21-10_t579      34.9763        34.0068       0.969476        2.000      head        
+ trgw-2-21-10_t61       34.6338        34.3767       0.257067        2.000      head        
+ trgw-2-21-10_t610      33.3047        33.9042      -0.599454        2.000      head        
+ trgw-2-21-10_t640      34.2369        33.8715       0.365442        2.000      head        
+ trgw-2-21-10_t671      34.3652        33.9169       0.448296        2.000      head        
+ trgw-2-21-10_t701      34.3570        34.0253       0.331654        2.000      head        
+ trgw-2-21-10_t732      34.5015        34.1703       0.331264        2.000      head        
+ trgw-2-21-10_t92       35.4806        34.4328        1.04785        2.000      head        
+ trgw-2-22-15_t122      34.7542        34.2339       0.520334        2.000      head        
+ trgw-2-22-15_t153      33.7991        34.1572      -0.358094        2.000      head        
+ trgw-2-22-15_t183      34.3628        34.0495       0.313359        2.000      head        
+ trgw-2-22-15_t214      34.5554        33.9346       0.620763        2.000      head        
+ trgw-2-22-15_t245      34.0200        33.8447       0.175327        2.000      head        
+ trgw-2-22-15_t275      33.9299        33.7999       0.129986        2.000      head        
+ trgw-2-22-15_t306      34.5924        33.8152       0.777198        2.000      head        
+ trgw-2-22-15_t32       35.0207        34.1352       0.885576        2.000      head        
+ trgw-2-22-15_t336      33.8221        33.8874      -6.532361E-02    2.000      head        
+ trgw-2-22-15_t367      34.0210        33.9991       2.190909E-02    2.000      head        
+ trgw-2-22-15_t398      34.1989        34.1160       8.285732E-02    2.000      head        
+ trgw-2-22-15_t426      32.9655        34.1982       -1.23273        2.000      head        
+ trgw-2-22-15_t457      34.6470        34.2350       0.412001        2.000      head        
+ trgw-2-22-15_t487      33.6899        34.2087      -0.518837        2.000      head        
+ trgw-2-22-15_t518      34.1921        34.1264       6.576407E-02    2.000      head        
+ trgw-2-22-15_t548      35.2650        34.0155        1.24952        2.000      head        
+ trgw-2-22-15_t579      34.2837        33.9031       0.380632        2.000      head        
+ trgw-2-22-15_t61       35.0071        34.2165       0.790580        2.000      head        
+ trgw-2-22-15_t610      34.0758        33.8252       0.250567        2.000      head        
+ trgw-2-22-15_t640      34.5997        33.8057       0.794047        2.000      head        
+ trgw-2-22-15_t671      34.3221        33.8495       0.472652        2.000      head        
+ trgw-2-22-15_t701      33.9086        33.9420      -3.333564E-02    2.000      head        
+ trgw-2-22-15_t732      34.0204        34.0599      -3.950613E-02    2.000      head        
+ trgw-2-22-15_t92       34.7070        34.2551       0.451881        2.000      head        
+ trgw-2-24-4_t122       35.9805        34.6371        1.34340        2.000      head        
+ trgw-2-24-4_t153       34.8280        34.5587       0.269318        2.000      head        
+ trgw-2-24-4_t183       35.0367        34.4241       0.612667        2.000      head        
+ trgw-2-24-4_t214       34.5221        34.2621       0.260074        2.000      head        
+ trgw-2-24-4_t245       34.7096        34.1190       0.590648        2.000      head        
+ trgw-2-24-4_t275       35.6430        34.0306        1.61233        2.000      head        
+ trgw-2-24-4_t306       35.7690        34.0184        1.75055        2.000      head        
+ trgw-2-24-4_t32        35.5274        34.4387        1.08877        2.000      head        
+ trgw-2-24-4_t336       35.1724        34.0875        1.08485        2.000      head        
+ trgw-2-24-4_t367       34.7175        34.2221       0.495403        2.000      head        
+ trgw-2-24-4_t398       35.0901        34.3809       0.709289        2.000      head        
+ trgw-2-24-4_t426       35.2656        34.5068       0.758739        2.000      head        
+ trgw-2-24-4_t457       35.4001        34.5846       0.815521        2.000      head        
+ trgw-2-24-4_t487       35.1033        34.5792       0.524114        2.000      head        
+ trgw-2-24-4_t518       35.6501        34.4924        1.15767        2.000      head        
+ trgw-2-24-4_t548       35.8755        34.3543        1.52121        2.000      head        
+ trgw-2-24-4_t579       34.9801        34.1980       0.782167        2.000      head        
+ trgw-2-24-4_t61        35.4044        34.5573       0.847067        2.000      head        
+ trgw-2-24-4_t610       35.0264        34.0737       0.952732        2.000      head        
+ trgw-2-24-4_t640       34.8573        34.0192       0.838056        2.000      head        
+ trgw-2-24-4_t671       35.1245        34.0479        1.07660        2.000      head        
+ trgw-2-24-4_t701       34.4837        34.1503       0.333359        2.000      head        
+ trgw-2-24-4_t732       34.1983        34.3019      -0.103639        2.000      head        
+ trgw-2-24-4_t92        35.7616        34.6353        1.12625        2.000      head        
+ trgw-2-26-6_t122       35.5007        34.4773        1.02334        2.000      head        
+ trgw-2-26-6_t153       34.3295        34.3838      -5.428643E-02    2.000      head        
+ trgw-2-26-6_t183       35.2147        34.2414       0.973312        2.000      head        
+ trgw-2-26-6_t214       34.1610        34.0812       7.978755E-02    2.000      head        
+ trgw-2-26-6_t245       34.8113        33.9480       0.863364        2.000      head        
+ trgw-2-26-6_t275       34.5271        33.8725       0.654629        2.000      head        
+ trgw-2-26-6_t306       34.7610        33.8766       0.884421        2.000      head        
+ trgw-2-26-6_t32        34.8433        34.3131       0.530183        2.000      head        
+ trgw-2-26-6_t336       34.0027        33.9612       4.156097E-02    2.000      head        
+ trgw-2-26-6_t367       33.7687        34.1065      -0.337805        2.000      head        
+ trgw-2-26-6_t398       34.6346        34.2682       0.366359        2.000      head        
+ trgw-2-26-6_t426       34.0822        34.3895      -0.307336        2.000      head        
+ trgw-2-26-6_t457       34.8489        34.4549       0.394005        2.000      head        
+ trgw-2-26-6_t487       34.8278        34.4341       0.393644        2.000      head        
+ trgw-2-26-6_t518       34.5836        34.3332       0.250423        2.000      head        
+ trgw-2-26-6_t548       34.9488        34.1862       0.762526        2.000      head        
+ trgw-2-26-6_t579       34.1379        34.0292       0.108714        2.000      head        
+ trgw-2-26-6_t61        35.3378        34.4283       0.909547        2.000      head        
+ trgw-2-26-6_t610       34.1310        33.9123       0.218618        2.000      head        
+ trgw-2-26-6_t640       34.6419        33.8711       0.770888        2.000      head        
+ trgw-2-26-6_t671       33.6868        33.9154      -0.228654        2.000      head        
+ trgw-2-26-6_t701       34.1028        34.0310       7.188271E-02    2.000      head        
+ trgw-2-26-6_t732       33.7657        34.1894      -0.423766        2.000      head        
+ trgw-2-26-6_t92        35.6015        34.4927        1.10878        2.000      head        
+ trgw-2-29-15_t122      33.6228        34.1320      -0.509201        2.000      head        
+ trgw-2-29-15_t153      33.2602        34.0641      -0.803928        2.000      head        
+ trgw-2-29-15_t183      33.9201        33.9670      -4.691213E-02    2.000      head        
+ trgw-2-29-15_t214      34.6243        33.8622       0.762105        2.000      head        
+ trgw-2-29-15_t245      32.9333        33.7796      -0.846273        2.000      head        
+ trgw-2-29-15_t275      33.8762        33.7388       0.137394        2.000      head        
+ trgw-2-29-15_t306      34.0979        33.7519       0.346042        2.000      head        
+ trgw-2-29-15_t32       33.7154        34.0361      -0.320642        2.000      head        
+ trgw-2-29-15_t336      33.9550        33.8163       0.138659        2.000      head        
+ trgw-2-29-15_t367      32.4448        33.9164       -1.47156        2.000      head        
+ trgw-2-29-15_t398      34.4441        34.0213       0.422820        2.000      head        
+ trgw-2-29-15_t426      33.9166        34.0952      -0.178674        2.000      head        
+ trgw-2-29-15_t457      33.6978        34.1289      -0.431087        2.000      head        
+ trgw-2-29-15_t487      34.0444        34.1061      -6.170459E-02    2.000      head        
+ trgw-2-29-15_t518      34.4379        34.0329       0.404950        2.000      head        
+ trgw-2-29-15_t548      35.1233        33.9340        1.18936        2.000      head        
+ trgw-2-29-15_t579      34.0820        33.8331       0.248945        2.000      head        
+ trgw-2-29-15_t61       34.4368        34.1114       0.325408        2.000      head        
+ trgw-2-29-15_t610      34.6773        33.7626       0.914680        2.000      head        
+ trgw-2-29-15_t640      33.8264        33.7443       8.209364E-02    2.000      head        
+ trgw-2-29-15_t671      33.4380        33.7830      -0.345023        2.000      head        
+ trgw-2-29-15_t701      33.6869        33.8655      -0.178645        2.000      head        
+ trgw-2-29-15_t732      34.5010        33.9711       0.529913        2.000      head        
+ trgw-2-29-15_t92       33.8544        34.1488      -0.294401        2.000      head        
+ trgw-2-3-8_t122        35.7602        34.8999       0.860283        2.000      head        
+ trgw-2-3-8_t153        35.1467        34.8460       0.300700        2.000      head        
+ trgw-2-3-8_t183        35.4334        34.7405       0.692905        2.000      head        
+ trgw-2-3-8_t214        35.5252        34.6055       0.919672        2.000      head        
+ trgw-2-3-8_t245        34.7935        34.4805       0.312997        2.000      head        
+ trgw-2-3-8_t275        35.3268        34.3993       0.927489        2.000      head        
+ trgw-2-3-8_t306        34.9996        34.3797       0.619868        2.000      head        
+ trgw-2-3-8_t32         34.9426        34.7117       0.230913        2.000      head        
+ trgw-2-3-8_t336        35.9133        34.4276        1.48573        2.000      head        
+ trgw-2-3-8_t367        34.9660        34.5311       0.434906        2.000      head        
+ trgw-2-3-8_t398        35.6051        34.6581       0.947012        2.000      head        
+ trgw-2-3-8_t426        34.6100        34.7617      -0.151703        2.000      head        
+ trgw-2-3-8_t457        36.5370        34.8294        1.70760        2.000      head        
+ trgw-2-3-8_t487        35.6126        34.8307       0.781935        2.000      head        
+ trgw-2-3-8_t518        35.1476        34.7655       0.382124        2.000      head        
+ trgw-2-3-8_t548        34.8919        34.6563       0.235653        2.000      head        
+ trgw-2-3-8_t579        34.9468        34.5290       0.417719        2.000      head        
+ trgw-2-3-8_t61         35.5315        34.8126       0.718867        2.000      head        
+ trgw-2-3-8_t610        35.1111        34.4246       0.686506        2.000      head        
+ trgw-2-3-8_t640        35.7443        34.3749        1.36938        2.000      head        
+ trgw-2-3-8_t671        34.9537        34.3920       0.561743        2.000      head        
+ trgw-2-3-8_t701        34.5230        34.4701       5.290031E-02    2.000      head        
+ trgw-2-3-8_t732        35.0642        34.5908       0.473402        2.000      head        
+ trgw-2-3-8_t92         35.5758        34.8865       0.689363        2.000      head        
+ trgw-2-33-7_t122       34.5450        34.2201       0.324955        2.000      head        
+ trgw-2-33-7_t153       34.6913        34.1381       0.553197        2.000      head        
+ trgw-2-33-7_t183       35.3749        34.0191        1.35585        2.000      head        
+ trgw-2-33-7_t214       35.1158        33.8896        1.22619        2.000      head        
+ trgw-2-33-7_t245       33.6297        33.7862      -0.156500        2.000      head        
+ trgw-2-33-7_t275       34.7033        33.7325       0.970825        2.000      head        
+ trgw-2-33-7_t306       33.6486        33.7443      -9.570623E-02    2.000      head        
+ trgw-2-33-7_t32        35.2099        34.0978        1.11204        2.000      head        
+ trgw-2-33-7_t336       33.5726        33.8199      -0.247227        2.000      head        
+ trgw-2-33-7_t367       34.2267        33.9416       0.285117        2.000      head        
+ trgw-2-33-7_t398       33.6926        34.0722      -0.379610        2.000      head        
+ trgw-2-33-7_t426       34.6427        34.1665       0.476184        2.000      head        
+ trgw-2-33-7_t457       34.4794        34.2123       0.267083        2.000      head        
+ trgw-2-33-7_t487       35.8146        34.1878        1.62682        2.000      head        
+ trgw-2-33-7_t518       34.0167        34.0998      -8.308753E-02    2.000      head        
+ trgw-2-33-7_t548       34.4962        33.9780       0.518203        2.000      head        
+ trgw-2-33-7_t579       34.4111        33.8522       0.558891        2.000      head        
+ trgw-2-33-7_t61        33.7499        34.1912      -0.441311        2.000      head        
+ trgw-2-33-7_t610       33.4284        33.7629      -0.334536        2.000      head        
+ trgw-2-33-7_t640       33.5659        33.7368      -0.170899        2.000      head        
+ trgw-2-33-7_t671       34.0465        33.7804       0.266140        2.000      head        
+ trgw-2-33-7_t701       33.6738        33.8794      -0.205548        2.000      head        
+ trgw-2-33-7_t732       35.0086        34.0095       0.999080        2.000      head        
+ trgw-2-33-7_t92        34.6464        34.2389       0.407451        2.000      head        
+ trgw-2-34-10_t122      33.7928        34.0866      -0.293782        2.000      head        
+ trgw-2-34-10_t153      34.6613        34.0057       0.655568        2.000      head        
+ trgw-2-34-10_t183      34.7476        33.8961       0.851507        2.000      head        
+ trgw-2-34-10_t214      33.2257        33.7824      -0.556671        2.000      head        
+ trgw-2-34-10_t245      33.8913        33.6960       0.195227        2.000      head        
+ trgw-2-34-10_t275      33.3932        33.6555      -0.262294        2.000      head        
+ trgw-2-34-10_t306      33.2716        33.6752      -0.403659        2.000      head        
+ trgw-2-34-10_t32       34.3580        33.9989       0.359101        2.000      head        
+ trgw-2-34-10_t336      34.0764        33.7512       0.325268        2.000      head        
+ trgw-2-34-10_t367      33.5828        33.8649      -0.282160        2.000      head        
+ trgw-2-34-10_t398      34.3806        33.9816       0.398916        2.000      head        
+ trgw-2-34-10_t426      33.9308        34.0617      -0.130899        2.000      head        
+ trgw-2-34-10_t457      34.7784        34.0943       0.684059        2.000      head        
+ trgw-2-34-10_t487      34.2216        34.0632       0.158366        2.000      head        
+ trgw-2-34-10_t518      33.5112        33.9770      -0.465826        2.000      head        
+ trgw-2-34-10_t548      34.0884        33.8644       0.224011        2.000      head        
+ trgw-2-34-10_t579      33.3945        33.7530      -0.358550        2.000      head        
+ trgw-2-34-10_t61       33.2880        34.0789      -0.790898        2.000      head        
+ trgw-2-34-10_t610      34.0356        33.6787       0.356919        2.000      head        
+ trgw-2-34-10_t640      34.6219        33.6638       0.958092        2.000      head        
+ trgw-2-34-10_t671      33.9264        33.7119       0.214533        2.000      head        
+ trgw-2-34-10_t701      34.6349        33.8073       0.827536        2.000      head        
+ trgw-2-34-10_t732      34.2611        33.9262       0.334850        2.000      head        
+ trgw-2-34-10_t92       34.0218        34.1131      -9.130022E-02    2.000      head        
+ trgw-2-9-1_t122        36.2492        35.2186        1.03064        2.000      head        
+ trgw-2-9-1_t153        36.5475        35.1824        1.36513        2.000      head        
+ trgw-2-9-1_t183        35.7966        35.0813       0.715313        2.000      head        
+ trgw-2-9-1_t214        35.7553        34.9348       0.820491        2.000      head        
+ trgw-2-9-1_t245        35.5697        34.7852       0.784487        2.000      head        
+ trgw-2-9-1_t275        36.2146        34.6749        1.53965        2.000      head        
+ trgw-2-9-1_t306        35.0796        34.6265       0.453171        2.000      head        
+ trgw-2-9-1_t32         35.7737        34.9746       0.799152        2.000      head        
+ trgw-2-9-1_t336        36.3628        34.6538        1.70904        2.000      head        
+ trgw-2-9-1_t367        37.2655        34.7491        2.51644        2.000      head        
+ trgw-2-9-1_t398        35.8287        34.8823       0.946341        2.000      head        
+ trgw-2-9-1_t426        36.5057        35.0019        1.50378        2.000      head        
+ trgw-2-9-1_t457        36.1019        35.0940        1.00797        2.000      head        
+ trgw-2-9-1_t487        36.4024        35.1183        1.28411        2.000      head        
+ trgw-2-9-1_t518        36.7980        35.0690        1.72908        2.000      head        
+ trgw-2-9-1_t548        36.3154        34.9632        1.35220        2.000      head        
+ trgw-2-9-1_t579        35.5717        34.8260       0.745736        2.000      head        
+ trgw-2-9-1_t61         35.6594        35.0862       0.573237        2.000      head        
+ trgw-2-9-1_t610        35.1962        34.7010       0.495228        2.000      head        
+ trgw-2-9-1_t640        35.7012        34.6269        1.07431        2.000      head        
+ trgw-2-9-1_t671        35.4095        34.6217       0.787812        2.000      head        
+ trgw-2-9-1_t701        36.5022        34.6871        1.81508        2.000      head        
+ trgw-2-9-1_t732        36.2207        34.8080        1.41266        2.000      head        
+ trgw-2-9-1_t92         36.0610        35.1817       0.879323        2.000      head        
+
+ See file W0001.res for more details of residuals in graph-ready format.
+
+ See file W0001.seo for composite observation sensitivities.
+
+
+ Objective function ----->
+
+   Sum of squared weighted residuals (ie phi)                =   1338.4    
+   Contribution to phi from observation group "gage"         =   108.81    
+   Contribution to phi from observation group "head"         =   1229.6    
+
+
+ Correlation Coefficient ----->
+
+   Correlation coefficient                                   =  0.99448    
+
+
+ Analysis of residuals ----->
+
+   All residuals:-
+      Number of residuals with non-zero weight                       =   648
+      Mean value of non-zero weighted residuals                      =  0.8050    
+      Maximum weighted residual [observation "trgw-2-9-1_t367"]      =   5.033    
+      Minimum weighted residual [observation "trgw-2-29-15_t367"]    =  -2.943    
+      Standard variance of weighted residuals                        =   2.386    
+      Standard error of weighted residuals                           =   1.545    
+
+      Note: the above variance was obtained by dividing the objective 
+      function by the number of system degrees of freedom (ie. number of 
+      observations with non-zero weight plus number of prior information 
+      articles with non-zero weight minus the number of adjustable parameters.)
+      If the degrees of freedom is negative the divisor becomes 
+      the number of observations with non-zero weight plus the number of 
+      prior information items with non-zero weight.
+
+   Residuals for observation group "gage":-
+      Number of residuals with non-zero weight                       =    24
+      Mean value of non-zero weighted residuals                      =   1.151    
+      Maximum weighted residual [observation "gage_t306"]            =   4.146    
+      Minimum weighted residual [observation "gage_t426"]            =  -1.680    
+      "Variance" of weighted residuals                               =   4.534    
+      "Standard error" of weighted residuals                         =   2.129    
+
+      Note: the above "variance" was obtained by dividing the sum of squared 
+      residuals by the number of items with non-zero weight.
+
+   Residuals for observation group "head":-
+      Number of residuals with non-zero weight                       =   624
+      Mean value of non-zero weighted residuals                      =  0.7917    
+      Maximum weighted residual [observation "trgw-2-9-1_t367"]      =   5.033    
+      Minimum weighted residual [observation "trgw-2-29-15_t367"]    =  -2.943    
+      "Variance" of weighted residuals                               =   1.970    
+      "Standard error" of weighted residuals                         =   1.404    
+
+      Note: the above "variance" was obtained by dividing the sum of squared 
+      residuals by the number of items with non-zero weight.
+
+
+ Covariance and other statistical matrices cannot be determined:-
+ Some form or regularisation was implemented so these are not applicable.
+
+ Use the PREDUNC7 utility to obtain a full posterior covariance matrix.
+
