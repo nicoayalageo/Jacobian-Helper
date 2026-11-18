@@ -43,7 +43,7 @@ La mejora es una predicción lineal y debe comprobarse con una iteración antes 
 
 ## Validación
 
-El veredicto se comparó con lo ocurrido en 173 corridas de PEST 18.25 y PEST++ 5.2.16 terminadas por su propio criterio, de 13 variantes del modelo de Freyberg, y coincidió en todas. Las variantes comparten el modelo base, por lo que el resultado no reemplaza la comprobación en un modelo propio.
+El veredicto se comparó con lo ocurrido en 183 corridas de PEST 18.25 y PEST++ 5.2.16 terminadas por su propio criterio, de 14 variantes del modelo de Freyberg, y coincidió en 182. Las variantes comparten el modelo base, por lo que el resultado no reemplaza la comprobación en un modelo propio.
 
 ## Referencia
 
