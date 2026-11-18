@@ -1,0 +1,4 @@
+pargpnme,inctyp,derinc,derinclb,forcen,derincmul,dermthd,splitthresh,splitreldiff,splitaction
+hk,relative,0.05,0.0,always_2,1.0,parabolic,1e-05,0.5,smaller
+expo,absolute,0.00125,0.0,always_2,1.0,parabolic,1e-05,0.5,smaller
+kroca,relative,0.05,0.0,always_2,1.0,parabolic,1e-05,0.5,smaller

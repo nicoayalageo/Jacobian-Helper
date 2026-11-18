@@ -30,7 +30,7 @@ La mejora es una predicción lineal y debe comprobarse con una iteración antes 
 | `index.html` | Página completa: estilos, textos en español e inglés y lógica |
 | `py/discriminador.py` | Cálculo del diagnóstico. Es el mismo archivo del repositorio del estudio; su SHA-256 está en `py/discriminador.sha256` |
 | `py/pestio.py` | Lectura de los archivos de PEST sin dependencias externas |
-| `ejemplos/` | Tres corridas de ejemplo |
+| `ejemplos/` | Cuatro corridas de ejemplo |
 | `tools/` | Scripts que generan el fondo de la cabecera y la imagen para compartir |
 | `img/` | Imágenes de la página |
 
@@ -38,6 +38,7 @@ La mejora es una predicción lineal y debe comprobarse con una iteración antes 
 
 - `ejemplos/detenida`: Freyberg en MODFLOW 6 con puntos piloto y decaimiento de K con la profundidad por unidad. PEST 18.25 declara la optimización completa en la iteración 2 con phi 1338. Veredicto: estrangulada.
 - `ejemplos/pestpp`: el mismo caso, con el Jacobiano de la primera iteración de PEST++GLM. Veredicto: estrangulada.
+- `ejemplos/sana`: Freyberg con una unidad de roca bajo el acuífero y exponentes iniciados en −1, tras la primera iteración de PEST++GLM. Veredicto: sana.
 - `ejemplos/convergida`: una variante del mismo modelo que llegó a phi 596. Veredicto: nada que recuperar.
 
 ## Validación
