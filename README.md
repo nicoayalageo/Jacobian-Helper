@@ -53,4 +53,8 @@ Doherty, J. (2018). PEST, Model-Independent Parameter Estimation. User Manual Pa
 
 White, J. T., Hunt, R. J., Fienen, M. N. y Doherty, J. E. (2020). Approaches to highly parameterized inversion: PEST++ Version 5. U.S. Geological Survey Techniques and Methods 7-C26.
 
+## Herramientas
+
+La revisión de los manuales de PEST y PEST++ se apoyó en [MODFLOW AI](https://agent.modflow.ai) (GWLab), un servidor de consulta de la documentación de MODFLOW, PEST y PEST++. No interviene en el cálculo del diagnóstico.
+
 Licencia MIT.
