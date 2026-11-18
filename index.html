@@ -4,349 +4,651 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jacobian Helper</title>
-<meta name="description" content="¿Se detuvo PEST antes de tiempo? Diagnóstico desde el Jacobiano ya calculado, sin correr el modelo. Todo ocurre en tu navegador.">
+<meta name="description" content="Revisa una calibración de PEST o PEST++ estancada a partir del Jacobiano ya calculado. Indica si el límite de cambio por iteración frena el avance, qué parámetros lo provocan y cuánto se recuperaría.">
+<meta property="og:title" content="Jacobian Helper">
+<meta property="og:description" content="Diagnóstico de una calibración de PEST estancada a partir del Jacobiano ya calculado.">
+<meta property="og:image" content="https://nicoayalageo.github.io/Jacobian-Helper/img/compartir.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/icono.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@87.5,600;87.5,800;100,500;100,700&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-:root{--paper:#F3F4F1;--surface:#FFFFFF;--sunken:#E9ECE7;--ink:#171B1E;--muted:#5C6570;--faint:#8A939B;--rule:#D9DDD6;
- --accent:#1E5F5A;--accent-soft:#DDEAE7;--accent-ink:#FFFFFF;
- --bad:#A8461F;--bad-soft:#F3E3DA;--good:#2F6B45;--good-soft:#DFEDE3;--neu:#4E5A66;--neu-soft:#E3E7EB;
- --shadow:0 1px 2px rgba(23,27,30,.05),0 10px 28px -18px rgba(23,27,30,.25)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#14181A;--surface:#1C2224;--sunken:#222A2D;--ink:#E6E8E3;--muted:#9AA3A8;--faint:#6F797F;--rule:#2B3336;
- --accent:#7CC1B8;--accent-soft:#1F3532;--accent-ink:#0F1B19;--bad:#E08A63;--bad-soft:#3A251B;--good:#7FC397;--good-soft:#1E3326;--neu:#AAB4BD;--neu-soft:#252D33;--shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.7)}}
-:root[data-theme="dark"]{--paper:#14181A;--surface:#1C2224;--sunken:#222A2D;--ink:#E6E8E3;--muted:#9AA3A8;--faint:#6F797F;--rule:#2B3336;
- --accent:#7CC1B8;--accent-soft:#1F3532;--accent-ink:#0F1B19;--bad:#E08A63;--bad-soft:#3A251B;--good:#7FC397;--good-soft:#1E3326;--neu:#AAB4BD;--neu-soft:#252D33;--shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.7)}
-*{box-sizing:border-box}html{color-scheme:light dark}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
-a{color:var(--accent)}code,.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
-.wrap{max-width:1180px;margin:0 auto;padding:0 24px 80px}
-header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:30px 0 18px;border-bottom:1px solid var(--rule)}
-.brand{display:flex;align-items:baseline;gap:14px}
-.brand h1{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:1.65rem;margin:0;letter-spacing:-.01em}
-.brand .tag{color:var(--muted);font-size:.92rem}
-.lang{display:flex;gap:2px;border:1px solid var(--rule);border-radius:4px;overflow:hidden}
-.lang button{border:0;background:transparent;color:var(--muted);padding:5px 10px;font:inherit;font-size:.82rem;cursor:pointer}
-.lang button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
-.lead{max-width:62ch;margin:26px 0 8px;font-size:1.06rem}
-.lead b{font-weight:600}
-.privacy{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;color:var(--muted);margin-bottom:26px}
-.privacy svg{flex:none}
-main{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:28px;align-items:start}
-@media (max-width:900px){main{grid-template-columns:1fr}}
-.panel{background:var(--surface);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow)}
-.panel h2{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:0;padding:14px 18px 0;font-weight:500}
-.drop{display:block;margin:14px 18px;border:1.5px dashed var(--rule);border-radius:6px;padding:26px 18px;text-align:center;color:var(--muted);cursor:pointer;transition:background .15s,border-color .15s}
-.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
-.drop strong{color:var(--ink);font-weight:600;display:block;margin-bottom:4px}
-.drop input{display:none}
-.files{list-style:none;margin:0;padding:0 18px 6px;display:flex;flex-direction:column;gap:6px}
-.files li{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.88rem;padding:7px 10px;border-radius:4px;background:var(--sunken)}
-.files li .k{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--muted);min-width:64px}
-.files li .n{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.files li .s{font-size:.75rem;padding:2px 7px;border-radius:3px;background:var(--neu-soft);color:var(--neu)}
-.files li.ok .s{background:var(--good-soft);color:var(--good)}
-.files li.miss .s{background:var(--bad-soft);color:var(--bad)}
-.opts{padding:8px 18px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:.84rem;color:var(--muted)}
-.opts label{display:flex;flex-direction:column;gap:3px}
-.opts input{font:inherit;font-family:"IBM Plex Mono",monospace;padding:6px 8px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);color:var(--ink)}
-.actions{display:flex;gap:10px;padding:0 18px 18px;flex-wrap:wrap}
-button.primary{background:var(--accent);color:var(--accent-ink);border:0;border-radius:4px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer}
-button.primary:disabled{opacity:.5;cursor:default}
-button.ghost{background:transparent;color:var(--accent);border:1px solid var(--rule);border-radius:4px;padding:9px 12px;font:inherit;font-size:.88rem;cursor:pointer}
-button:focus-visible,.drop:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.status{padding:0 18px 16px;font-size:.84rem;color:var(--muted);min-height:1.2em}
-.status.err{color:var(--bad)}
+:root{--bg:#f6f3ec;--panel:#fffdf8;--hundido:#ece8dd;--tinta:#152232;--tinta2:#4a5868;--linea:#d8d2c3;
+ --agua:#1d4f8f;--agua-suave:#dbe6f3;--sobre-agua:#ffffff;
+ --alerta:#a94c17;--alerta-suave:#f6e2d2;--bien:#2a6a47;--bien-suave:#dcebdf;--neutro:#4a5868;--neutro-suave:#e6e3da;
+ --trama:.17}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1621;--panel:#15202e;--hundido:#1b2838;--tinta:#e8edf3;--tinta2:#a5b2c1;--linea:#2a394b;
+ --agua:#86b6ef;--agua-suave:#1b2f48;--sobre-agua:#0e1621;
+ --alerta:#eb9c62;--alerta-suave:#3a2616;--bien:#84c8a0;--bien-suave:#17301f;--neutro:#a5b2c1;--neutro-suave:#1f2c3b;--trama:.22}}
+:root[data-theme="dark"]{--bg:#0e1621;--panel:#15202e;--hundido:#1b2838;--tinta:#e8edf3;--tinta2:#a5b2c1;--linea:#2a394b;
+ --agua:#86b6ef;--agua-suave:#1b2f48;--sobre-agua:#0e1621;
+ --alerta:#eb9c62;--alerta-suave:#3a2616;--bien:#84c8a0;--bien-suave:#17301f;--neutro:#a5b2c1;--neutro-suave:#1f2c3b;--trama:.22}
+*{box-sizing:border-box}
+html{color-scheme:light dark;scroll-behavior:smooth}
+:root[data-theme="light"]{color-scheme:light}:root[data-theme="dark"]{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--tinta);font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--agua);text-underline-offset:3px}
+code,.mono,pre{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:.88em}
+h1,h2,h3{font-family:"Archivo",system-ui,sans-serif;line-height:1.12;margin:0;text-wrap:balance}
+p{margin:0 0 .9em}
+.ancho{max-width:1160px;margin:0 auto;padding:0 20px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--agua);outline-offset:2px}
+
+/* barra superior */
+.barra{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0;flex-wrap:wrap}
+.marca{font-family:"Archivo",sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:.01em;display:flex;align-items:center;gap:9px}
+.marca svg{width:22px;height:22px}
+.controles{display:flex;gap:8px;align-items:center}
+.selector{display:flex;border:1px solid var(--linea);border-radius:999px;overflow:hidden;background:var(--panel)}
+.selector button{border:0;background:transparent;padding:5px 13px;font-size:.86rem;color:var(--tinta2)}
+.selector button[aria-pressed="true"]{background:var(--tinta);color:var(--bg)}
+.tema{border:1px solid var(--linea);background:var(--panel);border-radius:999px;width:34px;height:34px;display:grid;place-items:center;padding:0}
+.tema svg{width:17px;height:17px}
+
+/* cabecera */
+.cabecera{position:relative;overflow:hidden;border-bottom:1px solid var(--linea)}
+.cabecera::before{content:"";position:absolute;inset:0;background:var(--agua);opacity:var(--trama);
+ -webkit-mask:url(img/equipotenciales.svg) center/cover no-repeat;mask:url(img/equipotenciales.svg) center/cover no-repeat;pointer-events:none}
+.cabecera>.ancho{position:relative}
+.portada{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:44px;align-items:center;padding:34px 0 54px}
+.portada h1{font-size:clamp(2.2rem,5.2vw,3.9rem);font-weight:800;font-stretch:87.5%;letter-spacing:-.015em}
+.portada .bajada{font-size:1.1rem;max-width:54ch;margin:20px 0 14px;color:var(--tinta)}
+.portada .nota{font-size:.95rem;color:var(--tinta2);max-width:54ch;margin:0 0 22px}
+.ir{display:inline-block;background:var(--agua);color:var(--sobre-agua);text-decoration:none;font-weight:600;padding:11px 20px;border-radius:8px}
+.ir:hover{filter:brightness(1.08)}
+.fuente-fondo{font-size:.78rem;color:var(--tinta2);margin:18px 0 0}
+
+/* ilustración del mecanismo */
+.mecanismo{background:var(--panel);border:1px solid var(--linea);border-radius:14px;padding:20px 20px 14px;box-shadow:0 18px 40px -28px rgba(21,34,50,.45)}
+.mecanismo h2{font-size:1rem;font-weight:700;margin-bottom:4px}
+.mecanismo svg{display:block;width:100%;height:auto}
+.mecanismo text{font-family:"Public Sans",sans-serif;fill:var(--tinta2);font-size:13px}
+.mecanismo .fantasma{fill:none;stroke:var(--linea);stroke-width:1.5}
+.mecanismo .paso{fill:var(--agua);transform-box:fill-box;transform-origin:left center;animation:acortar 7s ease-in-out infinite}
+.mecanismo .paso.culpable{fill:var(--alerta)}
+.mecanismo .tope{stroke:var(--alerta);stroke-width:2}
+.leyendas{position:relative;min-height:5em;font-size:.93rem;color:var(--tinta2);margin-top:6px}
+.leyendas p{position:absolute;inset:0;margin:0;animation:turno 7s ease-in-out infinite}
+.leyendas p+p{animation-name:turno2}
+@keyframes acortar{0%,38%{transform:scaleX(1)}52%,90%{transform:scaleX(.07)}100%{transform:scaleX(1)}}
+@keyframes turno{0%,38%{opacity:1}46%,94%{opacity:0}100%{opacity:1}}
+@keyframes turno2{0%,40%{opacity:0}52%,90%{opacity:1}98%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.mecanismo .paso{animation:none;transform:scaleX(.07)}.leyendas p{animation:none;position:static;opacity:1;margin-bottom:.4em}html{scroll-behavior:auto}}
+
+/* herramienta */
+.herramienta{display:grid;grid-template-columns:minmax(280px,360px) minmax(0,1fr);gap:28px;align-items:start;padding:40px 0 20px}
+.herramienta>h2{grid-column:1/-1;font-size:1.7rem;font-weight:700}
+.entrada{background:var(--panel);border:1px solid var(--linea);border-radius:14px;padding:18px;position:sticky;top:14px}
+.soltar{display:block;border:2px dashed var(--linea);border-radius:10px;padding:26px 14px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+.soltar:hover,.soltar.encima{border-color:var(--agua);background:var(--agua-suave)}
+.soltar strong{display:block;font-size:1.02rem}
+.soltar span{display:block;font-size:.86rem;color:var(--tinta2);margin-top:4px}
+.soltar input{position:absolute;opacity:0;width:1px;height:1px}
+.archivos{list-style:none;margin:14px 0 0;padding:0;font-size:.9rem}
+.archivos li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--linea)}
+.archivos li span:last-child{color:var(--tinta2);text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%}
+.archivos li.falta span:last-child{color:var(--alerta)}
+.limpiar{border:0;background:none;padding:0;margin-top:8px;font-size:.84rem;color:var(--tinta2);text-decoration:underline}
+details.ajustes{margin-top:14px;font-size:.9rem}
+details.ajustes summary{cursor:pointer;color:var(--tinta2)}
+.ajustes .par{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.ajustes label{display:block;font-size:.82rem;color:var(--tinta2)}
+.ajustes input{width:100%;margin-top:3px;padding:7px 9px;border:1px solid var(--linea);border-radius:6px;background:var(--bg);color:var(--tinta);font:inherit}
+.accion{width:100%;margin-top:16px;border:0;border-radius:8px;background:var(--agua);color:var(--sobre-agua);font-weight:600;padding:12px}
+.accion:disabled{background:var(--hundido);color:var(--tinta2);cursor:not-allowed}
+.estado{font-size:.86rem;color:var(--tinta2);margin:10px 0 0;min-height:1.4em}
+.estado.error{color:var(--alerta)}
+.ejemplos{margin-top:16px;padding-top:14px;border-top:1px solid var(--linea);font-size:.9rem}
+.ejemplos p{margin:0 0 6px;color:var(--tinta2)}
+.ejemplos button{display:block;width:100%;text-align:left;border:0;background:none;padding:7px 0;color:var(--agua);border-bottom:1px solid var(--linea)}
+.ejemplos button:last-child{border-bottom:0}
+.ejemplos button small{display:block;color:var(--tinta2);font-size:.82rem}
+.ejemplos button[aria-current="true"]{font-weight:600}
+
 /* resultado */
-.result{display:flex;flex-direction:column;gap:18px}
-.verdict{padding:22px 24px;border-radius:6px;border:1px solid var(--rule);background:var(--surface);box-shadow:var(--shadow);display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
-.verdict .pill{font-family:"IBM Plex Mono",monospace;font-size:.78rem;letter-spacing:.08em;padding:6px 10px;border-radius:4px;font-weight:500;white-space:nowrap}
-.verdict.STRANGLED .pill{background:var(--bad-soft);color:var(--bad)}
-.verdict.HEALTHY .pill{background:var(--good-soft);color:var(--good)}
-.verdict.NO_INFORMATION .pill{background:var(--neu-soft);color:var(--neu)}
-.verdict.EMPTY .pill{background:var(--neu-soft);color:var(--neu)}
-.verdict h3{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:1.35rem;margin:0 0 4px;letter-spacing:-.005em;text-wrap:balance}
-.verdict p{margin:0;color:var(--muted);max-width:64ch}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.kpi{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:12px 14px}
-.kpi .l{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-family:"IBM Plex Mono",monospace}
-.kpi .v{font-family:"IBM Plex Mono",monospace;font-size:1.25rem;margin-top:4px;font-variant-numeric:tabular-nums}
-.kpi .h{font-size:.78rem;color:var(--muted);margin-top:2px}
-.card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:18px 20px}
-.card h4{margin:0 0 10px;font-size:.98rem;font-weight:600}
-.card h4 .num{font-family:"IBM Plex Mono",monospace;color:var(--faint);font-weight:500;margin-right:8px;font-size:.8rem}
-.gains{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end}
-svg.chart{width:100%;height:170px;display:block}
-.legend{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap:6px;min-width:190px}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
-table{border-collapse:collapse;width:100%;font-size:.88rem}
-th{text-align:left;font-weight:500;color:var(--faint);font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--rule)}
-td{padding:7px 8px;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
-td.mono{font-family:"IBM Plex Mono",monospace;font-size:.84rem}
-.tw{overflow-x:auto}
-.steps{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:14px}
-.steps li{display:grid;grid-template-columns:26px 1fr;gap:10px}
-.steps .b{width:22px;height:22px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-family:"IBM Plex Mono",monospace;font-size:.76rem;display:grid;place-items:center;font-weight:500}
-.steps p{margin:0 0 6px}
-pre{margin:6px 0 0;background:var(--sunken);border-radius:4px;padding:10px 12px;font-size:.8rem;line-height:1.5;overflow-x:auto;white-space:pre}
-.copy{float:right;font-size:.74rem;color:var(--accent);background:none;border:1px solid var(--rule);border-radius:3px;padding:2px 7px;cursor:pointer;font-family:inherit}
-.how{margin-top:56px;max-width:70ch}
-.how h2{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:1.35rem;margin:0 0 10px;letter-spacing:-.005em}
-.how p{margin:0 0 12px;color:var(--ink)}
-.how .f{font-family:"IBM Plex Mono",monospace;background:var(--sunken);padding:10px 14px;border-radius:4px;display:inline-block;margin:4px 0 12px}
-.how .src{font-size:.86rem;color:var(--muted)}
-footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--rule);font-size:.82rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-[hidden]{display:none!important}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.resultado{min-width:0}
+.vacio{border:1px dashed var(--linea);border-radius:14px;padding:40px 24px;color:var(--tinta2);text-align:center}
+.veredicto{border-left:6px solid var(--neutro);background:var(--neutro-suave);border-radius:0 14px 14px 0;padding:22px 24px}
+.veredicto .clase{font-family:"Archivo",sans-serif;font-weight:700;font-size:.95rem;color:var(--neutro);margin:0 0 6px}
+.veredicto h3{font-size:clamp(1.45rem,3vw,2rem);font-weight:700;margin-bottom:10px}
+.veredicto p{margin:0;max-width:62ch}
+.veredicto.STRANGLED{border-color:var(--alerta);background:var(--alerta-suave)}.veredicto.STRANGLED .clase{color:var(--alerta)}
+.veredicto.HEALTHY{border-color:var(--bien);background:var(--bien-suave)}.veredicto.HEALTHY .clase{color:var(--bien)}
+.bloque{padding:24px 0;border-bottom:1px solid var(--linea)}
+.bloque:last-child{border-bottom:0}
+.bloque h3{font-size:1.18rem;font-weight:700;margin-bottom:10px}
+.bloque p{max-width:68ch}
+.cita{font-style:italic}
+.pista{position:relative;height:46px;margin:14px 0 4px}
+.pista .riel{position:absolute;left:0;right:0;top:14px;height:8px;border-radius:4px;background:var(--hundido)}
+.pista .lleno{position:absolute;left:0;top:14px;height:8px;border-radius:4px;background:var(--alerta);min-width:6px}
+.pista .marca-eje{position:absolute;top:28px;font-size:.76rem;color:var(--tinta2);transform:translateX(-50%)}
+.pista .marca-eje:first-of-type{transform:none}.pista .marca-eje:last-of-type{transform:translateX(-100%)}
+.grafico{position:relative;overflow-x:auto}
+.grafico svg{display:block;width:100%;min-width:470px;height:auto;overflow:visible}
+.grafico text{font-family:"Public Sans",sans-serif;fill:var(--tinta2);font-size:12px}
+.grafico text.valor{fill:var(--tinta);font-weight:600;font-size:13px}
+.grafico rect.barra-g{fill:var(--agua)}
+.grafico rect.barra-g.tenue{opacity:.45}
+.grafico rect.zona{fill:transparent}
+.grafico rect.zona:hover+rect.barra-g,.grafico rect.barra-g.activa{opacity:1;filter:brightness(1.12)}
+.globo{position:absolute;pointer-events:none;background:var(--tinta);color:var(--bg);font-size:.82rem;padding:6px 9px;border-radius:6px;transform:translate(-50%,-110%);white-space:nowrap;opacity:0;transition:opacity .1s}
+.globo.ver{opacity:1}
+.leyenda-g{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:.88rem;color:var(--tinta2);margin-top:8px}
+.leyenda-g i{display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--agua);margin-right:6px;vertical-align:-1px}
+.leyenda-g i.raya{height:0;border-top:2px dashed var(--tinta2);background:none;border-radius:0;vertical-align:3px;width:18px}
+details.tabla{margin-top:10px;font-size:.9rem}
+details.tabla summary{cursor:pointer;color:var(--tinta2)}
+.desliza{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th{text-align:left;font-weight:600;color:var(--tinta2);padding:7px 12px 7px 0;border-bottom:1px solid var(--linea);white-space:nowrap}
+td{padding:7px 12px 7px 0;border-bottom:1px solid var(--linea);vertical-align:top}
+.pasos{list-style:none;counter-reset:paso;margin:0;padding:0}
+.pasos li{counter-increment:paso;position:relative;padding:0 0 16px 40px}
+.pasos li::before{content:counter(paso);position:absolute;left:0;top:0;width:27px;height:27px;border-radius:50%;background:var(--tinta);color:var(--bg);display:grid;place-items:center;font-size:.85rem;font-weight:600}
+.pasos p{margin:0 0 6px}
+pre{position:relative;margin:6px 0 0;background:var(--hundido);border-radius:8px;padding:12px 14px;overflow-x:auto;white-space:pre;line-height:1.55}
+.copiar{position:sticky;float:right;right:0;top:0;border:1px solid var(--linea);background:var(--panel);border-radius:6px;font-family:"Public Sans",sans-serif;font-size:.78rem;padding:2px 8px;margin-left:10px}
+.fino{font-size:.88rem;color:var(--tinta2)}
+
+/* explicación y caso de prueba */
+.texto{padding:46px 0 10px;border-top:1px solid var(--linea);margin-top:30px}
+.texto h2{font-size:1.7rem;font-weight:700;margin-bottom:16px}
+.columnas{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px 44px}
+.formula{font-family:"JetBrains Mono",monospace;background:var(--hundido);border-radius:8px;padding:12px 16px;margin:6px 0 16px;overflow-x:auto;white-space:nowrap}
+figure{margin:22px 0 0}
+figure img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--linea);background:#fff}
+figcaption{font-size:.9rem;color:var(--tinta2);margin-top:8px;max-width:78ch}
+.figuras{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px;align-items:start}
+.cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px 30px;margin:8px 0 6px;padding:0;list-style:none}
+.cifras li{border-top:2px solid var(--tinta);padding-top:10px;font-size:.95rem;color:var(--tinta2)}
+.cifras b{display:block;font-family:"Archivo",sans-serif;font-size:1.7rem;font-weight:700;color:var(--tinta);line-height:1.1;margin-bottom:4px}
+footer{margin-top:50px;border-top:1px solid var(--linea);padding:26px 0 60px;font-size:.9rem;color:var(--tinta2)}
+footer p{max-width:86ch}
+
+@media (max-width:900px){.portada{grid-template-columns:1fr;gap:28px;padding:20px 0 40px}.herramienta{grid-template-columns:1fr}.entrada{position:static}}
+@media (max-width:520px){body{font-size:15.5px}.ancho{padding:0 16px}.veredicto{padding:18px 16px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header>
-  <div class="brand"><h1>Jacobian Helper</h1><span class="tag" data-i18n="tag">¿PEST se detuvo antes de tiempo?</span></div>
-  <div class="lang" role="group" aria-label="idioma"><button id="l-es" aria-pressed="true">ES</button><button id="l-en" aria-pressed="false">EN</button></div>
-</header>
 
-<p class="lead" data-i18n="lead">Arrastra los archivos de una corrida de <b>PEST, PEST_HP o PEST++</b> que se estancó. Con el Jacobiano que ya pagaste, la página dice si el <b>límite de cambio por iteración</b> está frenando la calibración, qué parámetro la sostiene y cuánta mejora hay disponible — <b>sin correr el modelo</b>.</p>
-<p class="privacy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-i18n="privacy">Los archivos no salen de tu navegador: no hay servidor, el cálculo corre aquí mismo.</span></p>
+<div class="cabecera">
+ <div class="ancho">
+  <div class="barra">
+   <div class="marca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h9M3 18h4"/></svg>Jacobian Helper</div>
+   <div class="controles">
+    <div class="selector" role="group" data-i18n-aria="a_idioma" aria-label="Idioma"><button id="l-es" aria-pressed="true">Español</button><button id="l-en" aria-pressed="false">English</button></div>
+    <button class="tema" id="tema" data-i18n-aria="a_tema" aria-label="Cambiar entre tema claro y oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+   </div>
+  </div>
+  <div class="portada">
+   <div>
+    <h1 data-i18n="titulo">¿PEST se detuvo antes de tiempo?</h1>
+    <p class="bajada" data-i18n="bajada">Jacobian Helper revisa una calibración estancada con archivos que ya existen: el archivo de control, el Jacobiano y los residuales. Indica si el límite de cambio por iteración está frenando el avance, qué parámetros lo provocan y cuánto bajaría la función objetivo al corregirlo.</p>
+    <p class="nota" data-i18n="nota">No corre el modelo. Los archivos se leen en este navegador y no se envían a ningún servidor.</p>
+    <a class="ir" href="#herramienta" data-i18n="ir">Revisar una corrida</a>
+    <p class="fuente-fondo" data-i18n="fondo">Fondo: equipotenciales del modelo de Freyberg usado como caso de prueba.</p>
+   </div>
+   <div class="mecanismo" aria-labelledby="t-mec">
+    <h2 id="t-mec" data-i18n="mec_t">Qué ocurre dentro de una iteración</h2>
+    <svg viewBox="0 0 440 210" role="img" data-i18n-aria="mec_alt" aria-label="Cinco parámetros con el cambio que calcula PEST. Uno de ellos supera su límite y todos los cambios se reducen por el mismo factor.">
+     <g id="filas-mec"></g>
+    </svg>
+    <div class="leyendas">
+     <p data-i18n="mec_1">PEST calcula el cambio de cada parámetro. Uno de ellos, poco informado y cercano a cero, pide mucho más de lo que permite su límite.</p>
+     <p data-i18n="mec_2">Para respetar ese límite se acorta el vector completo con un solo factor. Los parámetros que sí tenían información casi no se mueven.</p>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
 
-<main>
-  <section class="panel" aria-labelledby="h-files">
-    <h2 id="h-files" data-i18n="files">Archivos de la corrida</h2>
-    <label class="drop" id="drop" tabindex="0">
-      <strong data-i18n="drop1">Suelta aquí los archivos, o haz clic</strong>
-      <span data-i18n="drop2">.pst · .jco / .jcb · .res / .rei — y si los tiene, .par, .rec y los CSV externos</span>
-      <input type="file" id="fileInput" multiple>
-    </label>
-    <ul class="files" id="fileList"></ul>
-    <div class="opts">
-      <label><span>RELPARMAX</span><input id="relparmax" placeholder="del .pst" inputmode="decimal"></label>
-      <label><span>FACPARMAX</span><input id="facparmax" placeholder="del .pst" inputmode="decimal"></label>
+<main class="ancho">
+ <section class="herramienta" id="herramienta">
+  <h2 data-i18n="h_t">Revisar una corrida</h2>
+  <div class="entrada">
+   <label class="soltar" id="soltar" tabindex="0">
+    <strong data-i18n="s1">Arrastra los archivos aquí</strong>
+    <span data-i18n="s2">o haz clic para elegirlos</span>
+    <input type="file" id="selector-archivos" multiple>
+   </label>
+   <ul class="archivos" id="lista"></ul>
+   <button class="limpiar" id="limpiar" hidden data-i18n="limpiar">Quitar todos</button>
+   <details class="ajustes">
+    <summary data-i18n="aj_t">Usar otros límites</summary>
+    <div class="par">
+     <label>RELPARMAX<input id="relparmax" inputmode="decimal" data-i18n-ph="aj_ph" placeholder="El del archivo"></label>
+     <label>FACPARMAX<input id="facparmax" inputmode="decimal" data-i18n-ph="aj_ph" placeholder="El del archivo"></label>
     </div>
-    <div class="actions">
-      <button class="primary" id="run" disabled data-i18n="run">Diagnosticar</button>
-      <button class="ghost" id="ex1" data-i18n="ex1">Ejemplo: corrida congelada</button>
-      <button class="ghost" id="ex2" data-i18n="ex2">Ejemplo: convergencia sana</button>
-    </div>
-    <div class="status" id="status" data-i18n="loading">Cargando el motor de cálculo (Python en el navegador, ~10 MB la primera vez)…</div>
-  </section>
+   </details>
+   <button class="accion" id="correr" disabled data-i18n="correr">Diagnosticar</button>
+   <p class="estado" id="estado" role="status" data-i18n="cargando">Preparando el cálculo. La primera vez descarga unos 10 MB.</p>
+   <div class="ejemplos">
+    <p data-i18n="ej_t">O prueba con una corrida de ejemplo</p>
+    <div id="ejemplos"></div>
+   </div>
+  </div>
 
-  <section class="result" id="result" aria-live="polite">
-    <div class="verdict EMPTY" id="verdict">
-      <span class="pill" id="vpill">—</span>
-      <div><h3 id="vtitle" data-i18n="v_empty_t">Todavía no hay diagnóstico</h3><p id="vtext" data-i18n="v_empty_p">Cuando el motor termine de cargar se analizará el ejemplo de una corrida congelada; después puedes soltar la tuya.</p></div>
-    </div>
-    <div class="kpis" id="kpis" hidden></div>
-    <div class="card" id="gainsCard" hidden><h4><span class="num">02</span><span data-i18n="gains_t">Cuánta mejora bloquea el límite</span></h4>
-      <div class="gains"><svg class="chart" id="chart" viewBox="0 0 520 170" role="img"></svg><div class="legend" id="legend"></div></div></div>
-    <div class="card" id="hostCard" hidden><h4><span class="num">03</span><span data-i18n="host_t">Quién fija el paso</span></h4><div class="tw"><table id="hostTable"></table></div></div>
-    <div class="card" id="doCard" hidden><h4><span class="num">04</span><span data-i18n="do_t">Qué hacer</span></h4><ol class="steps" id="steps"></ol></div>
-    <div class="card" id="recCard" hidden><h4><span class="num">01</span><span data-i18n="rec_t">Cómo terminó, según el .rec</span></h4><div id="recBody"></div></div>
-  </section>
+  <div class="resultado" id="resultado" aria-live="polite">
+   <div class="vacio" data-i18n="vacio">El diagnóstico aparece aquí. Al terminar la carga se muestra el de una corrida de ejemplo.</div>
+  </div>
+ </section>
+
+ <section class="texto">
+  <h2 data-i18n="c_t">Cómo funciona</h2>
+  <div class="columnas">
+   <div>
+    <p data-i18n="c_1">PEST y PEST++ limitan cuánto puede cambiar cada parámetro en una iteración, con RELPARMAX, FACPARMAX o ABSPARMAX. Si un parámetro pide más que su límite, el vector de actualización completo se acorta con un único factor:</p>
+    <div class="formula">β = mín<sub>i</sub> ( límite<sub>i</sub> / |Δ<sub>i</sub>| )</div>
+    <p data-i18n="c_2">Un parámetro con límite relativo que parte cerca de cero, como un exponente, una tendencia o un gradiente, tiene un límite muy pequeño y solo puede crecer por un factor fijo en cada iteración. Mientras llega a su valor, β frena también al resto. Si además los datos lo informan poco, la función objetivo apenas baja y el criterio de término puede cumplirse lejos del óptimo.</p>
+   </div>
+   <div>
+    <p data-i18n="c_3">Con el Jacobiano, los residuales y el archivo de control, la página calcula el paso de Gauss-Newton por descomposición en valores singulares, le aplica los límites y compara tres mejoras de la función objetivo: la que se obtiene tal como está, la que se obtendría sosteniendo los parámetros que fijan β y la que se obtendría sin el límite. A las dos últimas les descuenta lo que se ganaría solo por ajustar ruido.</p>
+    <p data-i18n="c_4">El resultado es una predicción lineal. Antes de adoptarlo conviene comprobarlo con una iteración.</p>
+    <p class="fino" data-i18n="c_5">El mecanismo está descrito en el manual de PEST (Doherty, 2018, parte I, secciones 3.4.5, 3.4.8 y 6.2) y aplica igual a PEST++ (White y otros, 2020). El cálculo es el mismo código Python del estudio, <code>py/discriminador.py</code>, ejecutado en el navegador.</p>
+   </div>
+  </div>
+ </section>
+
+ <section class="texto">
+  <h2 data-i18n="p_t">El caso de prueba</h2>
+  <p data-i18n="p_1" style="max-width:76ch">El procedimiento se probó en el modelo sintético de Freyberg en MODFLOW 6, con una sola modificación: a los puntos piloto habituales se agregó un decaimiento de la conductividad con la profundidad, con un exponente por unidad iniciado en −0,001 y una de las ocho unidades sin pozos de observación. PEST 18.25 declaró la optimización completa en la segunda iteración, con más del doble de la función objetivo que se alcanza al calibrar bien.</p>
+  <ul class="cifras">
+   <li><b>37 % → 46 %</b><span data-i18n="n_1">Mejora anticipada al sostener los exponentes y mejora medida al hacerlo, en una iteración y con el mismo Jacobiano.</span></li>
+   <li><b>52 % → 53 %</b><span data-i18n="n_2">Mejora anticipada al cambiar el tipo de límite y mejora medida en la primera iteración.</span></li>
+   <li><b>286 / 680</b><span data-i18n="n_3">Corridas del modelo que necesitó PEST++ para llegar al mismo ajuste, con y sin el diagnóstico sobre su primer Jacobiano.</span></li>
+   <li><b>173 / 173</b><span data-i18n="n_4">Veredictos correctos en corridas terminadas por criterio propio, de 13 variantes del mismo modelo.</span></li>
+  </ul>
+  <div class="figuras">
+   <figure><img src="img/fig_modelo.png" alt="" data-i18n-alt="f1_alt" loading="lazy" width="1500" height="1220"><figcaption data-i18n="f1">Modelo de Freyberg con las ocho unidades y el decaimiento de K con la profundidad que se agregó. La calibración parte con un exponente de −0,001; los valores verdaderos están entre −0,74 y −1,61.</figcaption></figure>
+   <figure><img src="img/fig_phi.png" alt="" data-i18n-alt="f2_alt" loading="lazy" width="1500" height="1551"><figcaption data-i18n="f2">Función objetivo frente a corridas del modelo. PEST se detiene en la iteración 2. Sosteniendo los exponentes y reiniciando desde el mismo Jacobiano, recupera la mitad del desajuste con ocho corridas.</figcaption></figure>
+  </div>
+  <p class="fino" style="margin-top:22px" data-i18n="p_2">Las trece variantes comparten el mismo modelo base, por lo que la validación no reemplaza la comprobación en un modelo propio. Las cifras y los archivos de cada corrida están en el repositorio del estudio.</p>
+ </section>
 </main>
 
-<section class="how" id="how">
-  <h2 data-i18n="how_t">Cómo funciona</h2>
-  <p data-i18n="how_1">PEST, PEST_HP y PEST++ limitan cuánto puede cambiar cada parámetro en una iteración (RELPARMAX, FACPARMAX, ABSPARMAX). Si un parámetro pide más de lo permitido, el <b>vector de actualización completo</b> se acorta con un solo factor:</p>
-  <div class="f">β = mín<sub>i</sub> ( límite<sub>i</sub> / |Δ<sub>i</sub>| )</div>
-  <p data-i18n="how_2">Un parámetro con límite <i>relativo</i> que nace cerca de cero (un exponente, una tendencia, un gradiente) tiene un límite diminuto: solo puede crecer ×(1+RELPARMAX) por iteración, y mientras tanto β frena también a todos los demás. Si además los datos lo informan poco, la función objetivo no baja, el criterio de término se cumple y PEST declara <i>Optimisation complete</i> lejos del óptimo.</p>
-  <p data-i18n="how_3">Con el Jacobiano final, los residuales y el archivo de control, la página calcula el paso de Gauss-Newton por SVD truncada, aplica el límite exactamente como lo hace PEST, y compara tres ganancias: la que PEST logra tal como está, la que lograría sosteniendo a los parámetros que fijan β, y la que lograría sin el límite. La diferencia es lo que el limitador está bloqueando. Es una predicción lineal: valida siempre con una corrida antes de adoptar el resultado.</p>
-  <p class="src" data-i18n="how_4">Método y validación (122 corridas con verdad conocida (117 aciertos), Freyberg MODFLOW 6, PEST 18.25 / PEST++ 5.2.16): Ayala, N. &amp; López, D. (2026). El código Python que corre aquí es el mismo del estudio, sin modificar (<code>py/discriminador.py</code>, SHA-256 en el repositorio). Referencias: Doherty (2018) PEST Manual Part I §3.4.5, §3.4.8, §6.2.2; White et al. (2020) PEST++ v5, T&amp;M 7-C26 §3.2.5.</p>
-</section>
-
-<footer><span>Jacobian Helper · Nicolás Ayala (Arcadis) &amp; Daniel López (GWLab)</span><span><a href="https://github.com/nicoayalageo/Jacobian-Helper">github.com/nicoayalageo/Jacobian-Helper</a></span></footer>
-</div>
+<footer>
+ <div class="ancho">
+  <p data-i18n="pie_1">Ayala, N. y López, D. (2026). Antes de recalibrar, cómo saber si una corrida PEST estancada se puede rescatar desde el Jacobiano ya calculado. XVII Congreso Geológico Chileno, Valdivia, sesión AT2.6.</p>
+  <p><span data-i18n="pie_2">Nicolás Ayala (Arcadis) y Daniel López (GWLab). Código abierto con licencia MIT:</span> <a href="https://github.com/nicoayalageo/Jacobian-Helper">github.com/nicoayalageo/Jacobian-Helper</a></p>
+ </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
 <script>
 const I18N = {
- es:{tag:"¿PEST se detuvo antes de tiempo?",
-  lead:"Arrastra los archivos de una corrida de <b>PEST, PEST_HP o PEST++</b> que se estancó. Con el Jacobiano que ya pagaste, la página dice si el <b>límite de cambio por iteración</b> está frenando la calibración, qué parámetro la sostiene y cuánta mejora hay disponible — <b>sin correr el modelo</b>.",
-  privacy:"Los archivos no salen de tu navegador: no hay servidor, el cálculo corre aquí mismo.",
-  files:"Archivos de la corrida", drop1:"Suelta aquí los archivos, o haz clic", drop2:".pst · .jco / .jcb · .res / .rei — y si los tiene, .par, .rec y los CSV externos",
-  run:"Diagnosticar", ex1:"Ejemplo: corrida congelada", ex2:"Ejemplo: convergencia sana",
-  loading:"Cargando el motor de cálculo (Python en el navegador, ~10 MB la primera vez)…", ready:"Listo. Suelta tus archivos o prueba un ejemplo.", running:"Calculando…",
-  v_empty_t:"Todavía no hay diagnóstico", v_empty_p:"Cuando el motor termine de cargar se analizará el ejemplo de una corrida congelada; después puedes soltar la tuya.",
-  gains_t:"Cuánta mejora bloquea el límite", host_t:"Quién fija el paso", do_t:"Qué hacer", rec_t:"Cómo terminó, según el .rec", how_t:"Cómo funciona",
-  how_1:"PEST, PEST_HP y PEST++ limitan cuánto puede cambiar cada parámetro en una iteración (RELPARMAX, FACPARMAX, ABSPARMAX). Si un parámetro pide más de lo permitido, el <b>vector de actualización completo</b> se acorta con un solo factor:",
-  how_2:"Un parámetro con límite <i>relativo</i> que nace cerca de cero (un exponente, una tendencia, un gradiente) tiene un límite diminuto: solo puede crecer ×(1+RELPARMAX) por iteración, y mientras tanto β frena también a todos los demás. Si además los datos lo informan poco, la función objetivo no baja, el criterio de término se cumple y PEST declara <i>Optimisation complete</i> lejos del óptimo.",
-  how_3:"Con el Jacobiano final, los residuales y el archivo de control, la página calcula el paso de Gauss-Newton por SVD truncada, aplica el límite exactamente como lo hace PEST, y compara tres ganancias: la que PEST logra tal como está, la que lograría sosteniendo a los parámetros que fijan β, y la que lograría sin el límite. La diferencia es lo que el limitador está bloqueando. Es una predicción lineal: valida siempre con una corrida antes de adoptar el resultado.",
-  how_4:"Método y validación (122 corridas con verdad conocida (117 aciertos), Freyberg MODFLOW 6, PEST 18.25 / PEST++ 5.2.16): Ayala, N. &amp; López, D. (2026). El código Python que corre aquí es el mismo del estudio, sin modificar (<code>py/discriminador.py</code>, SHA-256 en el repositorio). Referencias: Doherty (2018) PEST Manual Part I §3.4.5, §3.4.8, §6.2.2; White et al. (2020) PEST++ v5, T&amp;M 7-C26 §3.2.5.",
-  // resultados
-  STRANGLED_t:"El límite de cambio está frenando la calibración", STRANGLED_p:"El vector de actualización está colapsado (β = {beta}). PEST se detuvo por el limitador, no por falta de información: hay {perd} % de mejora disponible.",
-  HEALTHY_t:"El límite no está estorbando", HEALTHY_p:"El paso de PEST casi no pierde nada por el limitador. Si phi no baja, la causa es otra: derivadas, pesos, convergencia del modelo. No toques los límites.",
-  NO_INFORMATION_t:"No hay nada que rescatar desde este Jacobiano", NO_INFORMATION_p:"El desajuste restante no se explica desde estas sensibilidades ({gsl} % recuperable, dentro del ruido de la linealización). El límite está en los datos o en el modelo, no en la configuración de PEST.",
-  k_phi:"phi actual", k_beta:"β (factor de avance)", k_beta_h:"1 = paso completo", k_reh:"quien fija β", k_reh_h:"límite {tipo}, valor {val}", k_par:"parámetros", k_par_h:"{n} ajustables de {t}", k_obs:"observaciones", k_rank:"rango numérico", k_rank_h:"de {n} direcciones",
-  g_lim:"tal como está", g_grupo:"sosteniendo {n} rehén(es)", g_sin:"sin el limitador", g_leg1:"ganancia de phi en el próximo paso, predicción lineal", g_x:"parámetros sostenidos", g_y:"mejora de phi",
-  th_par:"parámetro", th_tipo:"límite", th_val:"valor", th_lim:"límite = ", th_ord:"orden", h_note:"Sostener uno solo puede no servir: otro pasa a fijar el paso (PEST Manual I §6.2.2). El orden es el que conviene.",
-  s1_t:"Sostener los rehenes y reiniciar desde este mismo Jacobiano (no se recalcula nada).", s1_c:"En el .pst: partrans = fixed para {names}\nPEST / PEST_HP:   echo caso.jco | pest caso /i        (el .jco solo con las columnas ajustables)\nPEST++GLM:        ++base_jacobian(caso.jcb)  ++hotstart_resfile(caso.res)",
-  s2_t:"Cambiarle el tipo de límite a los que nacen cerca de cero (exige Jacobiano nuevo).", s2_c:"Opción A (PEST y PEST++): OFFSET + log.   partrans log, parchglim factor, offset = -O, parval1/cotas desplazadas +O\nOpción B (solo PEST):     parchglim absolute(1)  y en la línea 6 del control data:  absparmax(1)=<paso máximo>",
-  s3_t:"Revisar si {name} debe estar en la calibración: si los datos no lo informan, sostenerlo es legítimo.",
-  s_val:"Valida siempre con una corrida antes de adoptar el resultado: la ganancia es una predicción lineal.",
-  s_no:"No hay intervención recomendada sobre los límites.",
-  r_razon:"razón", r_it:"iteraciones", r_de:"de", r_lim:"topó el límite", r_sosp:"Se detuvo muy por debajo de NOPTMAX: sospechoso.", r_none:"No se entregó el .rec; se omite este chequeo.",
-  f_pst:"control", f_jco:"Jacobiano", f_res:"residuales", f_par:"valores finales", f_rec:"registro", f_csv:"tabla externa", f_ok:"listo", f_miss:"falta", f_opt:"opcional", f_ign:"ignorado",
-  err_pre:"No se pudo diagnosticar: ", ex_note:"Ejemplo cargado desde el repositorio: {d}."},
- en:{tag:"Did PEST stop too early?",
-  lead:"Drop the files of a <b>PEST, PEST_HP or PEST++</b> run that stalled. Using the Jacobian you already paid for, this page tells whether the <b>per-iteration change limit</b> is holding the calibration back, which parameter is pinning it and how much improvement is available — <b>without running the model</b>.",
-  privacy:"Your files never leave the browser: there is no server, the computation runs right here.",
-  files:"Run files", drop1:"Drop the files here, or click", drop2:".pst · .jco / .jcb · .res / .rei — plus .par, .rec and external CSVs if you have them",
-  run:"Diagnose", ex1:"Example: frozen run", ex2:"Example: healthy convergence",
-  loading:"Loading the compute engine (Python in the browser, ~10 MB the first time)…", ready:"Ready. Drop your files or try an example.", running:"Computing…",
-  v_empty_t:"No diagnosis yet", v_empty_p:"Once the engine loads, the frozen-run example is analysed; then drop your own.",
-  gains_t:"How much improvement the limit is blocking", host_t:"Who pins the step", do_t:"What to do", rec_t:"How it ended, per the .rec", how_t:"How it works",
-  how_1:"PEST, PEST_HP and PEST++ cap how much each parameter may change per iteration (RELPARMAX, FACPARMAX, ABSPARMAX). If one parameter asks for more than allowed, the <b>whole upgrade vector</b> is shortened by a single factor:",
-  how_2:"A <i>relative</i>-limited parameter that starts near zero (an exponent, a trend, a gradient) has a tiny limit: it can only grow ×(1+RELPARMAX) per iteration, and meanwhile β also holds everyone else back. If the data barely inform it, the objective function does not drop, the termination criterion is met and PEST declares <i>Optimisation complete</i> far from the optimum.",
-  how_3:"From the final Jacobian, the residuals and the control file, the page computes the Gauss-Newton step by truncated SVD, applies the limit exactly as PEST does, and compares three gains: what PEST achieves as configured, what it would achieve holding the parameters that pin β, and what it would achieve without the limit. The difference is what the limiter is blocking. It is a linear prediction: always validate with one run before adopting the result.",
-  how_4:"Method and validation (189 runs with known truth, Freyberg MODFLOW 6, PEST 18.25 / PEST++ 5.2.16): Ayala, N. &amp; López, D. (2026). The Python running here is the study's own code, unmodified (<code>py/discriminador.py</code>, SHA-256 in the repository). References: Doherty (2018) PEST Manual Part I §3.4.5, §3.4.8, §6.2.2; White et al. (2020) PEST++ v5, T&amp;M 7-C26 §3.2.5.",
-  STRANGLED_t:"The change limit is holding the calibration back", STRANGLED_p:"The upgrade vector is collapsed (β = {beta}). PEST stopped because of the limiter, not for lack of information: {perd} % improvement is available.",
-  HEALTHY_t:"The limit is not in the way", HEALTHY_p:"PEST's step loses almost nothing to the limiter. If phi is not dropping, look elsewhere: derivatives, weights, model convergence. Leave the limits alone.",
-  NO_INFORMATION_t:"Nothing to rescue from this Jacobian", NO_INFORMATION_p:"The remaining misfit is not explained by these sensitivities ({gsl} % recoverable, within linearisation noise). The limit is in the data or the model, not in PEST's settings.",
-  k_phi:"current phi", k_beta:"β (step factor)", k_beta_h:"1 = full step", k_reh:"pins β", k_reh_h:"{tipo} limit, value {val}", k_par:"parameters", k_par_h:"{n} adjustable of {t}", k_obs:"observations", k_rank:"numerical rank", k_rank_h:"of {n} directions",
-  g_lim:"as configured", g_grupo:"holding {n} hostage(s)", g_sin:"without the limiter", g_leg1:"phi gain in the next step, linear prediction", g_x:"parameters held", g_y:"phi improvement",
-  th_par:"parameter", th_tipo:"limit", th_val:"value", th_lim:"limit = ", th_ord:"order", h_note:"Holding just one may not help: another takes over pinning the step (PEST Manual I §6.2.2). The order shown is the useful one.",
-  s1_t:"Hold the hostages and restart from this very Jacobian (nothing is recomputed).", s1_c:"In the .pst: partrans = fixed for {names}\nPEST / PEST_HP:   echo case.jco | pest case /i        (a .jco with the adjustable columns only)\nPEST++GLM:        ++base_jacobian(case.jcb)  ++hotstart_resfile(case.res)",
-  s2_t:"Change the limit type of the near-zero parameters (needs a new Jacobian).", s2_c:"Option A (PEST and PEST++): OFFSET + log.   partrans log, parchglim factor, offset = -O, parval1/bounds shifted +O\nOption B (PEST only):       parchglim absolute(1)  and on control-data line 6:  absparmax(1)=<max step>",
-  s3_t:"Ask whether {name} belongs in the calibration: if the data do not inform it, holding it is legitimate.",
-  s_val:"Always validate with one run before adopting the result: the gain is a linear prediction.",
-  s_no:"No intervention on the limits is recommended.",
-  r_razon:"reason", r_it:"iterations", r_de:"of", r_lim:"hit the limit", r_sosp:"Stopped far below NOPTMAX: suspicious.", r_none:"No .rec provided; this check is skipped.",
-  f_pst:"control", f_jco:"Jacobian", f_res:"residuals", f_par:"final values", f_rec:"record", f_csv:"external table", f_ok:"ok", f_miss:"missing", f_opt:"optional", f_ign:"ignored",
-  err_pre:"Could not diagnose: ", ex_note:"Example loaded from the repository: {d}."}
-};
-let lang = "es"; try{ const s = localStorage.getItem("jh-lang"); lang = s || ((navigator.language||"es").startsWith("en") ? "en" : "es"); }catch(e){}
-const T = (k, vars={}) => (I18N[lang][k] ?? I18N.es[k] ?? k).replace(/\{(\w+)\}/g, (_, v) => vars[v] ?? "");
-function applyLang(){
-  document.documentElement.lang = lang;
+es:{
+ a_idioma:"Idioma", a_tema:"Cambiar entre tema claro y oscuro",
+ titulo:"¿PEST se detuvo antes de tiempo?",
+ bajada:"Jacobian Helper revisa una calibración estancada con archivos que ya existen: el archivo de control, el Jacobiano y los residuales. Indica si el límite de cambio por iteración está frenando el avance, qué parámetros lo provocan y cuánto bajaría la función objetivo al corregirlo.",
+ nota:"No corre el modelo. Los archivos se leen en este navegador y no se envían a ningún servidor.",
+ ir:"Revisar una corrida", fondo:"Fondo: equipotenciales del modelo de Freyberg usado como caso de prueba.",
+ mec_t:"Qué ocurre dentro de una iteración",
+ mec_alt:"Cinco parámetros con el cambio que calcula PEST. Uno de ellos supera su límite y todos los cambios se reducen por el mismo factor.",
+ mec_1:"PEST calcula el cambio de cada parámetro. Uno de ellos, poco informado y cercano a cero, pide mucho más de lo que permite su límite.",
+ mec_2:"Para respetar ese límite se acorta el vector completo con un solo factor. Los parámetros que sí tenían información casi no se mueven.",
+ mec_k:"K, zona {n}", mec_e:"Exponente", mec_lim:"Su límite",
+ h_t:"Revisar una corrida", s1:"Arrastra los archivos aquí", s2:"o haz clic para elegirlos", limpiar:"Quitar todos",
+ aj_t:"Usar otros límites", aj_ph:"El del archivo", correr:"Diagnosticar",
+ cargando:"Preparando el cálculo. La primera vez descarga unos 10 MB.", listo:"Listo para diagnosticar.", calculando:"Calculando.",
+ listo_ej:"Se muestra el ejemplo «{d}».",
+ ej_t:"O prueba con una corrida de ejemplo",
+ vacio:"El diagnóstico aparece aquí. Al terminar la carga se muestra el de una corrida de ejemplo.",
+ f_pst:"Archivo de control (.pst)", f_jco:"Jacobiano (.jco o .jcb)", f_res:"Residuales (.res o .rei)", f_par:"Valores finales (.par)", f_rec:"Registro (.rec)", f_csv:"Tabla externa (.csv)",
+ f_falta:"Falta", f_opc:"Opcional",
+ c_STRANGLED:"Estrangulada", c_HEALTHY:"Sana", c_NO_INFORMATION:"Nada que recuperar",
+ t_STRANGLED:"El límite de cambio está frenando la calibración",
+ p_STRANGLED:"Con los límites actuales el próximo paso mejora la función objetivo en {glim} %. Sosteniendo {n} y reiniciando desde este mismo Jacobiano mejoraría cerca de {ggr} %, y sin el límite, {gex} %. La corrida no se detuvo por falta de información.",
+ p_STRANGLED_0:"Con los límites actuales el próximo paso mejora la función objetivo en {glim} %. Sostener parámetros no alcanza en este caso. Sin el límite de cambio la mejora sería de {gex} %, lo que apunta a cambiar el tipo de límite.",
+ p_STRANGLED_1:"un parámetro", p_STRANGLED_n:"{n} parámetros",
+ t_HEALTHY:"El límite de cambio no está estorbando",
+ p_HEALTHY:"El próximo paso mejora la función objetivo en {glim} % con los límites actuales, casi lo mismo que sin ellos. Si la función objetivo no baja, conviene revisar las derivadas, los pesos o la convergencia del modelo antes que los límites.",
+ t_NO_INFORMATION:"Desde este Jacobiano no hay nada que recuperar",
+ p_NO_INFORMATION:"Quitando los límites, la mejora que queda después de descontar el ajuste de ruido es de {gex} %. El desajuste restante no proviene de la configuración de PEST. Hay que buscarlo en los datos o en el modelo.",
+ b_fin:"Cómo terminó la corrida",
+ fin_1:"Terminó en la iteración {a} de {b} permitidas.", fin_razon:"Motivo registrado:", fin_phi:"Función objetivo por iteración: {p}.",
+ fin_tope:"El último parámetro que alcanzó su límite fue {x}.", fin_no:"No se entregó el archivo .rec, así que no se sabe cómo terminó.",
+ b_paso:"Cuánto se acorta el paso",
+ paso_1:"El paso de Gauss-Newton se reduce a {f} de su largo. Lo fija <b class=\"mono\">{x}</b>, que tiene límite {tipo} y vale {v}, por lo que en una iteración puede cambiar a lo más {l}.",
+ b_mej:"Mejora disponible según cuántos parámetros se sostienen",
+ g_eje:"Parámetros sostenidos", g_sin:"Sin el límite, descontado el ruido", g_bar:"Mejora de la función objetivo en el próximo paso", g_tabla:"Ver como tabla",
+ g_globo:"Sosteniendo {i}: {v} %", g_col1:"Sostenidos", g_col2:"Se agrega", g_col3:"Mejora anticipada",
+ b_quien:"Qué parámetros sostener",
+ q_nota:"El orden es el que conviene. Al sostener uno solo, otro puede pasar a fijar el paso.",
+ th_ord:"Orden", th_par:"Parámetro", th_tipo:"Límite", th_val:"Valor", th_max:"Cambio máximo por iteración",
+ tipo_relative:"relativo", tipo_factor:"de factor", tipo_absolute:"absoluto",
+ b_hacer:"Qué hacer",
+ h1:"Sostener esos parámetros y reiniciar desde este mismo Jacobiano. No hace falta recalcular sensibilidades.",
+ h1c:"En {pst}: partrans = fixed para {names}\n\nPEST      echo {jco} | pest {base} /i\n          (el Jacobiano solo con las columnas de los parámetros ajustables)\nPEST++    ++base_jacobian({jco})\n          ++hotstart_resfile({res})",
+ h2:"Cambiar el tipo de límite de los parámetros que parten cerca de cero. Esto sí exige un Jacobiano nuevo.",
+ h2c:"PEST y PEST++   partrans log, parchglim factor, con un OFFSET que aleje el valor de cero\nSolo PEST       parchglim absolute(1) y ABSPARMAX(1) en la sexta línea de control data",
+ h3:"Revisar si <b class=\"mono\">{x}</b> debe calibrarse. Si los datos no lo informan, sostenerlo es una decisión válida.",
+ h4:"Comprobar con una iteración antes de adoptar el resultado. La mejora es una predicción lineal.",
+ h_no:"No se recomienda intervenir sobre los límites.",
+ det:"Se analizaron {n} parámetros ajustables de {t} y {o} observaciones. Rango numérico del Jacobiano: {r}. {par}",
+ det_par:"Valores de parámetros tomados del archivo .par.", det_ini:"No se entregó el archivo .par, así que se usaron los valores iniciales del archivo de control.",
+ copiar:"Copiar", copiado:"Copiado",
+ e_pre:"No se pudo diagnosticar. ", e_faltan:"Faltan archivos: {x}.", e_ext:"El archivo de control pide la tabla externa {x} y no se entregó.",
+ e_denso:"El Jacobiano está en el formato denso de PEST++, que todavía no se lee.", e_col:"Ninguna columna del Jacobiano corresponde a un parámetro ajustable del archivo de control.",
+ e_fil:"Ninguna fila del Jacobiano tiene residual en el archivo de residuales.", e_motor:"No se pudo cargar el cálculo: ",
+ c_t:"Cómo funciona",
+ c_1:"PEST y PEST++ limitan cuánto puede cambiar cada parámetro en una iteración, con RELPARMAX, FACPARMAX o ABSPARMAX. Si un parámetro pide más que su límite, el vector de actualización completo se acorta con un único factor:",
+ c_2:"Un parámetro con límite relativo que parte cerca de cero, como un exponente, una tendencia o un gradiente, tiene un límite muy pequeño y solo puede crecer por un factor fijo en cada iteración. Mientras llega a su valor, β frena también al resto. Si además los datos lo informan poco, la función objetivo apenas baja y el criterio de término puede cumplirse lejos del óptimo.",
+ c_3:"Con el Jacobiano, los residuales y el archivo de control, la página calcula el paso de Gauss-Newton por descomposición en valores singulares, le aplica los límites y compara tres mejoras de la función objetivo: la que se obtiene tal como está, la que se obtendría sosteniendo los parámetros que fijan β y la que se obtendría sin el límite. A las dos últimas les descuenta lo que se ganaría solo por ajustar ruido.",
+ c_4:"El resultado es una predicción lineal. Antes de adoptarlo conviene comprobarlo con una iteración.",
+ c_5:"El mecanismo está descrito en el manual de PEST (Doherty, 2018, parte I, secciones 3.4.5, 3.4.8 y 6.2) y aplica igual a PEST++ (White y otros, 2020). El cálculo es el mismo código Python del estudio, <code>py/discriminador.py</code>, ejecutado en el navegador.",
+ p_t:"El caso de prueba",
+ p_1:"El procedimiento se probó en el modelo sintético de Freyberg en MODFLOW 6, con una sola modificación: a los puntos piloto habituales se agregó un decaimiento de la conductividad con la profundidad, con un exponente por unidad iniciado en −0,001 y una de las ocho unidades sin pozos de observación. PEST 18.25 declaró la optimización completa en la segunda iteración, con más del doble de la función objetivo que se alcanza al calibrar bien.",
+ n_1:"Mejora anticipada al sostener los exponentes y mejora medida al hacerlo, en una iteración y con el mismo Jacobiano.",
+ n_2:"Mejora anticipada al cambiar el tipo de límite y mejora medida en la primera iteración.",
+ n_3:"Corridas del modelo que necesitó PEST++ para llegar al mismo ajuste, con y sin el diagnóstico sobre su primer Jacobiano.",
+ n_4:"Veredictos correctos en corridas terminadas por criterio propio, de 13 variantes del mismo modelo.",
+ f1:"Modelo de Freyberg con las ocho unidades y el decaimiento de K con la profundidad que se agregó. La calibración parte con un exponente de −0,001; los valores verdaderos están entre −0,74 y −1,61.",
+ f1_alt:"Planta del modelo con ocho unidades, puntos piloto, pozos y río, junto a las curvas de K relativa frente a la profundidad.",
+ f2:"Función objetivo frente a corridas del modelo. PEST se detiene en la iteración 2. Sosteniendo los exponentes y reiniciando desde el mismo Jacobiano, recupera la mitad del desajuste con ocho corridas.",
+ f2_alt:"Curvas de la función objetivo frente a corridas acumuladas para PEST, PEST++ y los rescates.",
+ p_2:"Las trece variantes comparten el mismo modelo base, por lo que la validación no reemplaza la comprobación en un modelo propio. Las cifras y los archivos de cada corrida están en el repositorio del estudio.",
+ pie_1:"Ayala, N. y López, D. (2026). Antes de recalibrar, cómo saber si una corrida PEST estancada se puede rescatar desde el Jacobiano ya calculado. XVII Congreso Geológico Chileno, Valdivia, sesión AT2.6.",
+ pie_2:"Nicolás Ayala (Arcadis) y Daniel López (GWLab). Código abierto con licencia MIT:"
+},
+en:{
+ a_idioma:"Language", a_tema:"Switch between light and dark theme",
+ titulo:"Did PEST stop too early?",
+ bajada:"Jacobian Helper reviews a stalled calibration using files you already have: the control file, the Jacobian and the residuals. It tells whether the per-iteration change limit is holding progress back, which parameters cause it and how much the objective function would drop once fixed.",
+ nota:"It does not run the model. Files are read in this browser and are not sent to any server.",
+ ir:"Review a run", fondo:"Background: head contours of the Freyberg model used as the test case.",
+ mec_t:"What happens inside one iteration",
+ mec_alt:"Five parameters with the change PEST computes. One exceeds its limit and every change is scaled down by the same factor.",
+ mec_1:"PEST computes a change for each parameter. One of them, poorly informed and close to zero, asks for far more than its limit allows.",
+ mec_2:"To respect that limit the whole vector is shortened by a single factor. The parameters that did have information barely move.",
+ mec_k:"K, zone {n}", mec_e:"Exponent", mec_lim:"Its limit",
+ h_t:"Review a run", s1:"Drop the files here", s2:"or click to choose them", limpiar:"Remove all",
+ aj_t:"Use other limits", aj_ph:"From the file", correr:"Diagnose",
+ cargando:"Preparing the calculation. The first visit downloads about 10 MB.", listo:"Ready to diagnose.", calculando:"Computing.",
+ listo_ej:"Showing the example “{d}”.",
+ ej_t:"Or try an example run",
+ vacio:"The diagnosis appears here. Once loading finishes, an example run is shown.",
+ f_pst:"Control file (.pst)", f_jco:"Jacobian (.jco or .jcb)", f_res:"Residuals (.res or .rei)", f_par:"Final values (.par)", f_rec:"Run record (.rec)", f_csv:"External table (.csv)",
+ f_falta:"Missing", f_opc:"Optional",
+ c_STRANGLED:"Strangled", c_HEALTHY:"Healthy", c_NO_INFORMATION:"Nothing to recover",
+ t_STRANGLED:"The change limit is holding the calibration back",
+ p_STRANGLED:"With the current limits the next step improves the objective function by {glim} %. Holding {n} and restarting from this same Jacobian would improve it by about {ggr} %, and without the limit, {gex} %. The run did not stop for lack of information.",
+ p_STRANGLED_0:"With the current limits the next step improves the objective function by {glim} %. Holding parameters is not enough here. Without the change limit the improvement would be {gex} %, which points to changing the limit type.",
+ p_STRANGLED_1:"one parameter", p_STRANGLED_n:"{n} parameters",
+ t_HEALTHY:"The change limit is not in the way",
+ p_HEALTHY:"The next step improves the objective function by {glim} % with the current limits, nearly the same as without them. If the objective function is not dropping, check derivatives, weights or model convergence before the limits.",
+ t_NO_INFORMATION:"Nothing to recover from this Jacobian",
+ p_NO_INFORMATION:"With the limits removed, the improvement left after discounting noise fitting is {gex} %. The remaining misfit does not come from PEST settings. Look for it in the data or in the model.",
+ b_fin:"How the run ended",
+ fin_1:"It ended at iteration {a} of {b} allowed.", fin_razon:"Recorded reason:", fin_phi:"Objective function by iteration: {p}.",
+ fin_tope:"The last parameter to reach its limit was {x}.", fin_no:"No .rec file was provided, so how the run ended is unknown.",
+ b_paso:"How much the step is shortened",
+ paso_1:"The Gauss-Newton step is reduced to {f} of its length. It is set by <b class=\"mono\">{x}</b>, which has a {tipo} limit and a value of {v}, so in one iteration it can change by at most {l}.",
+ b_mej:"Improvement available by number of parameters held",
+ g_eje:"Parameters held", g_sin:"Without the limit, noise discounted", g_bar:"Objective function improvement in the next step", g_tabla:"View as table",
+ g_globo:"Holding {i}: {v} %", g_col1:"Held", g_col2:"Added", g_col3:"Predicted improvement",
+ b_quien:"Which parameters to hold",
+ q_nota:"The order shown is the useful one. When only one is held, another may take over setting the step.",
+ th_ord:"Order", th_par:"Parameter", th_tipo:"Limit", th_val:"Value", th_max:"Largest change per iteration",
+ tipo_relative:"relative", tipo_factor:"factor", tipo_absolute:"absolute",
+ b_hacer:"What to do",
+ h1:"Hold those parameters and restart from this same Jacobian. No sensitivities need to be recomputed.",
+ h1c:"In {pst}: partrans = fixed for {names}\n\nPEST      echo {jco} | pest {base} /i\n          (the Jacobian with the adjustable-parameter columns only)\nPEST++    ++base_jacobian({jco})\n          ++hotstart_resfile({res})",
+ h2:"Change the limit type of the parameters that start near zero. This does need a new Jacobian.",
+ h2c:"PEST and PEST++   partrans log, parchglim factor, with an OFFSET that moves the value away from zero\nPEST only         parchglim absolute(1) and ABSPARMAX(1) on the sixth line of control data",
+ h3:"Check whether <b class=\"mono\">{x}</b> should be calibrated. If the data do not inform it, holding it is a valid decision.",
+ h4:"Confirm with one iteration before adopting the result. The improvement is a linear prediction.",
+ h_no:"No intervention on the limits is recommended.",
+ det:"{n} adjustable parameters of {t} and {o} observations were analysed. Numerical rank of the Jacobian: {r}. {par}",
+ det_par:"Parameter values taken from the .par file.", det_ini:"No .par file was provided, so the initial values in the control file were used.",
+ copiar:"Copy", copiado:"Copied",
+ e_pre:"The diagnosis could not be completed. ", e_faltan:"Missing files: {x}.", e_ext:"The control file asks for the external table {x}, which was not provided.",
+ e_denso:"The Jacobian is in the PEST++ dense format, which is not read yet.", e_col:"No Jacobian column matches an adjustable parameter in the control file.",
+ e_fil:"No Jacobian row has a residual in the residuals file.", e_motor:"The calculation could not be loaded: ",
+ c_t:"How it works",
+ c_1:"PEST and PEST++ cap how much each parameter may change in one iteration, through RELPARMAX, FACPARMAX or ABSPARMAX. If one parameter asks for more than its limit, the whole upgrade vector is shortened by a single factor:",
+ c_2:"A relative-limited parameter that starts near zero, such as an exponent, a trend or a gradient, has a very small limit and can only grow by a fixed factor per iteration. While it gets to its value, β holds everyone else back too. If the data also inform it poorly, the objective function barely drops and the termination criterion can be met far from the optimum.",
+ c_3:"From the Jacobian, the residuals and the control file, the page computes the Gauss-Newton step by singular value decomposition, applies the limits and compares three objective function improvements: the one obtained as configured, the one obtained by holding the parameters that set β, and the one obtained without the limit. The last two are discounted by what would be gained from fitting noise alone.",
+ c_4:"The result is a linear prediction. Confirm it with one iteration before adopting it.",
+ c_5:"The mechanism is described in the PEST manual (Doherty, 2018, part I, sections 3.4.5, 3.4.8 and 6.2) and applies equally to PEST++ (White and others, 2020). The calculation is the study's own Python code, <code>py/discriminador.py</code>, run in the browser.",
+ p_t:"The test case",
+ p_1:"The procedure was tested on the synthetic Freyberg model in MODFLOW 6 with a single modification: a decay of hydraulic conductivity with depth was added to the usual pilot points, with one exponent per unit starting at −0.001 and one of the eight units without observation wells. PEST 18.25 declared the optimisation complete at the second iteration, with more than twice the objective function reached by a good calibration.",
+ n_1:"Improvement predicted for holding the exponents and improvement measured when doing so, in one iteration with the same Jacobian.",
+ n_2:"Improvement predicted for changing the limit type and improvement measured in the first iteration.",
+ n_3:"Model runs PEST++ needed to reach the same fit, with and without the diagnosis on its first Jacobian.",
+ n_4:"Correct verdicts on runs that ended by their own criterion, from 13 variants of the same model.",
+ f1:"Freyberg model with the eight units and the added decay of K with depth. Calibration starts with an exponent of −0.001; the true values lie between −0.74 and −1.61. Figure labels are in Spanish.",
+ f1_alt:"Plan view of the model with eight units, pilot points, wells and river, next to curves of relative K against depth.",
+ f2:"Objective function against model runs. PEST stops at iteration 2. Holding the exponents and restarting from the same Jacobian recovers half of the misfit with eight runs. Figure labels are in Spanish.",
+ f2_alt:"Objective function curves against cumulative runs for PEST, PEST++ and the rescues.",
+ p_2:"The thirteen variants share the same base model, so the validation does not replace a check on your own model. Figures and files for every run are in the study repository.",
+ pie_1:"Ayala, N. and López, D. (2026). Antes de recalibrar, cómo saber si una corrida PEST estancada se puede rescatar desde el Jacobiano ya calculado. XVII Congreso Geológico Chileno, Valdivia, session AT2.6.",
+ pie_2:"Nicolás Ayala (Arcadis) and Daniel López (GWLab). Open source under the MIT licence:"
+}};
+
+const EJEMPLOS = [
+ {id:"detenida", dir:"detenida", archivos:["W0001.pst","W0001.jco","W0001.res","W0001.par","W0001.rec"],
+  es:["Corrida detenida", "PEST 18.25 declara la optimización completa en la iteración 2"],
+  en:["Stalled run", "PEST 18.25 declares the optimisation complete at iteration 2"]},
+ {id:"pestpp", dir:"pestpp", archivos:["it1.pst","it1.par_data.csv","it1.obs_data.csv","it1.pargp_data.csv","it1.tplfile_data.csv","it1.insfile_data.csv","it1.jcb","it1.rei","it1.par","it1.rec"],
+  es:["Primer Jacobiano de PEST++", "El mismo caso, revisado después de una sola iteración"],
+  en:["First PEST++ Jacobian", "The same case, reviewed after a single iteration"]},
+ {id:"convergida", dir:"convergida", archivos:["P0001.pst","P0001.jco","P0001.res","P0001.par","P0001.rec"],
+  es:["Corrida convergida", "Una variante que sí llegó al óptimo"],
+  en:["Converged run", "A variant that did reach the optimum"]}
+];
+
+// ------------------------------------------------------------ idioma y tema
+const guardar = (k, v) => { try{ localStorage.setItem(k, v); }catch(e){} };
+const leer = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } };
+let idioma = leer("jh-idioma") || ((navigator.language || "es").toLowerCase().startsWith("en") ? "en" : "es");
+const T = (k, v={}) => (I18N[idioma][k] ?? I18N.es[k] ?? k).replace(/\{(\w+)\}/g, (_, n) => v[n] ?? "");
+const $ = id => document.getElementById(id);
+function aplicarIdioma(){
+  document.documentElement.lang = idioma;
   document.querySelectorAll("[data-i18n]").forEach(el => { el.innerHTML = T(el.dataset.i18n); });
-  document.getElementById("l-es").setAttribute("aria-pressed", lang==="es"); document.getElementById("l-en").setAttribute("aria-pressed", lang==="en");
-  try{ localStorage.setItem("jh-lang", lang); }catch(e){}
-  if (last) render(last);
-  renderFiles();
+  document.querySelectorAll("[data-i18n-aria]").forEach(el => el.setAttribute("aria-label", T(el.dataset.i18nAria)));
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => el.setAttribute("placeholder", T(el.dataset.i18nPh)));
+  document.querySelectorAll("[data-i18n-alt]").forEach(el => el.setAttribute("alt", T(el.dataset.i18nAlt)));
+  $("l-es").setAttribute("aria-pressed", idioma === "es"); $("l-en").setAttribute("aria-pressed", idioma === "en");
+  guardar("jh-idioma", idioma);
+  dibujarMecanismo(); pintarEjemplos(); pintarArchivos(); ponerEstado();
+  if (ultimo) pintar(ultimo);
 }
-document.getElementById("l-es").onclick = () => { lang="es"; applyLang(); };
-document.getElementById("l-en").onclick = () => { lang="en"; applyLang(); };
+$("l-es").onclick = () => { idioma = "es"; aplicarIdioma(); };
+$("l-en").onclick = () => { idioma = "en"; aplicarIdioma(); };
+const temaGuardado = leer("jh-tema"); if (temaGuardado) document.documentElement.dataset.theme = temaGuardado;
+$("tema").onclick = () => {
+  const oscuro = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.dataset.theme = oscuro ? "light" : "dark"; guardar("jh-tema", document.documentElement.dataset.theme);
+};
 
-// ---------------------------------------------------------------- archivos
-const files = new Map();   // nombre -> {kind, data(ArrayBuffer|string)}
-const KIND = n => { const e = n.toLowerCase().split(".").pop(); return ({pst:"pst",jco:"jco",jcb:"jco",res:"res",rei:"res",par:"par",rec:"rec",csv:"csv"})[e] || null; };
-const REQ = ["pst","jco","res"], OPT = ["par","rec","csv"];
-async function addFiles(list, note){
-  for (const f of list){ const k = KIND(f.name); if (!k) continue;
-    files.set(f.name, {kind:k, data: k==="jco" ? await f.arrayBuffer() : await f.text()}); }
-  exampleNote = note || null; renderFiles();
+// ------------------------------------------------------------ ilustración
+function dibujarMecanismo(){
+  const filas = [[1, 250], [2, 190], [3, 280], [4, 150]];
+  let s = "";
+  filas.forEach(([n, largo], i) => { const y = 14 + i*36;
+    s += `<text x="0" y="${y+14}">${T("mec_k", {n})}</text><rect class="fantasma" x="108" y="${y}" width="${largo}" height="20" rx="4"/><rect class="paso" x="108" y="${y}" width="${largo}" height="20" rx="4"/>`; });
+  const y = 14 + 4*36 + 8;
+  s += `<text x="0" y="${y+14}">${T("mec_e")}</text><rect class="fantasma" x="108" y="${y}" width="320" height="20" rx="4"/><rect class="paso culpable" x="108" y="${y}" width="320" height="20" rx="4"/>`;
+  s += `<line class="tope" x1="${108+320*.07}" x2="${108+320*.07}" y1="${y-7}" y2="${y+27}"/><text x="${108+320*.07+7}" y="${y+40}">${T("mec_lim")}</text>`;
+  $("filas-mec").innerHTML = s;
 }
-function renderFiles(){
-  const ul = document.getElementById("fileList"); ul.innerHTML = "";
-  const have = k => [...files.values()].some(v => v.kind===k);
-  for (const k of [...REQ, ...OPT]){
-    const items = [...files.entries()].filter(([,v]) => v.kind===k);
-    if (!items.length){ if (k==="csv") continue;
-      const li = document.createElement("li"); li.className = REQ.includes(k) ? "miss" : "";
-      li.innerHTML = `<span class="k">${k}</span><span class="n">—</span><span class="s">${REQ.includes(k)?T("f_miss"):T("f_opt")}</span>`; ul.appendChild(li); continue; }
-    for (const [n] of items){ const li = document.createElement("li"); li.className = "ok";
-      li.innerHTML = `<span class="k">${k}</span><span class="n" title="${n}">${n}</span><span class="s">${T("f_ok")}</span>`; ul.appendChild(li); }
+
+// ------------------------------------------------------------ archivos
+const archivos = new Map();          // nombre -> {tipo, datos}
+const TIPO = n => ({pst:"pst", jco:"jco", jcb:"jco", res:"res", rei:"res", par:"par", rec:"rec", csv:"csv"})[n.toLowerCase().split(".").pop()] || null;
+const OBLIGATORIOS = ["pst","jco","res"], OPCIONALES = ["par","rec"];
+let ejemploActivo = null;
+async function agregar(lista){
+  for (const f of lista){ const t = TIPO(f.name); if (!t) continue;
+    if (t !== "csv") for (const [n, v] of archivos) if (v.tipo === t) archivos.delete(n);      // uno por tipo: el nuevo reemplaza
+    archivos.set(f.name, {tipo:t, datos: t === "jco" ? await f.arrayBuffer() : await f.text()}); }
+  pintarArchivos();
+}
+function pintarArchivos(){
+  const ul = $("lista"); ul.innerHTML = "";
+  const de = t => [...archivos.entries()].filter(([, v]) => v.tipo === t).map(([n]) => n);
+  for (const t of [...OBLIGATORIOS, ...OPCIONALES, "csv"]){
+    const n = de(t); if (t === "csv" && !n.length) continue;
+    const li = document.createElement("li"); if (!n.length && OBLIGATORIOS.includes(t)) li.className = "falta";
+    const a = document.createElement("span"), b = document.createElement("span");
+    a.textContent = T("f_" + t); b.textContent = n.length ? n.join(", ") : T(OBLIGATORIOS.includes(t) ? "f_falta" : "f_opc"); b.title = n.join(", ");
+    li.append(a, b); ul.appendChild(li);
   }
-  document.getElementById("run").disabled = !(pyReady && REQ.every(have));
+  $("limpiar").hidden = !archivos.size;
+  $("correr").disabled = !(motorListo && OBLIGATORIOS.every(t => de(t).length));
 }
-const drop = document.getElementById("drop"), inp = document.getElementById("fileInput");
-["dragenter","dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
-["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
-drop.addEventListener("drop", e => { files.clear(); addFiles(e.dataTransfer.files); });
-drop.addEventListener("keydown", e => { if (e.key==="Enter"||e.key===" ") { e.preventDefault(); inp.click(); } });
-inp.addEventListener("change", () => { files.clear(); addFiles(inp.files); });
+const soltar = $("soltar"), selector = $("selector-archivos");
+["dragenter","dragover"].forEach(ev => soltar.addEventListener(ev, e => { e.preventDefault(); soltar.classList.add("encima"); }));
+["dragleave","drop"].forEach(ev => soltar.addEventListener(ev, e => { e.preventDefault(); soltar.classList.remove("encima"); }));
+function propios(){ if (ejemploActivo){ archivos.clear(); ejemploActivo = null; pintarEjemplos(); } }
+soltar.addEventListener("drop", async e => { propios(); await agregar(e.dataTransfer.files); ponerEstado(); });
+soltar.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); selector.click(); } });
+selector.addEventListener("change", async () => { propios(); await agregar(selector.files); selector.value = ""; ponerEstado(); });
+$("limpiar").onclick = () => { archivos.clear(); ejemploActivo = null; pintarEjemplos(); pintarArchivos(); ponerEstado(); };
 
-async function loadExample(dir, names, label){
-  files.clear(); setStatus(T("running"));
+function pintarEjemplos(){
+  const c = $("ejemplos"); c.innerHTML = "";
+  for (const ej of EJEMPLOS){ const b = document.createElement("button");
+    b.innerHTML = `${ej[idioma][0]}<small>${ej[idioma][1]}</small>`; b.setAttribute("aria-current", ejemploActivo === ej.id);
+    b.onclick = () => cargarEjemplo(ej); c.appendChild(b); }
+}
+async function cargarEjemplo(ej){
+  archivos.clear(); ponerEstado("calculando");
   const fs = [];
-  for (const n of names){ const r = await fetch(`ejemplos/${dir}/${n}`); if (!r.ok) continue; const b = await r.blob(); fs.push(new File([b], n)); }
-  await addFiles(fs, T("ex_note", {d: label})); await run();
+  for (const n of ej.archivos){ const r = await fetch(`ejemplos/${ej.dir}/${n}`); if (r.ok) fs.push(new File([await r.blob()], n)); }
+  await agregar(fs); ejemploActivo = ej.id; pintarEjemplos(); await correr();
 }
-document.getElementById("ex1").onclick = () => loadExample("congelado", ["W0001.pst","W0001.jco","W0001.res","W0001.par","W0001.rec"], "Freyberg · K(z) por unidad · PEST 18.25, phi 1338 (óptimo 629)");
-document.getElementById("ex2").onclick = () => loadExample("sano", ["P0001.pst","P0001.jco","P0001.res","P0001.par","P0001.rec"], "Freyberg · K(z) por unidad, 44 pp · PEST 18.25, phi 597 (converge)");
 
-// ---------------------------------------------------------------- pyodide
-let pyodide = null, pyReady = false, last = null, exampleNote = null;
-const setStatus = (t, err=false) => { const s = document.getElementById("status"); s.textContent = t; s.className = "status" + (err ? " err" : ""); };
+// ------------------------------------------------------------ cálculo
+let pyodide = null, motorListo = false, ultimo = null, estado = ["cargando"];
+function ponerEstado(clave, error){
+  if (clave !== undefined) estado = [clave, error];
+  const [k, err] = estado, e = $("estado"); e.className = "estado" + (err ? " error" : "");
+  if (err) e.textContent = err;
+  else if (k === "listo" && ejemploActivo) e.textContent = T("listo_ej", {d: EJEMPLOS.find(x => x.id === ejemploActivo)[idioma][0]});
+  else e.textContent = T(k);
+}
 (async () => {
   try{
     pyodide = await loadPyodide(); await pyodide.loadPackage("numpy");
-    for (const m of ["discriminador.py","pestio.py"]){ const r = await fetch("py/"+m); pyodide.FS.writeFile(m, await r.text()); }
+    for (const m of ["discriminador.py","pestio.py"]){ const r = await fetch("py/" + m); pyodide.FS.writeFile(m, await r.text()); }
     await pyodide.runPythonAsync("import json, pestio");
-    pyReady = true; setStatus(T("ready")); renderFiles();
-    if (!files.size) document.getElementById("ex1").click();
-  }catch(e){ setStatus("Pyodide: " + e.message, true); }
+    motorListo = true; ponerEstado("listo"); pintarArchivos();
+    if (!archivos.size) cargarEjemplo(EJEMPLOS[0]);
+  }catch(e){ ponerEstado("listo", T("e_motor") + e.message); }
 })();
-document.getElementById("run").onclick = run;
-async function run(){
-  if (!pyReady) return; setStatus(T("running"));
+function traducirError(m){
+  let x;
+  if ((x = m.match(/faltan archivos: (.+)/))) return T("e_faltan", {x: x[1]});
+  if ((x = m.match(/archivo externo '([^']+)'/))) return T("e_ext", {x: x[1]});
+  if (/dense/.test(m)) return T("e_denso");
+  if (/ninguna columna/.test(m)) return T("e_col");
+  if (/ninguna fila/.test(m)) return T("e_fil");
+  return m.replace(/^\w*Error:\s*/, "");
+}
+$("correr").onclick = correr;
+async function correr(){
+  if (!motorListo) return; ponerEstado("calculando");
   try{
-    const obj = {}; for (const [n, v] of files) obj[n] = v.kind==="jco" ? new Uint8Array(v.data) : v.data;
+    const obj = {}; for (const [n, v] of archivos) obj[n] = v.tipo === "jco" ? new Uint8Array(v.datos) : v.datos;
     pyodide.globals.set("_archivos", pyodide.toPy(obj));
-    const rel = parseFloat(document.getElementById("relparmax").value), fac = parseFloat(document.getElementById("facparmax").value);
+    const rel = parseFloat($("relparmax").value.replace(",", ".")), fac = parseFloat($("facparmax").value.replace(",", "."));
     pyodide.globals.set("_rel", isFinite(rel) ? rel : null); pyodide.globals.set("_fac", isFinite(fac) ? fac : null);
-    const out = await pyodide.runPythonAsync(`
+    const salida = await pyodide.runPythonAsync(`
 _src = _archivos.to_py() if hasattr(_archivos, 'to_py') else _archivos
 _a = {k: (v if isinstance(v, str) else bytes(v)) for k, v in _src.items()}
 json.dumps(pestio.diagnosticar(_a, _rel, _fac), default=float)`);
-    last = JSON.parse(out); render(last); setStatus(exampleNote || T("ready"));
-  }catch(e){ const m = String(e.message||e).split("\n").filter(l => l.trim()).pop(); setStatus(T("err_pre") + m, true); }
+    ultimo = JSON.parse(salida); pintar(ultimo); ponerEstado("listo");
+  }catch(e){ const m = String(e.message || e).split("\n").filter(l => l.trim()).pop(); ponerEstado("listo", T("e_pre") + traducirError(m)); }
 }
 
-// ---------------------------------------------------------------- render
-const pct = x => (100*x).toFixed(1), sci = x => Number(x).toExponential(1), num = x => Math.abs(x) >= 100 ? Number(x).toFixed(0) : Number(x).toPrecision(3);
-function render(d){
-  const v = d.veredicto; const box = document.getElementById("verdict"); box.className = "verdict " + v;
-  document.getElementById("vpill").textContent = v.replace("_"," ");
-  document.getElementById("vtitle").textContent = T(v + "_t");
-  document.getElementById("vtext").textContent = T(v + "_p", {beta: sci(d.beta_full), perd: pct(d.perdida), gsl: pct(d.g_sin_limite)});
-  // kpis
-  const reh = d.rehen, k = document.getElementById("kpis"); k.hidden = false;
-  k.innerHTML = [
-    ["k_phi", num(d.phi0), ""],
-    ["k_beta", sci(d.beta_full), T("k_beta_h")],
-    ["k_reh", `<span class="mono">${reh}</span>`, T("k_reh_h", {tipo: d.tipos[reh], val: num(d.valores[reh])})],
-    ["k_par", d.n_par, T("k_par_h", {n: d.n_par, t: d.n_par_total})],
-    ["k_obs", d.n_obs, ""],
-    ["k_rank", d.rango, T("k_rank_h", {n: d.n_par})],
-  ].map(([l, val, h]) => `<div class="kpi"><div class="l">${T(l)}</div><div class="v">${val}</div><div class="h">${h}</div></div>`).join("");
-  // ganancias
-  document.getElementById("gainsCard").hidden = false; drawChart(d);
-  // rehenes
-  const hc = document.getElementById("hostCard"); hc.hidden = false;
-  const names = (d.rehenes && d.rehenes.length ? d.rehenes : [reh]);
-  const lim = n => d.tipos[n]==="relative" ? `RELPARMAX·|v| = ${num(d.relparmax*Math.abs(d.valores[n]))}` : d.tipos[n]==="factor" ? `FACPARMAX = ${d.facparmax}` : "ABSPARMAX";
-  document.getElementById("hostTable").innerHTML = `<thead><tr><th>${T("th_ord")}</th><th>${T("th_par")}</th><th>${T("th_tipo")}</th><th>${T("th_val")}</th><th></th></tr></thead><tbody>` +
-    names.map((n,i) => `<tr><td class="mono">${i+1}</td><td class="mono">${n}</td><td>${d.tipos[n]}</td><td class="mono">${num(d.valores[n])}</td><td class="mono" style="color:var(--muted)">${lim(n)}</td></tr>`).join("") +
-    `</tbody>` + `<tfoot><tr><td colspan="5" style="color:var(--muted);font-size:.8rem;border:0;padding-top:8px">${T("h_note")}</td></tr></tfoot>`;
-  // que hacer
-  const dc = document.getElementById("doCard"); dc.hidden = false; const st = document.getElementById("steps"); st.innerHTML = "";
-  const step = (title, code) => { const li = document.createElement("li"); li.innerHTML = `<span class="b">${st.children.length+1}</span><div><p>${title}</p>${code ? `<pre><button class="copy" onclick="navigator.clipboard.writeText(this.parentNode.textContent.slice(this.textContent.length).trim())">${lang==="es"?"copiar":"copy"}</button>${code}</pre>` : ""}</div>`; st.appendChild(li); };
+// ------------------------------------------------------------ resultado
+const coma = s => idioma === "es" ? String(s).replace(".", ",") : String(s);
+const pct = x => coma((100 * Math.max(0, x)).toFixed(Math.abs(100 * x) < 10 ? 1 : 0));
+const num = x => coma(Math.abs(x) >= 100 ? Number(x).toFixed(0) : Number(Number(x).toPrecision(3)));
+function fraccion(b){                                   // 8.4e-6 -> "8,4 millonésimas" es difícil de leer: se usa notación 10^n
+  if (b >= 0.01) return pct(b) + " %";
+  const e = Math.floor(Math.log10(b)), m = b / 10 ** e;
+  return `${coma(m.toFixed(1))} × 10<sup>${String(e).replace("-", "−")}</sup>`;
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
+function pintar(d){
+  const v = d.veredicto, R = $("resultado");
+  const sostener = (d.rehenes && d.rehenes.length) ? d.rehenes : [d.rehen];
+  const primero = sostener[0], gex = d.g_sin_limite_exceso ?? d.g_sin_limite;
+  const tipo = n => T("tipo_" + (d.tipos[n] || "relative"));
+  const maximo = n => d.tipos[n] === "relative" ? num(d.relparmax * Math.abs(d.valores[n])) : d.tipos[n] === "factor" ? `×${coma(d.facparmax)}` : "ABSPARMAX";
+  const cuantos = d.n_sostener === 1 ? T("p_STRANGLED_1") : T("p_STRANGLED_n", {n: d.n_sostener});
+  const clave = v === "STRANGLED" && !d.n_sostener ? "p_STRANGLED_0" : "p_" + v;
+  let h = `<div class="veredicto ${v}"><p class="clase">${T("c_" + v)}</p><h3>${T("t_" + v)}</h3><p>${T(clave, {glim: pct(d.g_lim), ggr: pct(d.g_grupo), gex: pct(gex), n: cuantos})}</p></div>`;
+
+  // cómo terminó
+  const r = d.rec; h += `<div class="bloque"><h3>${T("b_fin")}</h3>`;
+  if (!r) h += `<p>${T("fin_no")}</p>`;
+  else {
+    if (r.nopt != null) h += `<p>${T("fin_1", {a: r.nopt, b: r.noptmax})}${r.topo_limite ? " " + T("fin_tope", {x: `<span class="mono">${esc(r.topo_limite)}</span>`}) : ""}</p>`;
+    if (r.razon) h += `<p>${T("fin_razon")} <span class="cita">${esc(r.razon)}</span></p>`;
+    if (r.phis && r.phis.length) h += `<p>${T("fin_phi", {p: r.phis.map(num).join(" → ")})}</p>`;
+  }
+  h += `</div>`;
+
   if (v === "STRANGLED"){
-    step(T("s1_t"), T("s1_c", {names: names.join(", ")}));
-    if (names.some(n => d.tipos[n]==="relative")) step(T("s2_t"), T("s2_c"));
-    step(T("s3_t", {name: names[0]})); step(`<b>${T("s_val")}</b>`);
-  } else { step(T("s_no")); if (d.rec && d.rec.nopt && d.rec.noptmax && d.rec.nopt < 0.5*d.rec.noptmax && v!=="STRANGLED") step(T("r_sosp")); }
-  // rec
-  const rc = document.getElementById("recCard"); rc.hidden = false; const r = d.rec;
-  document.getElementById("recBody").innerHTML = !r ? `<p style="margin:0;color:var(--muted)">${T("r_none")}</p>` :
-    `<div class="tw"><table><tbody>` + [[T("r_razon"), r.razon || "—"], [T("r_it"), r.nopt!=null ? `${r.nopt} ${T("r_de")} ${r.noptmax}` : "—"], [T("r_lim"), r.topo_limite ? `<span class="mono">${r.topo_limite}</span>` : "—"],
-      ...(r.phis ? [["phi", `<span class="mono">${r.phis.map(num).join(" → ")}</span>`]] : [])].map(([a,b]) => `<tr><td style="color:var(--muted);width:130px">${a}</td><td>${b}</td></tr>`).join("") + `</tbody></table></div>`;
-  // orden visual: rec primero
-  const res = document.getElementById("result"); res.insertBefore(rc, document.getElementById("kpis").nextSibling);
+    // acortamiento, en escala logarítmica de 10^-8 a 1
+    const b = Math.max(d.beta_full, 1e-8), ancho = (100 * (1 + Math.log10(b) / 8)).toFixed(1);
+    h += `<div class="bloque"><h3>${T("b_paso")}</h3><p>${T("paso_1", {f: fraccion(d.beta_full), x: esc(d.rehen), tipo: tipo(d.rehen), v: num(d.valores[d.rehen]), l: maximo(d.rehen)})}</p>
+      <div class="pista"><div class="riel"></div><div class="lleno" style="width:${ancho}%"></div>
+      ${[-8,-6,-4,-2,0].map(e => `<span class="marca-eje" style="left:${100*(1+e/8)}%">${e === 0 ? "1" : `10<sup>${String(e).replace("-", "−")}</sup>`}</span>`).join("")}</div></div>`;
+  }
+  if (v !== "NO_INFORMATION"){
+    h += `<div class="bloque"><h3>${T("b_mej")}</h3><div class="grafico" id="grafico"></div>
+      <div class="leyenda-g"><span><i></i>${T("g_bar")}</span><span><i class="raya"></i>${T("g_sin")}</span></div>
+      <details class="tabla"><summary>${T("g_tabla")}</summary><div class="desliza"><table><thead><tr><th>${T("g_col1")}</th><th>${T("g_col2")}</th><th>${T("g_col3")}</th></tr></thead><tbody>
+      ${(d.ganancias || []).map((g, i) => `<tr><td>${i}</td><td class="mono">${i ? esc((d.rehenes_todos || sostener)[i-1] ?? "") : ""}</td><td>${pct(g)} %</td></tr>`).join("")}</tbody></table></div></details></div>`;
+  }
+  if (v === "STRANGLED"){
+    h += `<div class="bloque"><h3>${T("b_quien")}</h3><div class="desliza"><table><thead><tr><th>${T("th_ord")}</th><th>${T("th_par")}</th><th>${T("th_tipo")}</th><th>${T("th_val")}</th><th>${T("th_max")}</th></tr></thead><tbody>
+      ${sostener.map((n, i) => `<tr><td>${i+1}</td><td class="mono">${esc(n)}</td><td>${tipo(n)}</td><td>${num(d.valores[n])}</td><td>${maximo(n)}</td></tr>`).join("")}</tbody></table></div><p class="fino" style="margin-top:10px">${T("q_nota")}</p></div>`;
+  }
+  // qué hacer
+  const a = d.archivos || {}, base = (a.pst || "caso.pst").replace(/\.pst$/i, "");
+  const paso = (t, c) => `<li><p>${t}</p>${c ? `<pre><button class="copiar" type="button">${T("copiar")}</button><code>${esc(c)}</code></pre>` : ""}</li>`;
+  h += `<div class="bloque"><h3>${T("b_hacer")}</h3><ol class="pasos">`;
+  if (v === "STRANGLED"){
+    h += paso(T("h1"), T("h1c", {pst: a.pst || "caso.pst", jco: a.jco || "caso.jco", res: a.res || "caso.res", base, names: sostener.join(", ")}));
+    if (sostener.some(n => d.tipos[n] === "relative")) h += paso(T("h2"), T("h2c"));
+    h += paso(T("h3", {x: esc(primero)})) + paso(T("h4"));
+  } else h += paso(T("h_no"));
+  h += `</ol><p class="fino">${T("det", {n: d.n_par, t: d.n_par_total, o: d.n_obs, r: d.rango, par: T(d.usa_par_final ? "det_par" : "det_ini")})}</p></div>`;
+  R.innerHTML = h;
+  R.querySelectorAll(".copiar").forEach(b => b.onclick = () => { navigator.clipboard?.writeText(b.nextElementSibling.textContent); b.textContent = T("copiado"); setTimeout(() => b.textContent = T("copiar"), 1400); });
+  if (v !== "NO_INFORMATION") graficar(d, gex);
 }
-function drawChart(d){
-  const g = d.ganancias || [d.g_lim]; const gsl = d.g_sin_limite ?? 0; const W = 520, H = 170, L = 44, R = 12, Tt = 14, B = 34;
-  const ymax = Math.max(0.05, ...g, gsl) * 1.15; const n = g.length; const bw = Math.min(46, (W-L-R)/n*0.7), sx = i => L + (i+0.5)*(W-L-R)/n, sy = y => Tt + (H-Tt-B)*(1 - y/ymax);
-  const acc = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim(), bad = getComputedStyle(document.documentElement).getPropertyValue("--bad").trim(), mut = getComputedStyle(document.documentElement).getPropertyValue("--faint").trim(), rule = getComputedStyle(document.documentElement).getPropertyValue("--rule").trim(), ink = getComputedStyle(document.documentElement).getPropertyValue("--muted").trim();
-  const ticks = [0, ymax/2, ymax].map(t => Math.round(t*100)/100);
-  let s = ticks.map(t => `<line x1="${L}" x2="${W-R}" y1="${sy(t)}" y2="${sy(t)}" stroke="${rule}" stroke-width="1"/><text x="${L-6}" y="${sy(t)+4}" font-size="10" text-anchor="end" fill="${ink}" font-family="IBM Plex Mono,monospace">${Math.round(t*100)}%</text>`).join("");
-  s += `<line x1="${L}" x2="${W-R}" y1="${sy(gsl)}" y2="${sy(gsl)}" stroke="${bad}" stroke-dasharray="4 4" stroke-width="1.4"/>`;
-  s += g.map((y,i) => `<rect x="${sx(i)-bw/2}" y="${sy(y)}" width="${bw}" height="${Math.max(0, sy(0)-sy(y))}" fill="${i===d.n_sostener?acc:mut}" opacity="${i===d.n_sostener?1:.55}" rx="2"/><text x="${sx(i)}" y="${sy(0)+14}" font-size="10" text-anchor="middle" fill="${ink}" font-family="IBM Plex Mono,monospace">${i}</text>`).join("");
-  s += `<text x="${(L+W-R)/2}" y="${H-4}" font-size="10" text-anchor="middle" fill="${ink}">${T("g_x")}</text>`;
-  document.getElementById("chart").innerHTML = s;
-  document.getElementById("legend").innerHTML = `<div><i style="background:${mut};opacity:.55"></i>${T("g_lim")}: <b class="mono">${pct(d.g_lim)}%</b></div><div><i style="background:${acc}"></i>${T("g_grupo", {n: d.n_sostener})}: <b class="mono">${pct(d.g_grupo)}%</b></div><div><i style="background:${bad}"></i>${T("g_sin")}: <b class="mono">${pct(gsl)}%</b></div><div style="color:var(--faint)">${T("g_leg1")}</div>`;
+function graficar(d, gex){
+  const g = d.ganancias || [d.g_lim], n = g.length, W = 640, H = 250, L = 44, Rm = 16, Tt = 22, B = 44;
+  const ymax = Math.max(0.05, ...g, gex) * 1.18, paso = (W - L - Rm) / n, ancho = Math.min(46, paso * 0.62);
+  const x = i => L + (i + 0.5) * paso, y = v => Tt + (H - Tt - B) * (1 - Math.max(0, v) / ymax);
+  const marcas = [0, ymax / 2 / 1.18, ymax / 1.18].map(t => Math.round(t * 100) / 100);
+  let s = marcas.map(t => `<line x1="${L}" x2="${W-Rm}" y1="${y(t)}" y2="${y(t)}" stroke="var(--linea)"/><text x="${L-8}" y="${y(t)+4}" text-anchor="end">${Math.round(t*100)} %</text>`).join("");
+  s += `<line x1="${L}" x2="${W-Rm}" y1="${y(gex)}" y2="${y(gex)}" stroke="var(--tinta2)" stroke-width="1.5" stroke-dasharray="5 4"/><text class="valor" x="${W-Rm}" y="${y(gex)-7}" text-anchor="end">${pct(gex)} %</text>`;
+  g.forEach((v, i) => {
+    const alto = Math.max(2, y(0) - y(v)), sel = i === d.n_sostener;
+    s += `<rect class="zona" data-i="${i}" x="${x(i)-paso/2}" y="${Tt}" width="${paso}" height="${H-Tt-B}"/><rect class="barra-g${sel ? "" : " tenue"}" x="${x(i)-ancho/2}" y="${y(0)-alto}" width="${ancho}" height="${alto}" rx="4"/>`;
+    s += `<text x="${x(i)}" y="${y(0)+17}" text-anchor="middle">${i}</text>`;
+    if (sel || i === 0) s += `<text class="valor" x="${x(i)}" y="${y(0)-alto-7}" text-anchor="middle">${pct(v)} %</text>`;
+  });
+  s += `<text x="${(L+W-Rm)/2}" y="${H-6}" text-anchor="middle">${T("g_eje")}</text>`;
+  const c = $("grafico"); c.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${T("b_mej")}">${s}</svg><div class="globo"></div>`;
+  const globo = c.querySelector(".globo"), svg = c.querySelector("svg");
+  c.querySelectorAll("rect.zona").forEach(z => {
+    z.addEventListener("pointerenter", () => { const i = +z.dataset.i, k = svg.getBoundingClientRect().width / W;
+      globo.textContent = T("g_globo", {i, v: pct(g[i])}); globo.style.left = x(i) * k + "px"; globo.style.top = (y(g[i]) * k) + "px"; globo.classList.add("ver"); });
+    z.addEventListener("pointerleave", () => globo.classList.remove("ver"));
+  });
 }
-applyLang();
+aplicarIdioma();
 </script>
 </body>
 </html>

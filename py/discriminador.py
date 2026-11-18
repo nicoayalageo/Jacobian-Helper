@@ -105,7 +105,8 @@ def discriminar_grupo(jco, residuals, weights, par_names, par_values, tipos,
     ganancia deja de mejorar. Devuelve la secuencia de rehenes y cuanto aporta cada uno.
 
     Devuelve, ademas de las claves de discriminar():
-      rehenes    : lista de nombres en el orden en que conviene sostenerlos
+      rehenes    : lista de nombres en el orden en que conviene sostenerlos (los n_sostener primeros)
+      rehenes_todos : la secuencia completa, en correspondencia con `ganancias`
       ganancias  : ganancia acumulada tras sostener 0, 1, 2, ... de ellos
       n_sostener : cuantos conviene sostener (donde la ganancia deja de subir de forma util)
       g_grupo      : ganancia sosteniendo esos n
@@ -115,10 +116,10 @@ def discriminar_grupo(jco, residuals, weights, par_names, par_values, tipos,
                      OFFSET+log dio 28.3% en la primera iteracion, mientras que la version
                      que solo liberaba un parametro predecia 3.8% (falso negativo).
 
-    min_gain=0.10 esta calibrado sobre 101 corridas con verdad conocida (`fam_validar.py`): una
-    ganancia predicha por debajo del 10% desde un solo paso linealizado cae dentro del ruido de la
-    linealizacion (con 44 puntos piloto el metodo predecia ~6% estando ya en el optimo). Los casos
-    que importan muestran entre 25% y 38%. Con este umbral: 99 aciertos de 101, 0 falsos positivos.
+    min_gain=0.10: una ganancia predicha por debajo del 10% desde un solo paso linealizado cae
+    dentro del ruido de la linealizacion (con 44 puntos piloto el metodo predecia ~6% estando ya en
+    el optimo). Los casos que importan muestran entre 25% y 38%. El recuento de aciertos vigente
+    esta en `fam_validacion.md`, que genera `fam_validar.py`.
 
     Con solo_relativos=True (por defecto) unicamente se consideran candidatos a sostener los
     parametros de limite relativo o absoluto (los que nacen cerca de cero); sostener una K
@@ -154,14 +155,16 @@ def discriminar_grupo(jco, residuals, weights, par_names, par_values, tipos,
         return g, g_ex
 
     def mejor(libres):
-        """(ganancia limitada, quien fija beta) usando solo las columnas `libres`."""
+        """(ganancia limitada, quien fija beta, ganancia limitada neta) usando solo las columnas
+        `libres`. La neta descuenta k/n_obs igual que en sin_limite()."""
         if len(libres) == 0:
-            return 0.0, None
+            return 0.0, None, 0.0
         A = WJ[:, libres]
         U, S, Vt = np.linalg.svd(A, full_matrices=False)
         rank = int(np.sum(S > S[0] * rank_tol)) if S.size else 0
         l = lim[libres]
-        g_best, rehen = -np.inf, None
+        n_obs = A.shape[0]
+        g_best, g_neta, rehen = -np.inf, -np.inf, None
         for k in range(1, rank + 1):
             d = Vt[:k].T @ ((U[:, :k].T @ wr) / S[:k])
             b = _beta(d, l)
@@ -169,17 +172,18 @@ def discriminar_grupo(jco, residuals, weights, par_names, par_values, tipos,
             g = 1.0 - float(e @ e) / phi0
             if g > g_best:
                 g_best = g
+            g_neta = max(g_neta, g - k / n_obs)
         d = Vt[:rank].T @ ((U[:, :rank].T @ wr) / S[:rank])
         with np.errstate(divide="ignore", invalid="ignore"):
             rr = np.where(np.abs(d) > 0, l / np.abs(d), np.inf)
         rehen = par_names[libres[int(np.argmin(rr))]]
-        return g_best, rehen
+        return g_best, rehen, g_neta
 
     candidatos = set(range(n)) if not solo_relativos else {i for i, t in enumerate(tipos) if t != "factor"}
     libres = list(range(n))
-    rehenes, ganancias = [], []
-    g, rehen = mejor(libres)
-    ganancias.append(g)
+    rehenes, ganancias, netas = [], [], []
+    g, rehen, gn = mejor(libres)
+    ganancias.append(g); netas.append(gn)
     for _ in range(max_sostener):
         if rehen is None:
             break
@@ -197,8 +201,8 @@ def discriminar_grupo(jco, residuals, weights, par_names, par_values, tipos,
             rehen = par_names[i]
         libres = [j for j in libres if j != i]
         rehenes.append(rehen)
-        g, rehen = mejor(libres)
-        ganancias.append(g)
+        g, rehen, gn = mejor(libres)
+        ganancias.append(g); netas.append(gn)
 
     # cuantos conviene sostener: hasta que sostener uno mas aporte menos de 1 punto de phi
     n_sost = 0
@@ -206,18 +210,23 @@ def discriminar_grupo(jco, residuals, weights, par_names, par_values, tipos,
         if ganancias[k] - ganancias[n_sost] > 0.01:
             n_sost = k
     g_grupo = ganancias[n_sost]
+    g_grupo_neta = netas[n_sost]
     g_sin_lim, g_exceso = sin_limite(list(range(n)))   # sin limitador: bruta y en exceso sobre el ruido
-    perdida = max(g_grupo, g_exceso) - ganancias[0]
+    # El veredicto usa ganancias netas de ruido en las dos rutas (sostener y sin limite); las
+    # ganancias que se informan como prediccion de phi son las brutas.
+    recuperable = max(g_grupo_neta, g_exceso)
+    perdida = recuperable - ganancias[0]
 
     base = discriminar(jco, residuals, weights, par_names, par_values, tipos,
                        rel_limit, factor_limit, abs_limit, min_gain, tol_perdida, rank_tol)
-    if max(g_grupo, g_exceso) < min_gain:
+    if recuperable < min_gain:
         veredicto = "NO_INFORMATION"
     elif perdida < tol_perdida:
         veredicto = "HEALTHY"
     else:
         veredicto = "STRANGLED"
-    base.update(veredicto=veredicto, rehenes=rehenes[:max(n_sost, 1)], ganancias=ganancias,
-                n_sostener=n_sost, g_grupo=g_grupo, g_lim=ganancias[0], perdida=perdida,
+    base.update(veredicto=veredicto, rehenes=rehenes[:max(n_sost, 1)], rehenes_todos=rehenes, ganancias=ganancias,
+                n_sostener=n_sost, g_grupo=g_grupo, g_grupo_neta=g_grupo_neta,
+                g_lim=ganancias[0], perdida=perdida,
                 g_sin_limite=g_sin_lim, g_sin_limite_exceso=g_exceso, n_obs=int(WJ.shape[0]))
     return base

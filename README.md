@@ -1,35 +1,55 @@
 # Jacobian Helper
 
-**¿PEST se detuvo antes de tiempo?** Diagnóstico de una calibración estancada a partir del Jacobiano ya calculado, sin correr el modelo. Corre entero en el navegador (Pyodide): los archivos no salen de tu computador.
+Diagnóstico de una calibración de PEST o PEST++ estancada a partir del Jacobiano ya calculado, sin correr el modelo. Funciona en el navegador con Pyodide y no envía los archivos a ningún servidor.
 
-**Página:** https://nicoayalageo.github.io/Jacobian-Helper/
+Página: https://nicoayalageo.github.io/Jacobian-Helper/
 
-## Qué necesita
+## Archivos que lee
 
-| archivo | obligatorio | de dónde |
+| Archivo | Obligatorio | Contenido |
 |---|---|---|
-| `caso.pst` | sí | el archivo de control (v1 de PEST/PEST_HP o v2 de PEST++; si usa tablas externas, arrastra también los CSV) |
-| `caso.jco` / `caso.jcb` | sí | el Jacobiano final que escribe PEST / PEST++ |
-| `caso.res` / `caso.rei` | sí | residuales de la última iteración |
-| `caso.par` | recomendado | valores finales de los parámetros (si falta, se usan los iniciales del .pst y se avisa) |
-| `caso.rec` | opcional | para leer cómo terminó y quién topó el límite |
+| `caso.pst` | Sí | Archivo de control, versión 1 de PEST o versión 2 de PEST++. Si usa tablas externas hay que agregar también los CSV |
+| `caso.jco` o `caso.jcb` | Sí | Jacobiano que escribe PEST o PEST++ |
+| `caso.res` o `caso.rei` | Sí | Residuales de la última iteración |
+| `caso.par` | Recomendado | Valores finales de los parámetros. Si falta se usan los iniciales del archivo de control |
+| `caso.rec` | Opcional | Registro de la corrida, para informar cómo terminó |
 
-## Qué responde
+## Qué entrega
 
-1. **Cómo terminó** (del `.rec`): razón, iteraciones usadas de NOPTMAX, qué parámetro topó el límite.
-2. **Qué dice el Jacobiano**: el factor de acortamiento β = mín(límite_i/|Δ_i|) del paso de Gauss-Newton y quién lo fija.
-3. **Conviene intervenir**: ganancia de phi tal como está, sosteniendo al grupo de parámetros que fijan β, y sin el limitador. Veredicto `STRANGLED` / `HEALTHY` / `NO_INFORMATION`.
-4. **Qué hacer**: reinicio sin recalcular el Jacobiano (`pest caso /i`, `++base_jacobian`), cambio del tipo de límite (OFFSET+log, `absolute(N)`), o revisar el parámetro.
+1. Cómo terminó la corrida, según el registro: motivo, iteraciones usadas y último parámetro que alcanzó su límite.
+2. El factor con que se acorta el paso de Gauss-Newton, β = mín(límite_i / |Δ_i|), y el parámetro que lo fija.
+3. La mejora de la función objetivo tal como está, sosteniendo los parámetros que fijan el paso y sin el límite de cambio, con un veredicto: estrangulada, sana o nada que recuperar.
+4. Qué hacer: reinicio desde el mismo Jacobiano (`pest caso /i`, `++base_jacobian`) o cambio del tipo de límite.
 
-## Método
+La mejora es una predicción lineal y debe comprobarse con una iteración antes de adoptarla.
 
-`py/discriminador.py` es el código del estudio, sin modificar (hash en `py/discriminador.sha256`). `py/pestio.py` lee los archivos de PEST sin dependencias; se validó contra pyemu en 188 corridas; el veredicto se validó a ciegas en 122 corridas con verdad conocida (117 aciertos) (`test_pestio.py` en el repositorio del estudio). La ganancia es una predicción lineal: valida siempre con una corrida.
+## Código
 
-Ayala, N. (Arcadis) & López, D. (GWLab), 2026. *Antes de recalibrar: cómo saber si una corrida PEST estancada se puede rescatar desde el Jacobiano ya calculado.* Referencias: Doherty (2018) PEST Manual Part I; White et al. (2020) PEST++ v5, USGS T&M 7-C26.
+| Ruta | Contenido |
+|---|---|
+| `index.html` | Página completa: estilos, textos en español e inglés y lógica |
+| `py/discriminador.py` | Cálculo del diagnóstico. Es el mismo archivo del repositorio del estudio; su SHA-256 está en `py/discriminador.sha256` |
+| `py/pestio.py` | Lectura de los archivos de PEST sin dependencias externas |
+| `ejemplos/` | Tres corridas de ejemplo |
+| `tools/` | Scripts que generan el fondo de la cabecera y la imagen para compartir |
+| `img/` | Imágenes de la página |
 
-## Ejemplos incluidos
+## Ejemplos
 
-- `ejemplos/congelado/`: Freyberg MODFLOW 6 + puntos piloto + decaimiento de K con la profundidad por unidad; PEST 18.25 declara "Optimisation complete" en la iteración 2 con phi 1338 (óptimo 629). Veredicto `STRANGLED`.
-- `ejemplos/sano/`: el mismo modelo con 44 puntos piloto, convergido a phi 597. Veredicto `NO_INFORMATION`.
+- `ejemplos/detenida`: Freyberg en MODFLOW 6 con puntos piloto y decaimiento de K con la profundidad por unidad. PEST 18.25 declara la optimización completa en la iteración 2 con phi 1338. Veredicto: estrangulada.
+- `ejemplos/pestpp`: el mismo caso, con el Jacobiano de la primera iteración de PEST++GLM. Veredicto: estrangulada.
+- `ejemplos/convergida`: una variante del mismo modelo que llegó a phi 596. Veredicto: nada que recuperar.
+
+## Validación
+
+El veredicto se comparó con lo ocurrido en 173 corridas de PEST 18.25 y PEST++ 5.2.16 terminadas por su propio criterio, de 13 variantes del modelo de Freyberg, y coincidió en todas. Las variantes comparten el modelo base, por lo que el resultado no reemplaza la comprobación en un modelo propio.
+
+## Referencia
+
+Ayala, N. y López, D. (2026). Antes de recalibrar, cómo saber si una corrida PEST estancada se puede rescatar desde el Jacobiano ya calculado. XVII Congreso Geológico Chileno, Valdivia, sesión AT2.6.
+
+Doherty, J. (2018). PEST, Model-Independent Parameter Estimation. User Manual Part I. Watermark Numerical Computing.
+
+White, J. T., Hunt, R. J., Fienen, M. N. y Doherty, J. E. (2020). Approaches to highly parameterized inversion: PEST++ Version 5. U.S. Geological Survey Techniques and Methods 7-C26.
 
 Licencia MIT.
